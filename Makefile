@@ -1,7 +1,7 @@
 TEX=Henry_Hsu_Resume.tex
 PDF=$(TEX:.tex=.pdf)
 
-.PHONY: all pdf watch clean fmt
+.PHONY: all pdf watch clean distclean fmt
 
 all: pdf
 
@@ -12,6 +12,9 @@ watch:
 	latexmk -xelatex -pvc $(TEX)
 
 clean:
+	latexmk -c
+
+distclean:
 	latexmk -C
 
 fmt:
