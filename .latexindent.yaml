@@ -1,0 +1,42 @@
+# latexindent configuration
+# 安全、溫和的預設，適合簡歷類 LaTeX 專案
+
+indentPreamble: true
+defaultIndent: "  "
+noBackup: 1
+removeTrailingWhitespace: 1
+
+# 對齊 tabular 之類的環境（不強制插入過多空白）
+lookForAlignDelims:
+  tabular:
+    delims: 1
+    alignDoubleBackSlash: 1
+    spacesBeforeDoubleBackSlash: 1
+  tabularx:
+    delims: 1
+
+# 文字換行策略：僅在段落編輯後才嘗試換行
+textWrap:
+  columns: 100
+  when: after
+  # 不對這些環境做換行包裝，避免破版
+  doNotWrap:
+    environments:
+      - tabular
+      - tabular*
+      - tabularx
+      - array
+      - align
+      - align*
+      - lstlisting
+      - verbatim
+
+# 視為原樣保留的環境與指令
+verbatimEnvironments:
+  - verbatim
+  - lstlisting
+  - minted
+  - comment
+verbatimCommands:
+  - url
+  - href
