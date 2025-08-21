@@ -1,0 +1,13 @@
+# Run `make clean` on every commit via pre-commit framework
+# Install once: pre-commit install
+# Run manually: pre-commit run --all-files
+repos:
+  - repo: local
+    hooks:
+      - id: make-clean
+        name: make clean
+        entry: make clean
+        language: system
+        pass_filenames: false
+        always_run: true
+        stages: [pre-commit]
