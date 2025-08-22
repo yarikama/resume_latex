@@ -157,7 +157,6 @@
 \newcommand{\resumeSubItem}[1]{\resumeItem{#1}}
 
 \renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
-\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
@@ -178,7 +177,7 @@
 % \end{tabular*}
 
 \begin{center}
-	{\Huge \scshape \href{https://yarikama.world}{Henry (Heng Jui), Hsu}} \\
+	{\Huge \scshape \href{https://yarikama.world}{Henry (Heng Jui) Hsu}} \\
     {\small\color{gray} \mylocation} \\
 	\href{tel:+1-510-996-6837}{\raisebox{-0.2\height}\faPhone\  \underline{+1-510-996-6837}} ~
 	\href{mailto:hsuhengjui@gmail.com}{\raisebox{-0.2\height}\faEnvelope\  \underline{hsuhengjui@gmail.com}} ~
@@ -190,7 +189,7 @@
 \section{EDUCATION}
 \resumeSubHeadingListStart
 \resumeSubheadingnull
-{Rice University}{Aug. 2025 -- Present}{}{}
+{Rice University}{Aug. 2025 -- Present}
 \vspace{-20pt}
 \resumeSubItema{M.C.S., Computer Science}{Houston, TX}
 \vspace{-15pt}
@@ -199,7 +198,7 @@
 
 \resumeSubHeadingListStart
 \resumeSubheadingnull
-{National Yang Ming Chiao Tung University (NYCU)}{Sep. 2020 -- Jun. 2024}{}{}
+{National Yang Ming Chiao Tung University (NYCU)}{Sep. 2020 -- Jun. 2024}
 \vspace{-20pt}
 \resumeSubItema{B.S., Industrial Engineering and Management (GPA: 4.07/4.30)}{Hsinchu, Taiwan}
 \resumeSubItem{Minor: Computer Science (Domain GPA: 4.13/4.30)}
@@ -213,9 +212,9 @@
 {AI Engineer}{Sep. 2024 -- Aug. 2025}
 {MaiAgent Co., Ltd. -- Generative AI Startup}
 \resumeItemListStart
-\resumeItem{Transformed chatbots to agents by integrating memory systems, tool APIs, and MCP Client, resulting in 120\% partner growth (MSI, HPE, iGroup) and 567\% user expansion (3K to 20K users) while optimizing LLM token usage to 67\%+ efficiency}
-\resumeItem{Refactored and optimized RAG architecture with async framework and dual-database synchronization (RDB/Vector DB), enabling tag-based filtering and multi-knowledge base management, which scaled system from 3M to 20M+ files while maintaining API response times and doubling indexing performance}
-\resumeItem{Introduced testing framework using pytest for unit and e2e coverage, achieving 67\% test coverage from zero baseline, which reduced production hotfixes by 90\% initially and sustained 50\% reduction long-term}
+\resumeItem{Transformed chatbots into agents by integrating memory systems, tool APIs, and MCP Client, resulting in \textbf{120\%} partner growth (MSI, HPE, iGroup) and \textbf{567\%} user expansion (\textbf{3K} to \textbf{20K} users) while optimizing LLM token usage to \textbf{67\%+} efficiency}
+\resumeItem{Refactored and optimized RAG architecture with async framework and dual-database synchronization (RDB/Vector DB), enabling tag-based filtering and multi-knowledge base management, which scaled the system from \textbf{3M} to \textbf{20M+} files while maintaining API response times and doubling indexing performance}
+\resumeItem{Introduced testing framework using pytest for unit and E2E coverage, achieving 67\% test coverage from zero baseline, which reduced production hotfixes by 90\% initially and sustaining a 50\% reduction long term}
 \resumeItem{Contributed 14 merged pull requests to the LlamaIndex open-source project, fixing bugs and adding features in integrations with Bedrock Converse, Elasticsearch, Cohere, OpenAI, MCP Client, PostgreSQL, and Agent Workflow, enhancing the community ecosystem}
 \resumeItemListEnd
 \resumeSubHeadingListEnd
@@ -227,8 +226,8 @@
 \resumeProjectHeading
 {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Agentic-Advanced-RAG}{Agentic Hybrid RAG}}} $|$ \emph{Graph RAG (Neo4j, Cypher), Vector RAG (Milvus), Multi-Agent (LangGraph)}}{Feb. 2024 -- Jul. 2024}
 \resumeItemListStart
-\resumeItem{Implemented a query classification agentic (gpt--4o--mini) system that will pick a global or local approach to request slicing from Graph RAG, Vector RAG (hybrid embedding search) or a Hybrid (Graph \& Vector) RAG path}
-\resumeItem{Used K-means, DBSCAN to recognize pivotal nodes of vector database, building a low-cost Graph RAG. Saved 35\% of build token cost, with only 2.56\% average worse RAGAS metrics}
+\resumeItem{Implemented a query classification agentic (GPT-4o-mini) system that will pick a global or local approach to request slicing from Graph RAG, Vector RAG (hybrid embedding search) or a Hybrid (Graph \& Vector) RAG path}
+\resumeItem{Used K-means and DBSCAN to recognize pivotal nodes of the vector database, building a low-cost Graph RAG. Saved 35\% of build token cost, with only 2.56\% worse on average in RAGAS}
 \resumeItem{Enhanced vector RAG hit rate using data retrieved from Graph RAG with HyDE, balancing both global and detailed information for more accurate responses. Achieved an MAR@10 of 88.2\% on multi-hop datasets}
 \resumeItemListEnd
 \vspace{-4pt}
@@ -236,26 +235,25 @@
 \resumeProjectHeading
 {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{Problem-Solving System with Multi-Agent RAG}}} $|$ \emph{LangChain, CrewAI, Streamlit, Chroma}}{Feb. 2024 -- Jul. 2024}
 \resumeItemListStart
-\resumeItem{Utilized LangChain, Chroma to apply multi-agentic RAG framework for high school student question answering}
+\resumeItem{Utilized LangChain and Chroma to apply a multi-agentic RAG framework for high school student question answering}
 \resumeItem{Enabled Streamlit-based user tuning of LLM settings and inspection of chain-of-thought and fetched chunks}
-\resumeItem{Used CrewAI to assign roles to LLMs for collaborative problem-solving, helping out students with problem-solving, exam detection, concept analysis, and compared open-source LLMs (llama--3) and commercial LLMs (gpt--4)}
+\resumeItem{Used CrewAI to assign roles to LLMs for collaborative problem-solving, helping out students with problem-solving, exam detection, concept analysis, and compared open-source LLMs (Llama 3) and commercial LLMs (GPT-4)}
 \resumeItem{Top 3 of 50 teams in the Computer Science AI workshop, winning the Outstanding Award}
 \resumeItemListEnd
 \vspace{-4pt}
 
 \resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/motion_classification}{Fitness Motion Classification}}} $|$ \emph{Keras, Scikit-Learn, MediaPipe, OpenCV, NumPy}}{Feb. 2024 -- Mar. 2024}
+{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/motion_classification}{Fitness Motion Classification}}} $|$ \emph{Keras, scikit-learn, MediaPipe, OpenCV, NumPy}}{Feb. 2024 -- Mar. 2024}
 \resumeItemListStart
-\resumeItem{Trained and compared different models to classify fitness motions in videos, including squats, bench presses, and deadlifts by 33 human skeleton keypoints extracted by MediaPipe and body angles derived from the keypoints}
-\resumeItem{Used LSTM and Random Forest to analyze the data, achieving an accuracy of 80.52\% \& 88.31\%, respectively}
+\resumeItem{Used LSTM and Random Forest to analyze the data, achieving an accuracy of 80.52\% and 88.31\%, respectively}
 \resumeItemListEnd
 \vspace{-4pt}
 
 \resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - An Online Mud Game with Group Chatting Utility}}}
-	$|$ \emph{C/C++ (SFML), SQL}}{Oct. 2023 -- Jan. 2023}
+{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - An Online MUD Game with Group Chatting Utility}}}
+	$|$ \emph{C/C++ (SFML), SQL}}{Oct. 2023 -- Jan. 2024}
 \resumeItemListStart
-\resumeItem{Developed a real-time multiplayer role-playing chat game in Socket Programming with server \& client architecture}
+\resumeItem{Developed a real-time multiplayer role-playing chat game using socket programming with server \& client architecture}
 % \resumeItem{Utilized SFML to build the GUI and gaming system in client with utility of group chatting, character moving}
 \resumeItem{Implemented login, registration, and ranking features for user management with SHA-256 hashing, JSON, and MySQL}
 \resumeItemListEnd
@@ -333,9 +331,7 @@
 
 % Skills
 \section{SKILLS}
-\noindent\small C/C++, Python $|$ SQL (PostgreSQL), NoSQL (Neo4j, Milvus, Elasticsearch) $|$ Unix (Linux, FreeBSD), Git, Docker, Shell Script (Bash) $|$ Generative AI (LangChain, LangGraph, LlamaIndex, MCP) $|$ Backend (Django, DRF, Celery) $|$ Machine Learning (PyTorch, Scikit-Learn) $|$ AWS (Bedrock, EC2, S3, RDS, Elasticache)
+\noindent\small C/C++, Python $|$ SQL (PostgreSQL), NoSQL (Neo4j, Milvus, Elasticsearch) $|$ Unix (Linux, FreeBSD), Git, Docker, Shell Script (Bash) $|$ Generative AI (LangChain, LangGraph, LlamaIndex, MCP) $|$ Backend (Django, DRF, Celery) $|$ Machine Learning (PyTorch, scikit-learn) $|$ AWS (Bedrock, EC2, S3, RDS, ElastiCache) $|$ Agile, Scrum
 \vspace{2pt}
 
 \end{document}
-
-
