@@ -218,10 +218,10 @@
 {MaiAgent Co., Ltd. -- Generative AI Startup}{Taipei, Taiwan}
 \vspace{-6pt}
 \resumeItemListStart
-\resumeItem{Transformed chatbots into agents by integrating memory systems, tool APIs, and MCP Client, resulting in \textbf{120\%} partner growth (MSI, HPE, iGroup) and \textbf{567\%} user expansion (\textbf{3K} to \textbf{20K} users) while optimizing LLM token usage to \textbf{67\%+} efficiency}
-\resumeItem{Refactored and optimized RAG architecture with async framework and dual-database synchronization (RDB/Vector DB), enabling tag-based filtering and multi-knowledge base management, which scaled the system from \textbf{3M} to \textbf{20M+} files while maintaining API response times and \textbf{doubling} indexing performance}
-\resumeItem{Introduced testing framework using pytest for unit and E2E coverage, achieving \textbf{67\%} test coverage from \textbf{zero} baseline, which reduced production hotfixes by \textbf{90\%} initially and sustaining a \textbf{50\%} reduction long term}
-\resumeItem{Contributed 14 merged pull requests to the LlamaIndex open-source project, fixing bugs and adding features in integrations with Bedrock Converse, Elasticsearch, Cohere, OpenAI, MCP Client, PostgreSQL, and Agent Workflow, enhancing the community ecosystem}
+\resumeItem{Upgraded chatbots into agents by integrating memory systems, tool APIs, and MCP Client, resulting in \textbf{120\%} partner growth (MSI, HPE, iGroup) and \textbf{567\%} user expansion (\textbf{3K} to \textbf{20K} users) while cutting LLM token usage by \textbf{67\%+}}
+\resumeItem{Refactored RAG architecture with async framework and dual-database synchronization (RDB/Vector DB), enabling tag-based filtering and multi-knowledge base management; scaled the system from \textbf{3M} to \textbf{20M+} text chunks while maintaining API response times and \textbf{doubling} indexing performance}
+\resumeItem{Introduced pytest testing framework for unit and E2E coverage to prevent production regressions, achieving \textbf{67\%} test coverage from \textbf{zero} baseline, which reduced production hotfixes by \textbf{90\%} initially and sustaining a \textbf{50\%} reduction long term}
+\resumeItem{Contributed 14 merged pull requests to the LlamaIndex \textbf{open-source} project, fixing bugs and adding features in integrations with AWS Bedrock, Claude, Elasticsearch, Cohere, OpenAI, MCP Client, PostgreSQL, and Agent Workflow, enhancing the community ecosystem}
 \resumeItemListEnd
 \resumeSubHeadingListEnd
 
@@ -235,17 +235,16 @@
 \resumeProjectHeading
 {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Agentic-Advanced-RAG}{Agentic Hybrid RAG}}} $|$ \emph{Graph RAG (Neo4j, Cypher), Vector RAG (Milvus), Multi-Agent (LangGraph)}}{Feb. 2024 -- Jul. 2024}
 \resumeItemListStart
-\resumeItem{Implemented a query classification agentic (GPT-4o-mini) system that picks a global or local approach to request slicing from Graph RAG, Vector RAG (hybrid embedding search) or a Hybrid (Graph \& Vector) RAG path}
-\resumeItem{Used K-means and DBSCAN to recognize pivotal nodes of the vector database, building a low-cost Graph RAG. Saved 35\% of build token cost, with only 2.56\% worse on average in RAGAS}
+\resumeItem{Implemented a query classification agentic system that picks a global or local approach to request slicing from Graph RAG, Vector RAG (hybrid embedding search) or a Hybrid (Graph \& Vector) RAG path to answer the contextual or detail-oriented queries}
+\resumeItem{Used K-means and DBSCAN to recognize pivotal nodes of the vector database, and built a low-cost Graph RAG. Saved 35\% of semantic graph indexing token cost, with only 2.56\% worse on average in RAGAS}
 \resumeItem{Enhanced vector RAG hit rate using data retrieved from Graph RAG with HyDE, balancing both global and detailed information for more accurate responses. Achieved an MAR@10 of 88.2\% on multi-hop datasets}
 \resumeItemListEnd
 \vspace{-4pt}
 
 \resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{Problem-Solving System with Multi-Agent RAG}}} $|$ \emph{LangChain, CrewAI, Streamlit, Chroma}}{Feb. 2024 -- Jul. 2024}
+{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{Student Problem-Solving System with Multi-Agent RAG}}} $|$ \emph{LangChain, CrewAI, Streamlit, Chroma}}{Feb. 2024 -- Jul. 2024}
 \resumeItemListStart
-\resumeItem{Utilized LangChain and Chroma to apply a multi-agent RAG framework for high school student question answering}
-\resumeItem{Enabled Streamlit-based user tuning of LLM settings and inspection of chain-of-thought and fetched chunks}
+\resumeItem{Enabled user tuning of LLM settings and inspection of chain-of-thought from ReAct Agent and fetched chunks by Streamlit}
 \resumeItem{Used CrewAI to assign roles to LLMs for collaborative problem-solving, assisting students with problem-solving, exam detection, concept analysis, and compared open-source LLMs (Llama 3) and commercial LLMs (GPT-4)}
 \resumeItem{Top 3 of 50 teams in the Computer Science AI workshop, winning the Outstanding Award}
 \resumeItemListEnd
@@ -340,7 +339,11 @@
 
 % Skills
 \section{SKILLS}
-\noindent\small C/C++, Python $|$ SQL (PostgreSQL), NoSQL (Neo4j, Milvus, Elasticsearch) $|$ Unix (Linux, FreeBSD), Git, Docker, Shell Script (Bash) $|$ Generative AI (LangChain, LangGraph, LlamaIndex, MCP) $|$ Backend (Django, DRF, Celery) $|$ Machine Learning (PyTorch, scikit-learn) $|$ AWS (Bedrock, EC2, S3, RDS, ElastiCache) $|$ Agile, Scrum
+\resumeItemListStart
+\resumeItem{C/C++, Python $|$ SQL (PostgreSQL, SQLite, MySQL), NoSQL (Neo4j, Milvus, Elasticsearch, Chroma)}
+\resumeItem{Generative AI (LangChain, LangGraph, LlamaIndex, MCP) $|$ Backend (Django, DRF, Celery) $|$ Machine Learning (PyTorch, scikit-learn)}
+\resumeItem{AWS (Bedrock, EC2, S3, RDS, ElastiCache) $|$ Agile, Scrum $|$ Unix (Linux, FreeBSD), git, Docker, Shell Script (Bash)}
+\resumeItemListEnd
 \vspace{2pt}
 
 \end{document}
