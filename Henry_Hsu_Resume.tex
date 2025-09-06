@@ -64,7 +64,7 @@
 \addtolength{\textwidth}{1.35in}
 \addtolength{\topmargin}{-0.7in}
 \addtolength{\textheight}{1.15in}
-\setlength{\footskip}{12pt}
+\setlength{\footskip}{7pt}
 
 \urlstyle{same}
 
@@ -77,17 +77,17 @@
 \titlespacing*{\section}{0pt}{6pt plus 1pt minus 1pt}{4pt}
 %-------------------------
 % Custom commands
-\newcommand{\mylocation}{Houston, TX 77030}
+\newcommand{\mylocation}{
+  Houston, TX 77030
+}
 \newcommand{\resumeItem}[1]{
   \item\small{#1}
 }
-
 \newcommand{\classesList}[4]{
     \item\small{
         {#1 #2 #3 #4 \vspace{-2pt}}
   }
 }
-
 \newcommand{\resumeSubheading}[4]{
   \vspace{-1.5pt}\item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
@@ -95,14 +95,12 @@
       \textit{\small#3} & \textit{\small #4} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubheadingnull}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & \textbf{\small #2} \\
     \end{tabular*}\vspace{3pt}
 }
-
 \newcommand{\resumeSubheadinga}[4]{
   \vspace{-3pt}\item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
@@ -110,7 +108,6 @@
       \textit{\small#3} & \textit{\small #4} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubheadingb}[4]{
   \vspace{-3pt}\item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
@@ -118,42 +115,36 @@
       \textit{\small#3} & \textit{\small #4} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubheadingc}[3]{
   \vspace{-3pt}\item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
        \textbf{#1} \textit{\small#3} & \textbf{\small #2} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubItema}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \small#1 & \textit{\small #2} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubItemb}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{\textit{\small#1}} & \textit{\small #2} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubSubheading}[2]{
     \item
     \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
       \textit{\small#1} & \textit{\small #2} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeProjectHeading}[2]{
     \item
     \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
       \small#1 & \textbf{\small #2}\\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubItem}[1]{\resumeItem{#1}}
 
 \renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
@@ -214,13 +205,13 @@
 \vspace{2pt}
 \resumeSubHeadingListStart
 \resumeSubheadinga
-{AI Engineer}{Sep. 2024 -- Aug. 2025}
+{Generative AI Team Lead}{Sep. 2024 -- Aug. 2025}
 {MaiAgent Co., Ltd. -- Generative AI Startup}{Taipei, Taiwan}
 \vspace{-6pt}
 \resumeItemListStart
 \resumeItem{\textbf{Building AI Agents --} Upgraded chatbots into AI agents by integrating memory systems, tool APIs, and MCP Client, resulting in \textbf{120\%} partner growth (MSI, HPE, iGroup) and \textbf{567\%} user expansion (\textbf{3K} to \textbf{20K} users) while cutting LLM token usage by \textbf{67\%+}}
-\resumeItem{\textbf{Scaling Advanced RAG --} Refactored RAG architecture with async framework and dual-database synchronization (RDB/Vector DB), enabling tag-based filtering and multi-knowledge base management; scaled the system from \textbf{3M} to \textbf{20M+} text chunks while maintaining API response times and \textbf{doubling} indexing performance}
-\resumeItem{\textbf{Contributing to Open Source --} Contributed 14 merged pull requests to the LlamaIndex \textbf{open-source} project, fixing bugs and adding features in integrations with AWS Bedrock, Claude, Elasticsearch, Cohere, OpenAI, MCP Client, PostgreSQL, and AI Agent Workflow}
+\resumeItem{\textbf{Scaling Advanced RAG --} Refactored RAG (Retrieval-Augmented Generation) architecture with async framework and dual-database synchronization (RDB/Vector DB), enabling tag-based filtering and multi-knowledge base management; scaled the system from \textbf{3M} to \textbf{20M+} text chunks while maintaining API response times and \textbf{doubling} indexing performance}
+\resumeItem{\textbf{Contributing to Open Source --} Contributed 14 merged pull requests to the \textbf{LlamaIndex} open-source project, fixing bugs and adding features in integrations with \textbf{AWS Bedrock}, \textbf{Claude}, \textbf{Elasticsearch}, \textbf{Cohere}, \textbf{OpenAI}, \textbf{MCP Client}, \textbf{PostgreSQL}, and \textbf{AI bAgent Workflow}}
 \resumeItem{\textbf{Testing Framework --} Introduced pytest testing framework for unit and E2E coverage to prevent production regressions, achieving \textbf{67\%} test coverage from \textbf{zero} baseline, which reduced production hotfixes by \textbf{90\%} initially and sustaining a \textbf{50\%} reduction long term}
 \resumeItemListEnd
 \resumeSubHeadingListEnd
@@ -233,7 +224,7 @@
 \vspace{-1pt}
 \resumeSubHeadingListStart
 \resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Agentic-Advanced-RAG}{Agentic AI Hybrid RAG}}} $|$ \emph{Graph RAG (Neo4j, Cypher), Vector RAG (Milvus), Multi-Agent (LangGraph)}}{Feb. 2024 -- Aug. 2024}
+{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Agentic-Advanced-RAG}{Agentic Hybrid RAG}}} $|$ \emph{Graph RAG (Neo4j, Cypher), Vector RAG (Milvus), Multi-Agent (LangGraph)}}{Feb. 2024 -- Aug. 2024}
 \resumeItemListStart
 \resumeItem{Implemented a query classification agentic AI system that picks a global or local approach to request slicing from Graph RAG, Vector RAG (hybrid embedding search) or a Hybrid (Graph \& Vector) RAG path to answer the contextual or detail-oriented queries}
 \resumeItem{Used ML clustering algorithms (K-means and DBSCAN) to recognize pivotal nodes of the vector database, and built a low-cost Graph RAG; saved 35\% of semantic graph indexing token cost, with only 2.56\% worse on average in RAGAS metrics}
@@ -242,7 +233,7 @@
 \vspace{-4pt}
 
 \resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{Tutoring System with Multi-Agent RAG}}} $|$ \emph{LangChain, CrewAI, Streamlit, Chroma}}{Feb. 2024 -- Jul. 2024}
+{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{GenAI Tutoring System with Multi-Agent RAG}}} $|$ \emph{LangChain, CrewAI, Streamlit, Chroma}}{Feb. 2024 -- Jul. 2024}
 \resumeItemListStart
 \resumeItem{Enabled user tuning of LLM settings and inspection of chain-of-thought from ReAct Agent and fetched chunks by Streamlit}
 \resumeItem{Used CrewAI to assign roles to LLMs for collaborative problem-solving, assisting students with problem-solving, exam detection, concept analysis, and compared open-source LLMs (Llama 3) and commercial LLMs (GPT-4)}
@@ -251,10 +242,10 @@
 \vspace{-4pt}
 
 \resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/motion_classification}{Fitness Motion Classification}}} $|$ \emph{Keras, scikit-learn, MediaPipe, OpenCV, NumPy}}{Feb. 2024 -- Mar. 2024}
+{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/motion_classification}{AI Fitness Motion Classification}}} $|$ \emph{Keras, scikit-learn, MediaPipe, OpenCV, NumPy}}{Feb. 2024 -- Mar. 2024}
 \resumeItemListStart
 \resumeItem{Trained and compared different models to classify fitness motions in videos, including squats, bench presses, and deadlifts by 33 human skeleton keypoints extracted by MediaPipe and body angles derived from the keypoints}
-\resumeItem{Used LSTM and Random Forest to analyze the data, achieving an accuracy of 80.52\% \& 88.31\%, respectively}
+\resumeItem{Used ML/DL models (LSTM and Random Forest) to analyze the data, achieving an accuracy of 80.52\% \& 88.31\%, respectively}
 \resumeItemListEnd
 \vspace{-4pt}
 
@@ -344,6 +335,6 @@
 \resumeItem{\textbf{Generative AI:} LangChain, LangGraph, LlamaIndex, MCP $|$ \textbf{Backend:} Django, FastAPI $|$ \textbf{Machine Learning:} PyTorch, scikit-learn}
 \resumeItem{\textbf{AWS:} Bedrock, EC2, S3, RDS, ElastiCache $|$ \textbf{Agile, Scrum} $|$ \textbf{Unix:} Linux, FreeBSD $|$ \textbf{Tools:} git, Docker, Shell Script (Bash)}
 \resumeItemListEnd
-\vspace{2pt}
+\vspace{-40pt}
 
 \end{document}
