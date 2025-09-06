@@ -64,7 +64,7 @@
 \addtolength{\textwidth}{1.35in}
 \addtolength{\topmargin}{-0.7in}
 \addtolength{\textheight}{1.15in}
-\setlength{\footskip}{12pt}
+\setlength{\footskip}{7pt}
 
 \urlstyle{same}
 
@@ -77,17 +77,17 @@
 \titlespacing*{\section}{0pt}{6pt plus 1pt minus 1pt}{4pt}
 %-------------------------
 % Custom commands
-\newcommand{\mylocation}{Houston, TX 77030}
+\newcommand{\mylocation}{
+  Houston, TX 77030
+}
 \newcommand{\resumeItem}[1]{
   \item\small{#1}
 }
-
 \newcommand{\classesList}[4]{
     \item\small{
         {#1 #2 #3 #4 \vspace{-2pt}}
   }
 }
-
 \newcommand{\resumeSubheading}[4]{
   \vspace{-1.5pt}\item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
@@ -95,14 +95,12 @@
       \textit{\small#3} & \textit{\small #4} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubheadingnull}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & \textbf{\small #2} \\
     \end{tabular*}\vspace{3pt}
 }
-
 \newcommand{\resumeSubheadinga}[4]{
   \vspace{-3pt}\item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
@@ -110,7 +108,6 @@
       \textit{\small#3} & \textit{\small #4} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubheadingb}[4]{
   \vspace{-3pt}\item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
@@ -118,42 +115,36 @@
       \textit{\small#3} & \textit{\small #4} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubheadingc}[3]{
   \vspace{-3pt}\item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
        \textbf{#1} \textit{\small#3} & \textbf{\small #2} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubItema}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \small#1 & \textit{\small #2} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubItemb}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{\textit{\small#1}} & \textit{\small #2} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubSubheading}[2]{
     \item
     \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
       \textit{\small#1} & \textit{\small #2} \\
     \end{tabular*}
 }
-
 \newcommand{\resumeProjectHeading}[2]{
     \item
     \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
       \small#1 & \textbf{\small #2}\\
     \end{tabular*}
 }
-
 \newcommand{\resumeSubItem}[1]{\resumeItem{#1}}
 
 \renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
@@ -176,6 +167,7 @@
 %   \href{http://sourabhbajaj.com/}{http://www.sourabhbajaj.com} & Mobile : +1-123-456-7890 \\
 % \end{tabular*}
 
+% Contact Information
 \begin{center}
 	{\Huge \scshape \href{https://yarikama.world}{Henry Hsu}} \\
     {\small\color{gray} \mylocation} \\
@@ -183,13 +175,21 @@
 	\href{mailto:hsuhengjui@gmail.com}{\raisebox{-0.2\height}\faEnvelope\  \underline{hsuhengjui@gmail.com}} ~
 	\href{https://linkedin.com/in/yarikama/}{\raisebox{-0.2\height}\faLinkedin\ \underline{linkedin.com/in/yarikama}}  ~
 	\href{https://github.com/yarikama}{\raisebox{-0.2\height}\faGithub\ \underline{github.com/yarikama}}
-	\vspace{-4pt}
+	\vspace{-10pt}
 \end{center}
+
+% Summary
+\section{SUMMARY}
+\resumeSubHeadingListStart
+\item\small{AI Team Lead/Engineer building production AI platforms: agentic AI agents and Hybrid RAG (Graph + Vector). Scaled knowledge base from 3M to 20M+ chunks with stable latency; reduced LLM token cost by 67\%+ and doubled indexing throughput}
+\resumeSubHeadingListEnd
+
+
 % Education
 \section{EDUCATION}
 \resumeSubHeadingListStart
 \resumeSubheadingnull
-{Rice University}{Aug. 2025 -- Dec. 2026 (Expected)}{}{}
+{Rice University - Top 20 U.S. University}{Aug. 2025 -- Dec. 2026 (Expected)}{}{}
 \vspace{-20pt}
 \resumeSubItema{M.C.S., Computer Science}{Houston, TX}
 \vspace{-15pt}
@@ -198,7 +198,7 @@
 
 \resumeSubHeadingListStart
 \resumeSubheadingnull
-{National Yang Ming Chiao Tung University (NYCU)}{Sep. 2020 -- Jun. 2024}
+{National Yang Ming Chiao Tung University (NYCU) - Top 3 Taiwan University }{Sep. 2020 -- Jun. 2024}
 \vspace{-20pt}
 \resumeSubItema{B.S., Industrial Engineering and Management (GPA: 4.07/4.30)}{Hsinchu, Taiwan}
 \resumeSubItem{Minor: Computer Science (Domain GPA: 4.13/4.30)}
@@ -214,14 +214,14 @@
 \vspace{2pt}
 \resumeSubHeadingListStart
 \resumeSubheadinga
-{AI Engineer}{Sep. 2024 -- Aug. 2025}
+{Generative AI Team Lead}{Sep. 2024 -- Aug. 2025}
 {MaiAgent Co., Ltd. -- Generative AI Startup}{Taipei, Taiwan}
 \vspace{-6pt}
 \resumeItemListStart
-\resumeItem{Upgraded chatbots into agents by integrating memory systems, tool APIs, and MCP Client, resulting in \textbf{120\%} partner growth (MSI, HPE, iGroup) and \textbf{567\%} user expansion (\textbf{3K} to \textbf{20K} users) while cutting LLM token usage by \textbf{67\%+}}
-\resumeItem{Refactored RAG architecture with async framework and dual-database synchronization (RDB/Vector DB), enabling tag-based filtering and multi-knowledge base management; scaled the system from \textbf{3M} to \textbf{20M+} text chunks while maintaining API response times and \textbf{doubling} indexing performance}
-\resumeItem{Introduced pytest testing framework for unit and E2E coverage to prevent production regressions, achieving \textbf{67\%} test coverage from \textbf{zero} baseline, which reduced production hotfixes by \textbf{90\%} initially and sustaining a \textbf{50\%} reduction long term}
-\resumeItem{Contributed 14 merged pull requests to the LlamaIndex \textbf{open-source} project, fixing bugs and adding features in integrations with AWS Bedrock, Claude, Elasticsearch, Cohere, OpenAI, MCP Client, PostgreSQL, and Agent Workflow}
+\resumeItem{\textbf{Building AI Agents --} Upgraded chatbots into AI agents by integrating memory systems, tool APIs, and MCP Client, resulting in \textbf{120\%} partner growth (MSI, HPE, iGroup) and \textbf{567\%} user expansion (\textbf{3K} to \textbf{20K} users) while cutting LLM token usage by \textbf{67\%+}}
+\resumeItem{\textbf{Scaling Advanced RAG --} Refactored RAG (Retrieval-Augmented Generation) architecture with async framework and dual-database synchronization (RDB/Vector DB), enabling tag-based filtering and multi-knowledge base management; scaled the system from \textbf{3M} to \textbf{20M+} text chunks while maintaining API response times and \textbf{doubling} indexing performance}
+\resumeItem{\textbf{Contributing to Open Source --} Contributed 14 merged pull requests to the \textbf{LlamaIndex} open-source project, fixing bugs and adding features in integrations with \textbf{AWS Bedrock}, \textbf{Claude}, \textbf{Elasticsearch}, \textbf{Cohere}, \textbf{OpenAI}, \textbf{MCP Client}, \textbf{PostgreSQL}, and \textbf{AI Agent Workflow}}
+\resumeItem{\textbf{Testing Framework --} Introduced pytest testing framework for unit and E2E coverage to prevent production regressions, achieving \textbf{67\%} test coverage from \textbf{zero} baseline, which reduced production hotfixes by \textbf{90\%} initially and sustaining a \textbf{50\%} reduction long term}
 \resumeItemListEnd
 \resumeSubHeadingListEnd
 
@@ -235,14 +235,14 @@
 \resumeProjectHeading
 {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Agentic-Advanced-RAG}{Agentic Hybrid RAG}}} $|$ \emph{Graph RAG (Neo4j, Cypher), Vector RAG (Milvus), Multi-Agent (LangGraph)}}{Feb. 2024 -- Aug. 2024}
 \resumeItemListStart
-\resumeItem{Implemented a query classification agentic system that picks a global or local approach to request slicing from Graph RAG, Vector RAG (hybrid embedding search) or a Hybrid (Graph \& Vector) RAG path to answer the contextual or detail-oriented queries}
-\resumeItem{Used K-means and DBSCAN to recognize pivotal nodes of the vector database, and built a low-cost Graph RAG; saved 35\% of semantic graph indexing token cost, with only 2.56\% worse on average in RAGAS metrics}
+\resumeItem{Implemented a query classification agentic AI system that picks a global or local approach to request slicing from Graph RAG, Vector RAG (hybrid embedding search) or a Hybrid (Graph \& Vector) RAG path to answer the contextual or detail-oriented queries}
+\resumeItem{Used ML clustering algorithms (K-means and DBSCAN) to recognize pivotal nodes of the vector database, and built a low-cost Graph RAG; saved 35\% of semantic graph indexing token cost, with only 2.56\% worse on average in RAGAS metrics}
 \resumeItem{Enhanced vector RAG hit rate using data retrieved from Graph RAG with HyDE, balancing both global and detailed information for more accurate responses. Achieved an MAR@10 of 88.2\% on multi-hop datasets}
 \resumeItemListEnd
 \vspace{-4pt}
 
 \resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{Student Problem-Solving System with Multi-Agent RAG}}} $|$ \emph{LangChain, CrewAI, Streamlit, Chroma}}{Feb. 2024 -- Jul. 2024}
+{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{GenAI Tutoring System with Multi-Agent RAG}}} $|$ \emph{LangChain, CrewAI, Streamlit, Chroma}}{Feb. 2024 -- Jul. 2024}
 \resumeItemListStart
 \resumeItem{Enabled user tuning of LLM settings and inspection of chain-of-thought from ReAct Agent and fetched chunks by Streamlit}
 \resumeItem{Used CrewAI to assign roles to LLMs for collaborative problem-solving, assisting students with problem-solving, exam detection, concept analysis, and compared open-source LLMs (Llama 3) and commercial LLMs (GPT-4)}
@@ -251,22 +251,22 @@
 \vspace{-4pt}
 
 \resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/motion_classification}{Fitness Motion Classification}}} $|$ \emph{Keras, scikit-learn, MediaPipe, OpenCV, NumPy}}{Feb. 2024 -- Mar. 2024}
+{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/motion_classification}{AI Fitness Motion Classification}}} $|$ \emph{Keras, scikit-learn, MediaPipe, OpenCV, NumPy}}{Feb. 2024 -- Mar. 2024}
 \resumeItemListStart
 \resumeItem{Trained and compared different models to classify fitness motions in videos, including squats, bench presses, and deadlifts by 33 human skeleton keypoints extracted by MediaPipe and body angles derived from the keypoints}
-\resumeItem{Used LSTM and Random Forest to analyze the data, achieving an accuracy of 80.52\% \& 88.31\%, respectively}
+\resumeItem{Used ML/DL models (LSTM and Random Forest) to analyze the data, achieving an accuracy of 80.52\% \& 88.31\%, respectively}
 \resumeItemListEnd
 \vspace{-4pt}
 
-\resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - An Online MUD Game with Group Chatting Utility}}}
-	$|$ \emph{C/C++ (SFML), SQL}}{Oct. 2023 -- Jan. 2024}
-\resumeItemListStart
-\resumeItem{Developed a real-time multiplayer role-playing chat game using socket programming with server \& client architecture}
-% \resumeItem{Utilized SFML to build the GUI and gaming system in client with utility of group chatting, character moving}
-\resumeItem{Implemented login, registration, and ranking features for user management with SHA-256 hashing, JSON, and MySQL}
-\resumeItemListEnd
-\vspace{-4pt}
+% \resumeProjectHeading
+% {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - An Online MUD Game with Group Chatting Utility}}}
+% 	$|$ \emph{C/C++ (SFML), SQL}}{Oct. 2023 -- Jan. 2024}
+% \resumeItemListStart
+% \resumeItem{Developed a real-time multiplayer role-playing chat game using socket programming with server \& client architecture}
+% % \resumeItem{Utilized SFML to build the GUI and gaming system in client with utility of group chatting, character moving}
+% \resumeItem{Implemented login, registration, and ranking features for user management with SHA-256 hashing, JSON, and MySQL}
+% \resumeItemListEnd
+% \vspace{-4pt}
 \resumeSubHeadingListEnd
 
 % \vspace{-15pt}
@@ -340,10 +340,10 @@
 % Skills
 \section{SKILLS}
 \resumeItemListStart
-\resumeItem{C/C++, Python $|$ SQL (PostgreSQL, SQLite, MySQL), NoSQL (Neo4j, Milvus, Elasticsearch, Chroma)}
-\resumeItem{Generative AI (LangChain, LangGraph, LlamaIndex, MCP) $|$ Backend (Django, DRF, Celery) $|$ Machine Learning (PyTorch, scikit-learn)}
-\resumeItem{AWS (Bedrock, EC2, S3, RDS, ElastiCache) $|$ Agile, Scrum $|$ Unix (Linux, FreeBSD), git, Docker, Shell Script (Bash)}
+\resumeItem{\textbf{Languages:} C/C++, Python, TypeScript $|$ \textbf{Databases:} SQL (PostgreSQL, SQLite), NoSQL (Neo4j, Milvus, Elasticsearch, Chroma)}
+\resumeItem{\textbf{Generative AI:} LangChain, LangGraph, LlamaIndex, MCP $|$ \textbf{Backend:} Django, FastAPI $|$ \textbf{Machine Learning:} PyTorch, scikit-learn}
+\resumeItem{\textbf{AWS:} Bedrock, EC2, S3, RDS, ElastiCache $|$ \textbf{Agile, Scrum} $|$ \textbf{Unix:} Linux, FreeBSD $|$ \textbf{Tools:} git, Docker, Shell Script (Bash)}
 \resumeItemListEnd
-\vspace{2pt}
+\vspace{-40pt}
 
 \end{document}
