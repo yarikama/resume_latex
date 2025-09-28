@@ -9,4 +9,5 @@
 *.blg
 *.brf
 *.idx
+.DS_Store
 cover_letters/
