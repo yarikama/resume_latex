@@ -181,7 +181,7 @@
 % Summary
 \section{SUMMARY}
 \resumeSubHeadingListStart
-\item\small{\textbf{Former Generative AI Team Lead with experience building production Generative AI platforms that doubled the B2B client base and grew the user base to 20K. Built key product features including Agentic AI Systems, Advanced RAG, and Backend infrastructure, leading to two major industry awards. Now pursuing a Master of Computer Science at Rice University.}}
+\item\small{\textbf{Software Engineer with production experience building scalable backend systems and full-stack applications. Optimized 200+ APIs with 70\% performance improvement, scaled systems from 3M to 20M+ records, and contributed 14+ open-source PRs to LlamaIndex. Strong expertise in Python, TypeScript, C++, distributed systems, and database optimization. Currently pursuing a Master of Computer Science at Rice University.}}
 \vspace{-2pt}
 \resumeSubHeadingListEnd
 
@@ -216,15 +216,16 @@
 \vspace{2pt}
 \resumeSubHeadingListStart
 \resumeSubheadinga
-{Generative AI Team Lead}{Sep. 2024 -- Aug. 2025}
+{Back-End Engineer \& GenAI Team Lead}{Sep. 2024 -- Aug. 2025}
 {MaiAgent Co., Ltd. -- Award-Winning B2B GenAI Startup}{Taipei, Taiwan}
 \vspace{-6pt}
 \resumeItemListStart
-% \resumeItem{\textbf{Building AI Agents --} Upgraded chatbots into AI agents by integrating memory systems, tool APIs, and MCP Client, resulting in \textbf{120\%} partner growth (\textbf{CTBC Bank}, \textbf{MSI}, \textbf{HPE}, \textbf{iGroup}) and \textbf{567\%} user expansion (\textbf{3K} to \textbf{20K} users) while cutting LLM token usage by \textbf{67\%+}}
-% \resumeItem{\textbf{Scaling Advanced RAG --} Refactored advanced RAG system with async framework and dual-database synchronization (RDB/Vector DB), scaling the system from \textbf{3M} to \textbf{20M+} text chunks while maintaining API response times and \textbf{doubling} indexing performance}
-% \resumeItem{\textbf{Contributing to Open Source --} Contributed 14 merged pull requests to the \textbf{LlamaIndex} open-source project, fixing bugs and adding features in integrations with \textbf{AWS Bedrock}, \textbf{Claude}, \textbf{Elasticsearch}, \textbf{Cohere}, \textbf{OpenAI}, \textbf{MCP Client}, \textbf{PostgreSQL}, and \textbf{AI Agent Workflow}}
-% \resumeItem{\textbf{Testing Framework --} Introduced pytest testing framework for unit and E2E coverage to prevent production regressions, achieving \textbf{67\%} test coverage from \textbf{zero} baseline, which reduced production hotfixes by \textbf{90\%} initially and sustaining a \textbf{50\%} reduction long term}
-% \resumeItem{\textbf{Enterprise Knowledge System:} Built a semantic tagging and permission management multi-knowledge base system for B2B clients}
+\resumeItem{\textbf{API Optimization --} Optimized \textbf{200+} RESTful APIs through SQL query refactoring, connection pooling (Elasticsearch, Cohere, OpenAI), and Django caching; reduced response time of 13 high-traffic APIs by \textbf{27.7\%} overall and prevent N+1 queries}
+\resumeItem{\textbf{Scalable Data Pipeline --} Architected async data processing pipeline using \textbf{asyncio}, \textbf{Celery}, and batch/generator patterns to handle \textbf{10M+} records for multi-level knowledge base indexing}
+\resumeItem{\textbf{Real-Time Communication --} Implemented \textbf{WebSocket}-based real-time notification system with \textbf{Redis} pub/sub for file parsing status updates (initialized, processing, completed); built event-driven architecture for agent state transitions, pushing canvas rendering triggers to frontend for seamless UI updates}
+\resumeItem{\textbf{System Architecture \& Refactoring --} Led incremental system refactoring with backward/forward compatibility, scaling from \textbf{3M to 20M+} text chunks; designed normalized data schema (document → page → chunk) and implemented Singleton patterns to optimize object creation and memory usage}
+\resumeItem{\textbf{CI/CD \& Testing --} Built \textbf{GitHub Actions} CI pipeline with pytest integration and E2E testing, achieving \textbf{67\%} code coverage from zero baseline; reduced production hotfixes by \textbf{90\%} initially and \textbf{50\%} long-term; managed database migrations in CD pipeline}
+\resumeItem{\textbf{Open Source Contributions --} Contributed \textbf{14 merged PRs} to \textbf{LlamaIndex} (15K+ stars), fixing bugs and adding features in AWS Bedrock, Claude, Elasticsearch, Cohere, OpenAI, MCP Client, PostgreSQL, and AI Agent Workflow integrations}
 \resumeItemListEnd
 \resumeSubHeadingListEnd
 
@@ -236,40 +237,40 @@
 \vspace{-1pt}
 \resumeSubHeadingListStart
 \resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Agentic-Advanced-RAG}{Agentic Hybrid RAG}}} $|$ \emph{Graph RAG (Neo4j, Cypher), Vector RAG (Milvus), Multi-Agent (LangGraph)}}{Feb. 2024 -- Aug. 2024}
+{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Agentic-Advanced-RAG}{Agentic Hybrid RAG System}}} $|$ \emph{Python, Neo4j (Cypher), Milvus, LangGraph, scikit-learn}}{Feb. 2024 -- Aug. 2024}
 \resumeItemListStart
-\resumeItem{\textbf{Self-Routing Agentic RAG:} Implemented a query classification agentic AI system that picks a global or local approach to request slicing from Graph RAG, Vector RAG or a Hybrid (Graph \& Vector) RAG path to answer the contextual or detail-oriented queries}
-\resumeItem{\textbf{ML Clustering:} Applied ML clustering algorithms (K-means and DBSCAN) in recognizing pivotal nodes from vector database to build a low-cost Graph RAG; saved \textbf{35\%} of indexing token cost, with only 2.56\% worse in RAGAS metrics}
-\resumeItem{\textbf{Advanced Hybrid RAG:} Enhanced vector RAG hit rate using data retrieved from Graph RAG with HyDE, balancing both global and detailed information for more accurate responses. Achieved an MAR@10 of \textbf{88.2\%} on multi-hop datasets}
-\resumeItemListEnd
-\vspace{-4pt}
-
-\resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{GenAI Tutoring System with Multi-Agent RAG}}} $|$ \emph{LangChain, CrewAI, Streamlit, Chroma}}{Feb. 2024 -- Jul. 2024}
-\resumeItemListStart
-\resumeItem{\textbf{Multi-Agent Framework:} Utilized \textbf{CrewAI} to assign roles to LLMs for collaborative problem-solving, assisting students with problem-solving, exam detection, concept analysis, and compared open-source LLMs (Llama 3) and commercial LLMs (GPT-4)}
-\resumeItem{\textbf{Interactive UI:} Enabled user tuning of LLM settings and inspection of chain-of-thought from ReAct Agent and citations by \textbf{Streamlit}}
-\resumeItem{\textbf{Competition Achievement:} \textbf{Top 3} of 50 teams in the Computer Science AI workshop, winning the Outstanding Award}
-\resumeItemListEnd
-\vspace{-4pt}
-
-\resumeProjectHeading
-{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/motion_classification}{AI Fitness Motion Classification}}} $|$ \emph{Keras, scikit-learn, MediaPipe, OpenCV, NumPy}}{Feb. 2024 -- Mar. 2024}
-\resumeItemListStart
-\resumeItem{\textbf{Video Data Extraction:} Extracted temporal 33 human skeleton keypoints and body angles from 24 videos by \textbf{MediaPipe}}
-\resumeItem{\textbf{ML/DL Model Training:} Trained and compared ML/DL models (LSTM \& Random Forest) to classify fitness motions in videos, including squats, bench presses, and deadlifts by 33 human skeleton keypoints, achieving an accuracy of \textbf{80.52\%} \& \textbf{88.31\%}, respectively}
+\resumeItem{\textbf{Multi-Database Architecture:} Designed hybrid retrieval system integrating \textbf{Graph DB} (Neo4j) and \textbf{Vector DB} (Milvus) with intelligent query routing; implemented agent-based orchestration using LangGraph for dynamic database selection based on query complexity}
+\resumeItem{\textbf{Cost Optimization:} Built ML clustering pipeline (K-means, DBSCAN) to identify key nodes from vector embeddings for graph construction, reducing indexing cost by \textbf{35\%} while maintaining 97.44\% performance (MAR@10: \textbf{88.2\%} on multi-hop datasets)}
+\resumeItem{\textbf{Query Processing:} Implemented Cypher query generation for graph traversal and vector similarity search with HyDE optimization, achieving balanced global/local information retrieval for complex multi-hop queries}
 \resumeItemListEnd
 \vspace{-4pt}
 
 % \resumeProjectHeading
-% {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - An Online MUD Game with Group Chatting Utility}}}
-% 	$|$ \emph{C/C++ (SFML), SQL}}{Oct. 2023 -- Jan. 2024}
+% {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{GenAI Tutoring System}}} $|$ \emph{Python, LangChain, CrewAI, Streamlit, Chroma (Vector DB)}}{Feb. 2024 -- Jul. 2024}
 % \resumeItemListStart
-% \resumeItem{Developed a real-time multiplayer role-playing chat game using socket programming with server \& client architecture}
-% % \resumeItem{Utilized SFML to build the GUI and gaming system in client with utility of group chatting, character moving}
-% \resumeItem{Implemented login, registration, and ranking features for user management with SHA-256 hashing, JSON, and MySQL}
+% \resumeItem{\textbf{Multi-Agent Orchestration:} Built agent-based system with \textbf{CrewAI} framework for role delegation and task coordination; designed workflow for problem-solving, exam detection, and concept analysis with ReAct agent pattern and chain-of-thought reasoning}
+% \resumeItem{\textbf{Full-Stack Implementation:} Developed interactive web interface with \textbf{Streamlit}, implementing real-time LLM parameter tuning, RAG citation tracking, and agent workflow visualization; integrated Chroma vector database for semantic search across educational content}
+% \resumeItem{\textbf{Competition Achievement:} \textbf{Top 3 of 50} teams in Computer Science AI Workshop, winning Outstanding Award for technical implementation}
 % \resumeItemListEnd
 % \vspace{-4pt}
+
+% \resumeProjectHeading
+% {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/motion_classification}{ML Video Classification Pipeline}}} $|$ \emph{Python, Keras, scikit-learn, MediaPipe, OpenCV, NumPy}}{Feb. 2024 -- Mar. 2024}
+% \resumeItemListStart
+% \resumeItem{\textbf{Data Processing Pipeline:} Built end-to-end video processing pipeline using \textbf{MediaPipe} and \textbf{OpenCV} to extract 33 temporal skeleton keypoints and body angles; engineered features from raw video data for model training}
+% \resumeItem{\textbf{ML Model Development:} Implemented and compared LSTM (deep learning) and Random Forest (ensemble learning) models for multi-class fitness motion classification (squats, bench press, deadlifts), achieving \textbf{88.31\%} accuracy with Random Forest}
+% \resumeItemListEnd
+% \vspace{-4pt}
+
+\resumeProjectHeading
+{\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - Real-Time Multiplayer Game Server}}}
+	$|$ \emph{C/C++ (Socket Programming, SFML), MySQL, SHA-256}}{Oct. 2023 -- Jan. 2024}
+\resumeItemListStart
+\resumeItem{\textbf{Server-Client Architecture:} Designed and implemented real-time multiplayer game server using \textbf{TCP socket programming} with multi-threaded client handling, supporting concurrent connections for chat and gameplay synchronization}
+\resumeItem{\textbf{User Management System:} Built authentication system with SHA-256 password hashing, MySQL database integration for user data persistence, and implemented ranking/leaderboard features with optimized queries}
+\resumeItem{\textbf{Game Engine:} Developed client-side GUI and game logic using SFML library with event-driven architecture for character movement, group chatting, and real-time state updates}
+\resumeItemListEnd
+\vspace{-4pt}
 \resumeSubHeadingListEnd
 
 % \vspace{-15pt}
@@ -343,9 +344,10 @@
 % Skills
 \section{SKILLS}
 \resumeItemListStart
-\resumeItem{\textbf{Languages:} C/C++, Python, TypeScript $|$ \textbf{Databases:} SQL (PostgreSQL, SQLite), NoSQL (Neo4j, Milvus, Elasticsearch, Chroma)}
-\resumeItem{\textbf{Generative AI:} LangChain, LangGraph, LlamaIndex, MCP $|$ \textbf{Backend:} Django, FastAPI $|$ \textbf{Machine Learning:} PyTorch, scikit-learn}
-\resumeItem{\textbf{AWS:} Bedrock, EC2, S3, RDS, ElastiCache $|$ \textbf{Agile, Scrum} $|$ \textbf{Unix:} Linux, FreeBSD $|$ \textbf{Tools:} git, Docker, Shell Script (Bash)}
+\resumeItem{\textbf{Languages:} Python, C/C++, JS, TS $|$ \textbf{Frontend:} HTML, CSS, JavaScript, React $|$ \textbf{Backend:} Django, FastAPI}
+\resumeItem{\textbf{Databases:} PostgreSQL, SQLite, MSSQL, Neo4j, Milvus, Elasticsearch, Chroma, Redis $|$ \textbf{Real-Time:} WebSocket, Redis Pub/Sub}
+\resumeItem{\textbf{Async \& Concurrency:} asyncio, Celery $|$ \textbf{DevOps:} GitHub Actions, Docker, git, Shell Script}
+\resumeItem{\textbf{AWS:} EC2, S3, RDS, ElastiCache, Bedrock $|$ \textbf{AI/ML:} LangChain, LangGraph, LlamaIndex, PyTorch, scikit-learn $|$ \textbf{Testing:} pytest, E2E $|$ \textbf{Agile, Scrum}}
 \resumeItemListEnd
 \vspace{-40pt}
 
