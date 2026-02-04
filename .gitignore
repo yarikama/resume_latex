@@ -10,6 +10,8 @@
 *.brf
 *.idx
 .DS_Store
-cover_letters/
+cover_letters/*
+!cover_letters/cover_letter.tex
+!cover_letters/cover_letter.pdf
 resume_references/
 work_sample.txt

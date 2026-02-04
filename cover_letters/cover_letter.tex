@@ -1,0 +1,73 @@
+\documentclass[letterpaper,11pt]{article}
+\usepackage[empty]{fullpage}
+\usepackage[hidelinks]{hyperref}
+\usepackage{bookmark}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{fontawesome5}
+\usepackage{graphicx}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[default]{sourcesanspro}
+\else
+  \usepackage{fontspec}
+  \setmainfont{Source Sans Pro}
+\fi
+\setlength{\parskip}{8pt}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+%----------HEADING----------
+\vspace*{-20pt}
+\begin{center}
+	{\Huge \scshape \href{https://yarikama.com}{Henry Hsu}} \\
+    {\small\color{gray} Houston, TX 77030} \\
+	\href{tel:+1-510-996-6837}{\raisebox{-0.2\height}\faPhone\  \underline{+1-510-996-6837}} ~
+	\href{mailto:hsuhengjui@gmail.com}{\raisebox{-0.2\height}\faEnvelope\  \underline{hsuhengjui@gmail.com}} ~
+	\href{https://yarikama.com/}{\raisebox{-0.2\height}\faGlobe\ \underline{yarikama.com}} ~
+	\href{https://linkedin.com/in/yarikama/}{\raisebox{-0.2\height}\faLinkedin\ \underline{yarikama}}  ~
+	\href{https://github.com/yarikama}{\raisebox{-0.2\height}\faGithub\ \underline{yarikama}}
+\end{center}
+
+%----------DATE----------
+\vspace{4pt}
+\today
+
+%----------COMPANY INFO----------
+% Change company name and address for each application
+\textbf{Company Name} \\
+Street Address \\
+City, State ZIP
+
+%----------GREETING----------
+Dear Hiring Team,
+
+%----------OPENING PARAGRAPH----------
+% 1. Name the position you are applying for and how you heard about it
+% 2. State your degree, major, university, and expected graduation date
+% 3. Explain why you are a great fit — highlight shared values or mission that make you stand out
+% 4. End with a strong claim previewing 1-3 qualifications you will discuss in the body
+Opening paragraph here.
+
+%----------BODY PARAGRAPHS----------
+% 1. Connect past, present, and future — show how past experiences make you uniquely qualified now,
+%    and how those qualifications will be an asset at this company
+% 2. Highlight qualifications gained from experience, NOT the experience itself — don't restate your resume
+% 3. Be specific — eliminate generic sentences anyone could write; show, don't tell
+% 4. Unify each paragraph around one key qualification, with supporting details that distinguish you
+Body paragraphs here.
+
+%----------CLOSING PARAGRAPH----------
+% 1. Remind the reader why you are a strong match for the position and company
+% 2. Mention enclosed documents (e.g. resume, portfolio)
+% 3. Request an interview or refer to future contact
+% 4. Thank the reader for their consideration
+Closing paragraph here.
+
+%----------SIGNATURE----------
+Sincerely,
+
+\includegraphics[width=0.2\textwidth]{sign.png}
+
+\end{document}
