@@ -16,8 +16,8 @@
 \usepackage{enumitem}
 \setlist[itemize]{
   leftmargin=*,
-  itemsep=2pt,
-  topsep=2pt,
+  itemsep=1pt,
+  topsep=1pt,
   parsep=0pt,
 }
 \usepackage[hidelinks]{hyperref}
@@ -73,16 +73,18 @@
 
 % Sections formatting
 \titleformat{\section}{\raggedright\large\bfseries}{}{0em}{}[\vspace{2pt}\color{black}\titlerule]
-\titlespacing*{\section}{0pt}{4pt plus 1pt minus 1pt}{4pt}
+\titlespacing*{\section}{0pt}{3pt plus 1pt minus 1pt}{3pt}
 
 %-------------------------
 % Custom commands
 \newcommand{\mylocation}{Houston, TX 77030}
 
+% A single bullet point inside an entry's bullet list.
 \newcommand{\resumeItem}[1]{\item\small{#1}}
 
-% Job heading with title, date, company, location
-\newcommand{\resumeSubheadinga}[4]{
+% Entry header, two rows: (title, date) over (organization, location).
+% \resumeEntry{title}{date}{organization}{location}
+\newcommand{\resumeEntry}[4]{
   \vspace{-3pt}\item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & \textbf{\small #2} \\
@@ -90,25 +92,27 @@
     \end{tabular*}
 }
 
-% Job heading with title and date only (no company/location row)
-\newcommand{\resumeSubheadingnull}[2]{
+% Entry header, single row -- use when there is no organization/location row.
+% \resumeEntryNoOrg{title}{date}
+\newcommand{\resumeEntryNoOrg}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & \textbf{\small #2} \\
     \end{tabular*}\vspace{3pt}
 }
 
-% Sub-item with text and right-aligned detail
-\newcommand{\resumeSubDetail}[2]{
+% Detail row under an entry header: plain text left, italic detail right.
+% \resumeEntryDetail{text}{right-aligned detail}
+\newcommand{\resumeEntryDetail}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \small#1 & \textit{\small #2} \\
     \end{tabular*}
 }
 
-\newcommand{\resumeSubItem}[1]{\resumeItem{#1}}
-
-\newcommand{\resumeProjectHeading}[2]{
+% Project header: title (with links/stack) left, date bold right.
+% \resumeProjectEntry{title}{date}
+\newcommand{\resumeProjectEntry}[2]{
     \item
     \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
       \small#1 & \textbf{\small #2}\\
@@ -117,8 +121,9 @@
 
 \renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
-\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
-\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+% Outer list holding entries; inner list holding an entry's bullets.
+\newcommand{\resumeEntryListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeEntryListEnd}{\end{itemize}}
 \newcommand{\resumeItemListStart}{\begin{itemize}[label=$\vcenter{\hbox{\tiny$\bullet$}}$]}
 \newcommand{\resumeItemListEnd}{\end{itemize}}
 
@@ -142,15 +147,24 @@
 
 %----------SUMMARY----------
 \section{SUMMARY}
-\resumeSubHeadingListStart
-\item\small{\textbf{Former GenAI Team Lead with experience building production GenAI platforms that doubled the B2B client base and grew the user base to 20K. Built key product features including Agentic AI Systems, Advanced RAG, and Backend infrastructure, leading to two major industry awards. Now pursuing a Master of Computer Science at Rice University.}}
-\resumeSubHeadingListEnd
+\resumeEntryListStart
+\item\small{\textbf{Software Engineering Intern at Google and former GenAI Team Lead, shipping production GenAI platforms and agentic developer infrastructure. Grew a B2B platform's client base by 120\% and user base to 20K via Agentic AI Systems, Advanced RAG, and backend infrastructure, earning two major industry awards. Now pursuing an M.C.S. at Rice University.}}
+\resumeEntryListEnd
 
 %----------WORK EXPERIENCE----------
 \section{WORK EXPERIENCE}
 \vspace{2pt}
-\resumeSubHeadingListStart
-  \resumeSubheadinga
+\resumeEntryListStart
+  \resumeEntry
+    {Software Engineering Intern}{Jun. 2026 -- Aug. 2026}
+    {\href{https://about.google/}{\textcolor{RoyalBlue}{\textbf{Google}}}}{Taipei, Taiwan}
+    \vspace{-6pt}
+    \resumeItemListStart
+      \resumeItem{\textbf{Integration Test Infrastructure --} Built \textbf{3} test infrastructures from a \textbf{zero} baseline (Java, Python), onboarding \textbf{400+} integration test suites across \textbf{200+} smart home device types, with \textbf{90\%+} unit test coverage for the infrastructure itself}
+      \resumeItem{\textbf{Agentic Failure Triage --} Developed an LLM agent that triages scheduled integration test runs and surfaces root-cause summaries directly on issue tickets, replacing manual log inspection and cutting failure narrow-down time by \textbf{20+ minutes} per issue}
+      \resumeItem{\textbf{Local Device Reproduction --} Extended the agent to reproduce device failures locally against virtual devices instead of waiting on cloud runs, cutting manual reproduction time by \textbf{85\%}; \textbf{shipped and adopted by the team}}
+    \resumeItemListEnd
+  \resumeEntry
     {Generative AI Team Lead}{Dec. 2024 -- Aug. 2025}
     {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}} -- Award-Winning B2B GenAI Startup}{Taipei, Taiwan}
     \vspace{-6pt}
@@ -160,40 +174,38 @@
       \resumeItem{\textbf{Testing Framework --} Introduced pytest testing framework for unit and E2E coverage to prevent production regressions, achieving \textbf{67\%} test coverage from \textbf{zero} baseline, which reduced production hotfixes by \textbf{90\%} initially and sustaining a \textbf{50\%} reduction long term}
       \resumeItem{\textbf{Technical Roadmap \& Leadership --} Defined GenAI product roadmap for a 10-person startup; led feasibility evaluation and end-to-end delivery of production features including Agentic RAG, Artifact Generation, Tagging \& Permission System, and Information Retrieval}
     \resumeItemListEnd
-  \resumeSubheadingnull
+  \resumeEntry
     {Generative AI Intern}{Sep. 2024 -- Dec. 2024}
-    \vspace{-17pt}
+    {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}} -- Award-Winning B2B GenAI Startup}{Taipei, Taiwan}
+    \vspace{-6pt}
     \resumeItemListStart
       \resumeItem{\textbf{Pipeline Scaling --} Refactored with async framework and dual-database synchronization (RDB/Vector DB), achieving \textbf{3.5x} faster parsing and scaling from \textbf{3M} to \textbf{20M+} text chunks while \textbf{doubling} indexing performance}
       \resumeItem{\textbf{Reranker Integration --} Integrated Cohere and BGE open-source rerankers as a customer-selectable retrieval feature, improving RAG precision on large documents by \textbf{30\% Precision@5} and \textbf{7\% Precision@10}}
-      \resumeItem{\textbf{Citation Architecture --} Redesigned parsing pipeline by decoupling Document and TextNode layers, enabling precise citations}
+      % \resumeItem{\textbf{Citation Architecture --} Redesigned parsing pipeline by decoupling Document and TextNode layers, enabling precise citations}
     \resumeItemListEnd
-\resumeSubHeadingListEnd
+\resumeEntryListEnd
 
 %----------EDUCATION----------
 \section{EDUCATION}
-\resumeSubHeadingListStart
-  \resumeSubheadingnull
-    {Rice University - Top 20 U.S. University}{Aug. 2025 -- Dec. 2026 (Expected)}{}{}
+\resumeEntryListStart
+  \resumeEntryNoOrg
+    {Rice University - Top 20 U.S. University}{Aug. 2025 -- Dec. 2026 (Expected)}
     \vspace{-20pt}
-    \resumeSubDetail{M.C.S., Computer Science (GPA: 4.00/4.00)}{Houston, TX}
-    \vspace{-17pt}
-\resumeSubHeadingListEnd
-
-\resumeSubHeadingListStart
-  \resumeSubheadingnull
+    \resumeEntryDetail{M.C.S., Computer Science (GPA: 4.00/4.00)}{Houston, TX}
+    \vspace{-12pt}
+  \resumeEntryNoOrg
     {National Yang Ming Chiao Tung University (NYCU) - Top 3 Taiwan University}{Sep. 2020 -- Jun. 2024}
     \vspace{-20pt}
-    \resumeSubDetail{Minor: Computer Science (Domain GPA: 4.13/4.30)}{Hsinchu, Taiwan}
+    \resumeEntryDetail{B.S., Industrial Engineering and Management (GPA: 4.07/4.30, Two-Time Dean's List)}{Hsinchu, Taiwan}
     \vspace{-15pt}
-    \resumeSubItem{B.S., Industrial Engineering and Management (GPA: 4.07/4.30, Two-Time Dean's List)}
-\resumeSubHeadingListEnd
+    \resumeItem{Minor: Computer Science (4.13/4.30)}
+\resumeEntryListEnd
 
 %----------PROJECTS----------
 \section{PROJECTS}
 \vspace{-1pt}
-\resumeSubHeadingListStart
-  \resumeProjectHeading
+\resumeEntryListStart
+  \resumeProjectEntry
     {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Agentic-Advanced-RAG}{Agentic Hybrid RAG}}} $|$ \emph{Graph RAG (Neo4j, Cypher), Vector RAG (Milvus), Multi-Agent (LangGraph)}}{Feb. 2024 -- Aug. 2024}
     \resumeItemListStart
       \resumeItem{\textbf{Self-Routing Agentic RAG:} Implemented a query classification agentic AI system that picks a global or local approach to request slicing from Graph RAG, Vector RAG or a Hybrid (Graph \& Vector) RAG path to answer the contextual or detail-oriented queries}
@@ -201,30 +213,31 @@
       \resumeItem{\textbf{Advanced Hybrid RAG:} Enhanced vector RAG hit rate using data retrieved from Graph RAG with HyDE, balancing both global and detailed information for more accurate responses. Achieved an MAR@10 of \textbf{88.2\%} on multi-hop datasets}
     \resumeItemListEnd
 
-  \resumeProjectHeading
-    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{GenAI Tutoring System with Multi-Agent RAG}}} $|$ \emph{LangChain, CrewAI, Streamlit, Chroma}}{Feb. 2024 -- Jul. 2024}
-    \resumeItemListStart
-      \resumeItem{\textbf{Competition Achievement:} \textbf{Top 3} of 50 teams in the Computer Science AI workshop, winning the Outstanding Award}
-      \resumeItem{\textbf{Multi-Agent Framework:} Utilized \textbf{CrewAI} to assign roles to LLMs for collaborative problem-solving, assisting students with problem-solving, exam detection, concept analysis, and compared open-source LLMs (Llama 3) and commercial LLMs (GPT-4)}
-      \resumeItem{\textbf{Interactive UI:} Enabled user tuning of LLM settings and inspection of chain-of-thought from ReAct Agent and citations by \textbf{Streamlit}}
-    \resumeItemListEnd
-
   % --- Inactive projects (available for reuse) ---
-  % \resumeProjectHeading
+  % Commented out to make room for the Google entry; award moved to AWARDS section.
+  % \resumeProjectEntry
+  %   {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system}{GenAI Tutoring System with Multi-Agent RAG}}} $|$ \emph{LangChain, CrewAI, Streamlit, Chroma}}{Feb. 2024 -- Jul. 2024}
+  %   \resumeItemListStart
+  %     \resumeItem{\textbf{Competition Achievement:} \textbf{Top 3} of 50 teams in the Computer Science AI workshop, winning the Outstanding Award}
+  %     \resumeItem{\textbf{Multi-Agent Framework:} Utilized \textbf{CrewAI} to assign roles to LLMs for collaborative problem-solving, assisting students with problem-solving, exam detection, concept analysis, and compared open-source LLMs (Llama 3) and commercial LLMs (GPT-4)}
+  %     \resumeItem{\textbf{Interactive UI:} Enabled user tuning of LLM settings and inspection of chain-of-thought from ReAct Agent and citations by \textbf{Streamlit}}
+  %   \resumeItemListEnd
+
+  % \resumeProjectEntry
   %   {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/motion_classification}{AI Fitness Motion Classification}}} $|$ \emph{Keras, scikit-learn, MediaPipe, OpenCV, NumPy}}{Feb. 2024 -- Mar. 2024}
   %   \resumeItemListStart
   %     \resumeItem{\textbf{Video Data Extraction:} Extracted temporal 33 human skeleton keypoints and body angles from 24 videos by MediaPipe}
   %     \resumeItem{\textbf{ML/DL Model Training:} Trained and compared ML/DL models (LSTM \& Random Forest) to classify fitness motions in videos, including squats, bench presses, and deadlifts by 33 human skeleton keypoints, achieving an accuracy of \textbf{80.52\%} \& \textbf{88.31\%}, respectively}
   %   \resumeItemListEnd
 
-  % \resumeProjectHeading
+  % \resumeProjectEntry
   %   {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - An Online MUD Game with Group Chatting Utility}}} $|$ \emph{C/C++ (SFML), SQL}}{Oct. 2023 -- Jan. 2024}
   %   \resumeItemListStart
   %     \resumeItem{Developed a real-time multiplayer role-playing chat game using socket programming with server \& client architecture}
   %     \resumeItem{Implemented login, registration, and ranking features for user management with SHA-256 hashing, JSON, and MySQL}
   %   \resumeItemListEnd
 
-  % \resumeProjectHeading
+  % \resumeProjectEntry
   %   {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/ChuEating1005/GA/tree/master/Final_Project}{AI Game Agents Tetris Arena}}} $|$ \emph{Python (Scikit-learn, Keras, PyGame)}}{Sep. 2022 -- Feb. 2023}
   %   \resumeItemListStart
   %     \resumeItem{Developed a Tetris game using PyGame, providing human player mode, AI-assisted mode, and AI competition mode}
@@ -232,7 +245,7 @@
   %     \resumeItem{Established different setups and compared their capabilities, performance, and complexity}
   %   \resumeItemListEnd
 
-  % \resumeProjectHeading
+  % \resumeProjectEntry
   %   {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Elderly-Care-Map-Website}{Elderly Care Map Website}}} $|$ \emph{Python, PHP, SQL, JavaScript, HTML, CSS}}{Feb. 2022 -- Jun. 2022}
   %   \resumeItemListStart
   %     \resumeItem{Developed a website featuring a map for elderly care, displaying the locations and information of institutes in Taiwan}
@@ -240,7 +253,7 @@
   %     \resumeItem{Used JavaScript, PHP, MySQL, and connected to Google Geography API to enable users to obtain facility usage information by clicking the icons indicating the level of bed occupancy on the map}
   %   \resumeItemListEnd
 
-  % \resumeProjectHeading
+  % \resumeProjectEntry
   %   {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/JSSP-Simulation-and-Flexsim-Model}{Applied Bayesian Optimization \& Genetic Algorithm in Scheduling Problems}}} $|$ \emph{Flexsim}}{Apr. 2022 -- Jun. 2022}
   %   \resumeItemListStart
   %     \resumeItem{Employed Genetic Algorithm from metaheuristics to Solve Job Shop Scheduling Problem in Python}
@@ -248,45 +261,46 @@
   %     \resumeItem{Utilized file scripting in Python to automate the output into a Flexsim-compatible format for cross-validation}
   %   \resumeItemListEnd
 
-\resumeSubHeadingListEnd
+\resumeEntryListEnd
 
 % ----------EXTRACURRICULAR (inactive)----------
 % \section{Extracurricular Experience}
-% \resumeSubHeadingListStart
-%   \resumeSubheadinga{College of Management Affairs Committee}{Sep. 2023 -- July. 2024}{Student Representative}{NYCU}
+% \resumeEntryListStart
+%   \resumeEntry{College of Management Affairs Committee}{Sep. 2023 -- July. 2024}{Student Representative}{NYCU}
 %   \vspace{-2pt}
 %   \resumeItemListStart
 %     \resumeItem{Participated in over 10 amendment drafts, including College committee selection procedure establishment and the management school development white paper formulation as a student representative}
 %   \resumeItemListEnd
-%   \resumeSubheadinga{Student Association of Industrial Engineering and Management}{Jun. 2022 -- Jun. 2023}{President}{NYCU}
+%   \resumeEntry{Student Association of Industrial Engineering and Management}{Jun. 2022 -- Jun. 2023}{President}{NYCU}
 %   \vspace{-2pt}
 %   \resumeItemListStart
 %     \resumeItem{Managed four teams comprising 37 individuals, holding over 20 events in a year}
 %     \resumeItem{Managed exam archives, event coordination, budget tracking, and project management via Notion, while also organizing over 5 years' worth of departmental association data}
 %     \resumeItem{Refurbished \href{https://www.facebook.com/watch/?v=414127704166517}{\textcolor{RoyalBlue}{the student shared space}} on a tight budget, enabling clubs and students to utilize the space for their activities}
 %   \resumeItemListEnd
-%   \resumeSubheadinga{Atona Case Competition (ATCC) Final Rounds in Preliminary}{Mar. 2022 -- Apr. 2022}{Project Lead of "Gong Mei Swag" (Chatty Cathy)}{Teacher Chang Foundation}
+%   \resumeEntry{Atona Case Competition (ATCC) Final Rounds in Preliminary}{Mar. 2022 -- Apr. 2022}{Project Lead of "Gong Mei Swag" (Chatty Cathy)}{Teacher Chang Foundation}
 %   \vspace{-2pt}
 %   \resumeItemListStart
 %     \resumeItem{Our group "Gong Mei Swag" was the \textbf{top 20 teams nationally} in the ATCC, with over \textbf{2,000} teams registering}
 %     \resumeItem{Led the "HeartBeat" digital transformation initiative for Teacher Chang Foundation's mental counseling services to raise youth mental health awareness and address the shortage of qualified counseling volunteers}
 %   \resumeItemListEnd
-% \resumeSubHeadingListEnd
+% \resumeEntryListEnd
 
 %----------AWARDS----------
 \section{AWARDS}
-\noindent\small
-\textbf{Presidential Hackathon Winner (2024)} - Urban noise detection with LLM-powered structured analysis
-\textbf{23rd Golden Peak Award (2025)} - Outstanding Commercial Product, MaiAgent AI Platform
-% \\ \textbf{Atona Case Competition Finalist (Top 1\%)} - National enterprise transformation competition
-% \\ \textbf{AI Workshop Outstanding Award (Top 3/50)} - Multi-Agent RAG tutoring system, NYCU CS
+{\noindent\small
+  \textbf{Presidential Hackathon Winner (2024)} - Urban noise detection with LLM-powered structured analysis
+  \\ \textbf{23rd Golden Peak Award (2025)} - Outstanding Commercial Product, MaiAgent AI Platform
+  % \\ \textbf{Atona Case Competition Finalist (Top 1\%)} - National enterprise transformation competition
+  % \\ \textbf{AI Workshop Outstanding Award (Top 3/50)} - Multi-Agent RAG tutoring system, NYCU CS
+}
 
 %----------SKILLS----------
 \section{SKILLS}
 \begin{itemize}[leftmargin=0in, label={}]
-\item \textbf{Languages:} Python, C/C++, TypeScript $|$ \textbf{GenAI:} LlamaIndex, LangChain, LangGraph, MCP $|$ \textbf{Fullstack:} Django, FastAPI, Express.js, React
-\item \textbf{Databases:} PostgreSQL, MongoDB, Milvus, Elasticsearch $|$ \textbf{Tools:} nvim, git, Docker, Shell Script, Nginx $|$ \textbf{Methodologies:} Agile, Scrum
-\item \textbf{Data Science:} numpy, pandas, scikit-learn, PyTorch, JAX $|$ \textbf{AWS:} Bedrock, EMR, EC2, S3, RDS, ElastiCache, SageMaker
+\item\small{\textbf{Languages:} Python, Java, C/C++, TypeScript $|$ \textbf{GenAI:} LlamaIndex, LangChain, LangGraph, MCP $|$ \textbf{Fullstack:} Django, FastAPI, React}
+\item\small{\textbf{Databases:} PostgreSQL, MongoDB, Milvus, Elasticsearch $|$ \textbf{Tools:} nvim, git, Docker, Shell Script, Nginx $|$ \textbf{Methodologies:} Agile, Scrum}
+\item\small{\textbf{Data Science:} numpy, pandas, scikit-learn, PyTorch, JAX $|$ \textbf{AWS:} Bedrock, EMR, EC2, S3, RDS, ElastiCache, SageMaker}
 \end{itemize}
 
 \end{document}
