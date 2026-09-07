@@ -9,50 +9,48 @@
 \documentclass[letterpaper,11pt]{article}
 \usepackage{resumestyle}
 
-% Contact details -- resume data, not layout, so it stays out of the package.
-\newcommand{\mylocation}{Houston, TX 77025}
-
 \begin{document}
 
-\input{content/header}
+\input{content/shared/header}
+\vspace{\resumeHeaderGap}
 
 %----------SUMMARY----------
 \section{SUMMARY}
 \resumeEntryListStart
-  \input{content/summary/swe}
+  \input{content/resume/summary/swe}
 \resumeEntryListEnd
 
 %----------WORK EXPERIENCE----------
 \section{WORK EXPERIENCE}
 \resumeEntryListStart
-  \input{content/experience/google-swe}
-  \input{content/experience/maiagent-backend-lead}
+  \input{content/resume/experience/google-swe}
+  \input{content/resume/experience/maiagent-backend-lead}
 \resumeEntryListEnd
 
 %----------EDUCATION----------
 \section{EDUCATION}
 \resumeEntryListStart
-  \input{content/education/rice}
-  \input{content/education/nycu}
+  \input{content/resume/education/rice}
+  \input{content/resume/education/nycu}
 \resumeEntryListEnd
 
 %----------PROJECTS----------
 \section{PROJECTS}
 \resumeEntryListStart
-  \input{content/projects/chat-bar-server}
-  \input{content/projects/elderly-care-map}
+  \input{content/resume/projects/chat-bar-server}
+  \input{content/resume/projects/elderly-care-map}
 \resumeEntryListEnd
 
 %----------AWARDS----------
 \section{AWARDS}
 {\noindent\small
-\input{content/awards}
+\input{content/resume/awards}
 }
 
 %----------SKILLS----------
 \section{SKILLS}
 \begin{itemize}[leftmargin=0in, label={}]
-  \input{content/skills/swe}
+  \input{content/resume/skills/swe}
 \end{itemize}
 
 \end{document}

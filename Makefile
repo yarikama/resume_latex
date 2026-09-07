@@ -5,10 +5,11 @@ PDFS    := $(addsuffix .pdf,$(RESUMES))
 # produces a different, wrong PDF.
 LATEXMK := latexmk -xelatex -interaction=nonstopmode
 
-.PHONY: all check clean $(PDFS)
+.PHONY: all check clean cover $(PDFS)
 
-# Build every resume, then verify each still fits on one page.
-all: check
+# Build every resume, verify each still fits on one page, then build the
+# tracked cover letter template.
+all: check cover
 
 # The PDF targets are deliberately phony so latexmk runs every time and makes
 # the decision itself: it knows the real dependency graph (resumestyle.sty plus
@@ -31,6 +32,12 @@ check: $(PDFS)
 	done; \
 	exit $$status
 
+# Built from inside its own directory: it \input's ../content/shared/header
+# and \includegraphics's sign.png, both relative to cover_letters/.
+cover:
+	@cd cover_letters && $(LATEXMK) cover_letter.tex
+
 clean:
 	find . -name "*.synctex.gz" -delete
+	cd cover_letters && $(LATEXMK) -c cover_letter.tex >/dev/null
 	$(LATEXMK) -c $(addsuffix .tex,$(RESUMES)) >/dev/null
