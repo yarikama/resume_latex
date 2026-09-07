@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-LaTeX resume repository with multiple resume variants (SWE vs GenAI/AI Engineer) and a cover letter system. Each `.tex` file is fully self-contained — there are no shared `.cls` or `.sty` files. Each resume duplicates the same ~128-line preamble: same custom commands, same list/section spacing. Because it is duplicated rather than shared, any preamble edit must be applied to both files by hand.
+LaTeX resume repository with multiple resume variants (SWE vs GenAI/AI Engineer) and a cover letter system. All layout — packages, margins, custom commands, spacing — lives in the shared `resumestyle.sty`; each resume `.tex` holds only `\documentclass`, `\usepackage{resumestyle}`, the contact details, and its content. A layout change is made once, in the package, and applies to every variant.
 
 ## Build Commands
 
@@ -26,16 +26,17 @@ LaTeX source is formatted with `latexindent` configured via `.latexindent.yaml` 
 
 ## Architecture
 
-- **Resume variants**: `Henry_Hsu_SWE_resume.tex` (Software Engineer) and `Henry_Hsu_GAIE_resume.tex` (GenAI/AI Engineer). Both share the same preamble, contact header, education, awards, and skills sections but differ in work experience bullets, project selections, and skills emphasis. Unused sections are commented out rather than removed.
+- **Shared style**: `resumestyle.sty` carries the whole layout. Loading it is the entire preamble of a resume file.
+- **Resume variants**: `Henry_Hsu_SWE_resume.tex` (Software Engineer) and `Henry_Hsu_GAIE_resume.tex` (GenAI/AI Engineer). Both share the contact header, education, awards, and skills sections but differ in work experience bullets, project selections, and skills emphasis. Unused sections are commented out rather than removed.
 - **Cover letters**: `cover_letters/cover_letter.tex` is the tracked generic template. Company-specific letters go in `cover_letters/specific_comps/` (gitignored).
-- **Custom commands** (identical in both resume preambles, each with a doc comment above its definition):
+- **Custom commands** (defined in `resumestyle.sty`, each with a doc comment above its definition):
   - `\resumeEntry{title}{date}{org}{location}` — entry header, two rows
   - `\resumeEntryNoOrg{title}{date}` — entry header, single row (no org/location)
   - `\resumeEntryDetail{text}{right}` — detail row, plain left / italic right
   - `\resumeProjectEntry{title}{date}` — project header
   - `\resumeItem{text}` — one bullet
   - `\resumeEntryListStart`/`End` — outer list of entries; `\resumeItemListStart`/`End` — inner bullet list
-- **Vertical rhythm**: all spacing lives in the `VERTICAL RHYTHM` block near the top of the preamble — `\resumeBulletSep`, `\resumeEntrySep`, `\resumeHeadSep`, `\resumeHeaderGap`, `\resumeSectionBefore`, `\resumeSectionAfter`. The document body contains **no bare `\vspace`**; entries are vertically self-contained so they can be reordered or swapped freely. Never reintroduce a hand-tuned `\vspace` in content — adjust a knob instead. Both resumes fit on exactly one page with little slack, so recompile and check the page count after any edit.
+- **Vertical rhythm**: all spacing lives in the `VERTICAL RHYTHM` block near the top of `resumestyle.sty` — `\resumeBulletSep`, `\resumeEntrySep`, `\resumeHeadSep`, `\resumeHeaderGap`, `\resumeSectionBefore`, `\resumeSectionAfter`. The document body contains **no bare `\vspace`**; entries are vertically self-contained so they can be reordered or swapped freely. Never reintroduce a hand-tuned `\vspace` in content — adjust a knob instead. Both resumes fit on exactly one page with little slack, so recompile and check the page count after any edit.
 - **Key packages**: `sourcesanspro` (font), `fontawesome5` (icons), `titlesec`, `enumitem`, `tabularx`, `hyperref`, `xcolor`.
 
 ## Cover Letter Workflow
@@ -54,6 +55,7 @@ Full methodology is stored in the persistent memory file `cover_letter_methodolo
 
 ## Important Notes
 
-- When modifying the shared preamble or custom commands, changes must be applied to **both** resume `.tex` files to keep them in sync.
+- Layout changes go in `resumestyle.sty` only — never copy layout back into a resume `.tex`. Recompile **both** resumes afterwards, since one package edit reflows every variant.
+- Always compile with XeLaTeX. A pdfLaTeX build silently produces a different (wrong) PDF — check `pdffonts` shows `CID Type 0C` fonts if a PDF looks unexpectedly different.
 - The project uses XeLaTeX (not pdfLaTeX) for font support via `fontspec`.
 - PDFs are tracked in git. Recompile and include updated PDFs when modifying `.tex` content.

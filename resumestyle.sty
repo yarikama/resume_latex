@@ -1,0 +1,142 @@
+%-------------------------
+% resumestyle.sty -- shared layout for every resume variant.
+% Originally based on: https://github.com/sb2nov/resume (Jake Gutierrez, MIT)
+%
+% Load with \usepackage{resumestyle} after \documentclass[letterpaper,11pt]{article}.
+% Contact details stay in each resume .tex -- this file carries layout only.
+%-------------------------
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{resumestyle}[2026/09/07 Shared resume layout]
+
+
+\RequirePackage{latexsym}
+\RequirePackage[empty]{fullpage}
+\RequirePackage{titlesec}
+\RequirePackage{marvosym}
+\RequirePackage[dvipsnames]{xcolor}
+\RequirePackage{verbatim}
+\RequirePackage{enumitem}
+
+%----------VERTICAL RHYTHM----------
+% All vertical spacing lives here. Content must never contain a bare \vspace --
+% tune these knobs instead, so entries stay freely reorderable.
+\newcommand{\resumeBulletSep}{0pt}   % between bullets inside an entry
+\newcommand{\resumeEntrySep}{2pt}    % between consecutive entries
+\newcommand{\resumeHeadSep}{1pt}     % between an entry header and its bullets
+\newcommand{\resumeHeaderGap}{-10pt} % between the contact header and the first section
+\newcommand{\resumeSectionBefore}{2pt plus 1pt minus 1pt}  % above a section heading
+\newcommand{\resumeSectionAfter}{1pt} % below a section rule, before its content
+\setlist[itemize]{
+  leftmargin=*,
+  itemsep=\resumeBulletSep,
+  topsep=0pt,
+  parsep=0pt,
+  partopsep=0pt,
+}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage{fancyhdr}
+\RequirePackage[english]{babel}
+\RequirePackage{tabularx}
+\RequirePackage{fontawesome5}
+\RequirePackage{multicol}
+\RequirePackage{iftex}
+\ifPDFTeX
+  \input{glyphtounicode}
+  \pdfgentounicode=1
+  \usepackage[T1]{fontenc}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+\fi
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+\RequirePackage[default]{sourcesanspro}
+
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.7in}
+\addtolength{\evensidemargin}{-0.8in}
+\addtolength{\textwidth}{1.35in}
+\addtolength{\topmargin}{-0.7in}
+\addtolength{\textheight}{1.15in}
+\setlength{\footskip}{7pt}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{\raggedright\large\bfseries}{}{0em}{}[\vspace{1pt}\color{black}\titlerule]
+\titlespacing*{\section}{0pt}{\resumeSectionBefore}{\resumeSectionAfter}
+%-------------------------
+% Custom commands
+
+% A single bullet point inside an entry's bullet list.
+\newcommand{\resumeItem}[1]{\item\small{#1}}
+
+% Entry header, two rows: (title, date) over (organization, location).
+% \resumeEntry{title}{date}{organization}{location}
+\newcommand{\resumeEntry}[4]{
+  \item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4}
+    \end{tabular*}
+}
+
+% Entry header, single row -- use when there is no organization/location row.
+% \resumeEntryNoOrg{title}{date}
+\newcommand{\resumeEntryNoOrg}[2]{
+  \item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2}
+    \end{tabular*}
+}
+
+% Detail row under an entry header: plain text left, italic detail right.
+% \resumeEntryDetail{text}{right-aligned detail}
+\newcommand{\resumeEntryDetail}[2]{
+  \item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \small#1 & \textit{\small #2}
+    \end{tabular*}
+}
+
+% Project header: title (with links/stack) left, date bold right.
+% \resumeProjectEntry{title}{date}
+\newcommand{\resumeProjectEntry}[2]{
+    \item
+    \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}
+    \end{tabular*}
+}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+% Outer list holding entries; inner list holding an entry's bullets.
+\newcommand{\resumeEntryListStart}{\begin{itemize}[leftmargin=0.0in, label={}, itemsep=\resumeEntrySep]}
+\newcommand{\resumeEntryListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[label=$\vcenter{\hbox{\tiny$\bullet$}}$, topsep=\resumeHeadSep]}
+\newcommand{\resumeItemListEnd}{\end{itemize}}
+
+\endinput
