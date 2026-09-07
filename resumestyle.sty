@@ -25,7 +25,8 @@
 \newcommand{\resumeHeadSep}{1pt}     % between an entry header and its bullets
 \newcommand{\resumeHeaderGap}{-10pt} % between the contact header and the first section
 \newcommand{\resumeSectionBefore}{2pt plus 1pt minus 1pt}  % above a section heading
-\newcommand{\resumeSectionAfter}{1pt} % below a section rule, before its content
+\newcommand{\resumeSectionRuleGap}{0pt} % between a section heading and its rule
+\newcommand{\resumeSectionAfter}{4pt} % below a section rule, before its content
 \setlist[itemize]{
   leftmargin=*,
   itemsep=\resumeBulletSep,
@@ -86,7 +87,7 @@
 \setlength{\tabcolsep}{0in}
 
 % Sections formatting
-\titleformat{\section}{\raggedright\large\bfseries}{}{0em}{}[\vspace{1pt}\color{black}\titlerule]
+\titleformat{\section}{\raggedright\large\bfseries}{}{0em}{}[\vspace{\resumeSectionRuleGap}\color{black}\titlerule]
 \titlespacing*{\section}{0pt}{\resumeSectionBefore}{\resumeSectionAfter}
 %-------------------------
 % Custom commands
@@ -104,21 +105,21 @@
     \end{tabular*}
 }
 
-% Entry header, single row -- use when there is no organization/location row.
-% \resumeEntryNoOrg{title}{date}
-\newcommand{\resumeEntryNoOrg}[2]{
+% Education entry: school/date over degree/location, as a single item so the
+% rows are held together by the tabular instead of by list spacing. The
+% optional argument adds a third row (a minor, a thesis, honours) to the group.
+% The row is built into \resume@edunote first: \\ and & must not sit inside a
+% conditional that the alignment scanner has to read through.
+% \resumeEducation[note]{school}{date}{degree}{location}
+\newcommand{\resumeEducation}[5][]{
+  \def\resume@edunote{}%
+  \if\relax\detokenize{#1}\relax\else
+    \def\resume@edunote{\\ \small#1 & }%
+  \fi
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & \textbf{\small #2}
-    \end{tabular*}
-}
-
-% Detail row under an entry header: plain text left, italic detail right.
-% \resumeEntryDetail{text}{right-aligned detail}
-\newcommand{\resumeEntryDetail}[2]{
-  \item
-    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \small#1 & \textit{\small #2}
+      \textbf{#2} & \textbf{\small #3} \\
+      \small#4 & \textit{\small #5}\resume@edunote
     \end{tabular*}
 }
 

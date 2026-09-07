@@ -38,12 +38,13 @@ LaTeX source is formatted with `latexindent` configured via `.latexindent.yaml` 
 - **Cover letters**: `cover_letters/cover_letter.tex` is the tracked generic template. Company-specific letters go in `cover_letters/specific_comps/` (gitignored).
 - **Custom commands** (defined in `resumestyle.sty`, each with a doc comment above its definition):
   - `\resumeEntry{title}{date}{org}{location}` — entry header, two rows
-  - `\resumeEntryNoOrg{title}{date}` — entry header, single row (no org/location)
-  - `\resumeEntryDetail{text}{right}` — detail row, plain left / italic right
+  - `\resumeEducation[note]{school}{date}{degree}{location}` — education entry; all rows sit in one `\item` so the group holds together, and the optional note becomes a third row (minor, thesis, honours)
   - `\resumeProjectEntry{title}{date}` — project header
   - `\resumeItem{text}` — one bullet
   - `\resumeEntryListStart`/`End` — outer list of entries; `\resumeItemListStart`/`End` — inner bullet list
-- **Vertical rhythm**: all spacing lives in the `VERTICAL RHYTHM` block near the top of `resumestyle.sty` — `\resumeBulletSep`, `\resumeEntrySep`, `\resumeHeadSep`, `\resumeHeaderGap`, `\resumeSectionBefore`, `\resumeSectionAfter`. The document body contains **no bare `\vspace`**; entries are vertically self-contained so they can be reordered or swapped freely. Never reintroduce a hand-tuned `\vspace` in content — adjust a knob instead. Both resumes fit on exactly one page with little slack, so recompile and check the page count after any edit.
+- **Vertical rhythm**: all spacing lives in the `VERTICAL RHYTHM` block near the top of `resumestyle.sty` — `\resumeBulletSep`, `\resumeEntrySep`, `\resumeHeadSep`, `\resumeHeaderGap`, `\resumeSectionBefore`, `\resumeSectionRuleGap`, `\resumeSectionAfter`. The document body contains **no bare `\vspace`**; entries are vertically self-contained so they can be reordered or swapped freely. Never reintroduce a hand-tuned `\vspace` in content — adjust a knob instead. Both resumes fit on exactly one page with **almost no slack** — `\resumeSectionAfter` is at 4pt and 5pt already overflows the SWE resume — so run `make` after any edit and expect to trade space elsewhere when adding content.
+
+  Spacing that groups rows *within* an entry belongs inside the entry's macro, in one `\item`, not in a negative `\vspace` between items. A `\vspace` written after a `tabular*` is still in horizontal mode and collapses rows instead of separating them; this has broken the layout twice.
 - **Key packages**: `sourcesanspro` (font), `fontawesome5` (icons), `titlesec`, `enumitem`, `tabularx`, `hyperref`, `xcolor`.
 
 ## Cover Letter Workflow
