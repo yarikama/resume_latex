@@ -35,7 +35,7 @@ LaTeX source is formatted with `latexindent` configured via `.latexindent.yaml` 
   - `\resumeProjectEntry{title}{date}` — project header
   - `\resumeItem{text}` — one bullet
   - `\resumeEntryListStart`/`End` — outer list of entries; `\resumeItemListStart`/`End` — inner bullet list
-- **Spacing knobs**: `\setlist[itemize]` (`itemsep=1pt`, `topsep=1pt`) and `\titlespacing*{\section}` (`3pt`/`3pt`). Both resumes fit on exactly one page with little slack — changing these reflows the whole document, so recompile and check the page count after any edit.
+- **Vertical rhythm**: all spacing lives in the `VERTICAL RHYTHM` block near the top of the preamble — `\resumeBulletSep`, `\resumeEntrySep`, `\resumeHeadSep`, `\resumeHeaderGap`, `\resumeSectionBefore`, `\resumeSectionAfter`. The document body contains **no bare `\vspace`**; entries are vertically self-contained so they can be reordered or swapped freely. Never reintroduce a hand-tuned `\vspace` in content — adjust a knob instead. Both resumes fit on exactly one page with little slack, so recompile and check the page count after any edit.
 - **Key packages**: `sourcesanspro` (font), `fontawesome5` (icons), `titlesec`, `enumitem`, `tabularx`, `hyperref`, `xcolor`.
 
 ## Cover Letter Workflow

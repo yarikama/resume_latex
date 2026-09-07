@@ -14,11 +14,22 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{verbatim}
 \usepackage{enumitem}
+
+%----------VERTICAL RHYTHM----------
+% All vertical spacing lives here. Content must never contain a bare \vspace --
+% tune these knobs instead, so entries stay freely reorderable.
+\newcommand{\resumeBulletSep}{0pt}   % between bullets inside an entry
+\newcommand{\resumeEntrySep}{2pt}    % between consecutive entries
+\newcommand{\resumeHeadSep}{1pt}     % between an entry header and its bullets
+\newcommand{\resumeHeaderGap}{-10pt} % between the contact header and the first section
+\newcommand{\resumeSectionBefore}{2pt plus 1pt minus 1pt}  % above a section heading
+\newcommand{\resumeSectionAfter}{1pt} % below a section rule, before its content
 \setlist[itemize]{
   leftmargin=*,
-  itemsep=1pt,
-  topsep=1pt,
+  itemsep=\resumeBulletSep,
+  topsep=0pt,
   parsep=0pt,
+  partopsep=0pt,
 }
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
@@ -73,8 +84,8 @@
 \setlength{\tabcolsep}{0in}
 
 % Sections formatting
-\titleformat{\section}{\raggedright\large\bfseries}{}{0em}{}[\vspace{2pt}\color{black}\titlerule]
-\titlespacing*{\section}{0pt}{3pt plus 1pt minus 1pt}{3pt}
+\titleformat{\section}{\raggedright\large\bfseries}{}{0em}{}[\vspace{1pt}\color{black}\titlerule]
+\titlespacing*{\section}{0pt}{\resumeSectionBefore}{\resumeSectionAfter}
 %-------------------------
 % Custom commands
 \newcommand{\mylocation}{Houston, TX 77025}
@@ -85,10 +96,10 @@
 % Entry header, two rows: (title, date) over (organization, location).
 % \resumeEntry{title}{date}{organization}{location}
 \newcommand{\resumeEntry}[4]{
-  \vspace{-3pt}\item
+  \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & \textbf{\small #2} \\
-      \textit{\small#3} & \textit{\small #4} \\
+      \textit{\small#3} & \textit{\small #4}
     \end{tabular*}
 }
 
@@ -97,8 +108,8 @@
 \newcommand{\resumeEntryNoOrg}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & \textbf{\small #2} \\
-    \end{tabular*}\vspace{3pt}
+      \textbf{#1} & \textbf{\small #2}
+    \end{tabular*}
 }
 
 % Detail row under an entry header: plain text left, italic detail right.
@@ -106,7 +117,7 @@
 \newcommand{\resumeEntryDetail}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \small#1 & \textit{\small #2} \\
+      \small#1 & \textit{\small #2}
     \end{tabular*}
 }
 
@@ -115,16 +126,16 @@
 \newcommand{\resumeProjectEntry}[2]{
     \item
     \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
-      \small#1 & \textbf{\small #2}\\
+      \small#1 & \textbf{\small #2}
     \end{tabular*}
 }
 
 \renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
 % Outer list holding entries; inner list holding an entry's bullets.
-\newcommand{\resumeEntryListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeEntryListStart}{\begin{itemize}[leftmargin=0.0in, label={}, itemsep=\resumeEntrySep]}
 \newcommand{\resumeEntryListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}[label=$\vcenter{\hbox{\tiny$\bullet$}}$]}
+\newcommand{\resumeItemListStart}{\begin{itemize}[label=$\vcenter{\hbox{\tiny$\bullet$}}$, topsep=\resumeHeadSep]}
 \newcommand{\resumeItemListEnd}{\end{itemize}}
 
 %-------------------------------------------
@@ -143,8 +154,8 @@
   \href{https://www.github.com/yarikama}{\raisebox{-0.2\height}\faGithub\ \underline{yarikama}} ~~
   \href{mailto:hsuhengjui@gmail.com}{\raisebox{-0.2\height}\faEnvelope\  \underline{hsuhengjui@gmail.com}} ~~
 \end{center}
+\vspace{\resumeHeaderGap}
 
-\vspace{-12pt}
 
 %----------SUMMARY----------
 \section{SUMMARY}
@@ -154,12 +165,10 @@
 
 %----------WORK EXPERIENCE----------
 \section{WORK EXPERIENCE}
-\vspace{2pt}
 \resumeEntryListStart
   \resumeEntry
     {Software Engineering Intern}{Jun. 2026 -- Aug. 2026}
     {\href{https://about.google/}{\textcolor{RoyalBlue}{\textbf{Google}}}}{Taipei, Taiwan}
-    \vspace{-6pt}
     \resumeItemListStart
       \resumeItem{\textbf{Test Infrastructure --} Built \textbf{3} integration test infrastructures from a \textbf{zero} baseline (\textbf{Java}, \textbf{Python}), onboarding \textbf{400+} test suites across \textbf{200+} smart home device types, with \textbf{90\%+} unit test coverage for the infrastructure itself}
       \resumeItem{\textbf{Automated Failure Triage --} Built an LLM-backed service that triages scheduled integration test runs and posts root-cause summaries directly onto issue tickets, replacing manual log inspection and cutting failure narrow-down time by \textbf{20+ minutes} per issue}
@@ -168,7 +177,6 @@
   \resumeEntry
     {Back-End Engineer \& GenAI Team Lead}{Sep. 2024 -- Aug. 2025}
     {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}} -- Award-Winning B2B GenAI Startup}{Taipei, Taiwan}
-    \vspace{-6pt}
     \resumeItemListStart
       \resumeItem{\textbf{API Optimization --} Optimized \textbf{140+} RESTful APIs through SQL query refactoring, connection pooling (Elasticsearch, Cohere, OpenAI), and Django caching; cut response time of 13 high-traffic APIs by \textbf{27.7\%} overall and eliminated N+1 queries}
       \resumeItem{\textbf{Data Pipeline \& Scaling --} Architected an async processing pipeline with \textbf{asyncio}, \textbf{Celery}, and batch/generator patterns for multi-level knowledge base indexing, achieving \textbf{5x faster} parsing while scaling from \textbf{3M to 20M+} records through a normalized schema and backward-compatible incremental refactors}
@@ -178,29 +186,22 @@
     \resumeItemListEnd
 \resumeEntryListEnd
 
-\vspace{-9pt}
 
 %----------EDUCATION----------
 \section{EDUCATION}
 \resumeEntryListStart
   \resumeEntryNoOrg
     {Rice University - Top 20 U.S. University}{Aug. 2025 -- Dec. 2026 (Expected)}
-    \vspace{-20pt}
     \resumeEntryDetail{M.C.S., Computer Science (GPA: 4.00/4.00)}{Houston, TX}
-    \vspace{-12pt}
   \resumeEntryNoOrg
     {National Yang Ming Chiao Tung University (NYCU) - Top 3 Taiwan University}{Sep. 2020 -- Jun. 2024}
-    \vspace{-20pt}
     \resumeEntryDetail{B.S., Industrial Engineering and Management (GPA: 4.07/4.30, Two-Time Dean's List)}{Hsinchu, Taiwan}
-    \vspace{-15pt}
     \resumeItem{Minor: Computer Science (Domain GPA: 4.13/4.30)}
 \resumeEntryListEnd
 
-\vspace{-6pt}
 
 %----------PROJECTS----------
 \section{PROJECTS}
-\vspace{-1pt}
 \resumeEntryListStart
   \resumeProjectEntry
     {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - Real-Time Multiplayer Game Server}}} $|$ \emph{C/C++ (Socket Programming, SFML), MySQL, SHA-256}}{Oct. 2023 -- Jan. 2024}

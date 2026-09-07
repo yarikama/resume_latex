@@ -14,11 +14,22 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage{verbatim}
 \usepackage{enumitem}
+
+%----------VERTICAL RHYTHM----------
+% All vertical spacing lives here. Content must never contain a bare \vspace --
+% tune these knobs instead, so entries stay freely reorderable.
+\newcommand{\resumeBulletSep}{0pt}   % between bullets inside an entry
+\newcommand{\resumeEntrySep}{2pt}    % between consecutive entries
+\newcommand{\resumeHeadSep}{1pt}     % between an entry header and its bullets
+\newcommand{\resumeHeaderGap}{-10pt} % between the contact header and the first section
+\newcommand{\resumeSectionBefore}{2pt plus 1pt minus 1pt}  % above a section heading
+\newcommand{\resumeSectionAfter}{1pt} % below a section rule, before its content
 \setlist[itemize]{
   leftmargin=*,
-  itemsep=1pt,
-  topsep=1pt,
+  itemsep=\resumeBulletSep,
+  topsep=0pt,
   parsep=0pt,
+  partopsep=0pt,
 }
 \usepackage[hidelinks]{hyperref}
 \usepackage{fancyhdr}
@@ -46,6 +57,7 @@
 % \usepackage[sfdefault]{noto-sans}
 \usepackage[default]{sourcesanspro}
 
+
 % serif
 % \usepackage{CormorantGaramond}
 % \usepackage{charter}
@@ -72,9 +84,8 @@
 \setlength{\tabcolsep}{0in}
 
 % Sections formatting
-\titleformat{\section}{\raggedright\large\bfseries}{}{0em}{}[\vspace{2pt}\color{black}\titlerule]
-\titlespacing*{\section}{0pt}{3pt plus 1pt minus 1pt}{3pt}
-
+\titleformat{\section}{\raggedright\large\bfseries}{}{0em}{}[\vspace{1pt}\color{black}\titlerule]
+\titlespacing*{\section}{0pt}{\resumeSectionBefore}{\resumeSectionAfter}
 %-------------------------
 % Custom commands
 \newcommand{\mylocation}{Houston, TX 77025}
@@ -85,10 +96,10 @@
 % Entry header, two rows: (title, date) over (organization, location).
 % \resumeEntry{title}{date}{organization}{location}
 \newcommand{\resumeEntry}[4]{
-  \vspace{-3pt}\item
+  \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & \textbf{\small #2} \\
-      \textit{\small#3} & \textit{\small #4} \\
+      \textit{\small#3} & \textit{\small #4}
     \end{tabular*}
 }
 
@@ -97,8 +108,8 @@
 \newcommand{\resumeEntryNoOrg}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \textbf{#1} & \textbf{\small #2} \\
-    \end{tabular*}\vspace{3pt}
+      \textbf{#1} & \textbf{\small #2}
+    \end{tabular*}
 }
 
 % Detail row under an entry header: plain text left, italic detail right.
@@ -106,7 +117,7 @@
 \newcommand{\resumeEntryDetail}[2]{
   \item
     \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
-      \small#1 & \textit{\small #2} \\
+      \small#1 & \textit{\small #2}
     \end{tabular*}
 }
 
@@ -115,20 +126,21 @@
 \newcommand{\resumeProjectEntry}[2]{
     \item
     \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
-      \small#1 & \textbf{\small #2}\\
+      \small#1 & \textbf{\small #2}
     \end{tabular*}
 }
 
 \renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
 
 % Outer list holding entries; inner list holding an entry's bullets.
-\newcommand{\resumeEntryListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeEntryListStart}{\begin{itemize}[leftmargin=0.0in, label={}, itemsep=\resumeEntrySep]}
 \newcommand{\resumeEntryListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}[label=$\vcenter{\hbox{\tiny$\bullet$}}$]}
+\newcommand{\resumeItemListStart}{\begin{itemize}[label=$\vcenter{\hbox{\tiny$\bullet$}}$, topsep=\resumeHeadSep]}
 \newcommand{\resumeItemListEnd}{\end{itemize}}
 
 %-------------------------------------------
 %%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \begin{document}
 
@@ -142,8 +154,8 @@
   \href{https://www.github.com/yarikama}{\raisebox{-0.2\height}\faGithub\ \underline{yarikama}} ~~
   \href{mailto:hsuhengjui@gmail.com}{\raisebox{-0.2\height}\faEnvelope\  \underline{hsuhengjui@gmail.com}} ~~
 \end{center}
+\vspace{\resumeHeaderGap}
 
-\vspace{-12pt}
 
 %----------SUMMARY----------
 \section{SUMMARY}
@@ -153,12 +165,10 @@
 
 %----------WORK EXPERIENCE----------
 \section{WORK EXPERIENCE}
-\vspace{2pt}
 \resumeEntryListStart
   \resumeEntry
     {Software Engineering Intern}{Jun. 2026 -- Aug. 2026}
     {\href{https://about.google/}{\textcolor{RoyalBlue}{\textbf{Google}}}}{Taipei, Taiwan}
-    \vspace{-6pt}
     \resumeItemListStart
       \resumeItem{\textbf{Integration Test Infrastructure --} Built \textbf{3} test infrastructures from a \textbf{zero} baseline (Java, Python), onboarding \textbf{400+} integration test suites across \textbf{200+} smart home device types, with \textbf{90\%+} unit test coverage for the infrastructure itself}
       \resumeItem{\textbf{Agentic Failure Triage --} Developed an LLM agent that triages scheduled integration test runs and surfaces root-cause summaries directly on issue tickets, replacing manual log inspection and cutting failure narrow-down time by \textbf{20+ minutes} per issue}
@@ -167,7 +177,6 @@
   \resumeEntry
     {Generative AI Team Lead}{Dec. 2024 -- Aug. 2025}
     {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}} -- Award-Winning B2B GenAI Startup}{Taipei, Taiwan}
-    \vspace{-6pt}
     \resumeItemListStart
       \resumeItem{\textbf{Building AI Agents --} Upgraded chatbots into AI agents by integrating memory systems, tool APIs, and MCP Client, resulting in \textbf{120\%} partner growth (CTBC Bank, MSI, HPE, iGroup) and user expansion from \textbf{3K} to \textbf{20K} users while cutting LLM token usage by \textbf{67\%+}}
       \resumeItem{\textbf{Contributing to Open Source --} Contributed \textbf{14} merged pull requests to the \textbf{LlamaIndex} open-source project (\textbf{15K+ stars}), fixing bugs and adding features in integrations with AWS Bedrock, Claude, Elasticsearch, Cohere, OpenAI, MCP Client, and AI Agent Workflow}
@@ -177,7 +186,6 @@
   \resumeEntry
     {Generative AI Intern}{Sep. 2024 -- Dec. 2024}
     {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}} -- Award-Winning B2B GenAI Startup}{Taipei, Taiwan}
-    \vspace{-6pt}
     \resumeItemListStart
       \resumeItem{\textbf{Pipeline Scaling --} Refactored with async framework and dual-database synchronization (RDB/Vector DB), achieving \textbf{3.5x} faster parsing and scaling from \textbf{3M} to \textbf{20M+} text chunks while \textbf{doubling} indexing performance}
       \resumeItem{\textbf{Reranker Integration --} Integrated Cohere and BGE open-source rerankers as a customer-selectable retrieval feature, improving RAG precision on large documents by \textbf{30\% Precision@5} and \textbf{7\% Precision@10}}
@@ -190,20 +198,15 @@
 \resumeEntryListStart
   \resumeEntryNoOrg
     {Rice University - Top 20 U.S. University}{Aug. 2025 -- Dec. 2026 (Expected)}
-    \vspace{-20pt}
     \resumeEntryDetail{M.C.S., Computer Science (GPA: 4.00/4.00)}{Houston, TX}
-    \vspace{-12pt}
   \resumeEntryNoOrg
     {National Yang Ming Chiao Tung University (NYCU) - Top 3 Taiwan University}{Sep. 2020 -- Jun. 2024}
-    \vspace{-20pt}
     \resumeEntryDetail{B.S., Industrial Engineering and Management (GPA: 4.07/4.30, Two-Time Dean's List)}{Hsinchu, Taiwan}
-    \vspace{-15pt}
     \resumeItem{Minor: Computer Science (4.13/4.30)}
 \resumeEntryListEnd
 
 %----------PROJECTS----------
 \section{PROJECTS}
-\vspace{-1pt}
 \resumeEntryListStart
   \resumeProjectEntry
     {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Agentic-Advanced-RAG}{Agentic Hybrid RAG}}} $|$ \emph{Graph RAG (Neo4j, Cypher), Vector RAG (Milvus), Multi-Agent (LangGraph)}}{Feb. 2024 -- Aug. 2024}
@@ -267,19 +270,16 @@
 % \section{Extracurricular Experience}
 % \resumeEntryListStart
 %   \resumeEntry{College of Management Affairs Committee}{Sep. 2023 -- July. 2024}{Student Representative}{NYCU}
-%   \vspace{-2pt}
 %   \resumeItemListStart
 %     \resumeItem{Participated in over 10 amendment drafts, including College committee selection procedure establishment and the management school development white paper formulation as a student representative}
 %   \resumeItemListEnd
 %   \resumeEntry{Student Association of Industrial Engineering and Management}{Jun. 2022 -- Jun. 2023}{President}{NYCU}
-%   \vspace{-2pt}
 %   \resumeItemListStart
 %     \resumeItem{Managed four teams comprising 37 individuals, holding over 20 events in a year}
 %     \resumeItem{Managed exam archives, event coordination, budget tracking, and project management via Notion, while also organizing over 5 years' worth of departmental association data}
 %     \resumeItem{Refurbished \href{https://www.facebook.com/watch/?v=414127704166517}{\textcolor{RoyalBlue}{the student shared space}} on a tight budget, enabling clubs and students to utilize the space for their activities}
 %   \resumeItemListEnd
 %   \resumeEntry{Atona Case Competition (ATCC) Final Rounds in Preliminary}{Mar. 2022 -- Apr. 2022}{Project Lead of "Gong Mei Swag" (Chatty Cathy)}{Teacher Chang Foundation}
-%   \vspace{-2pt}
 %   \resumeItemListStart
 %     \resumeItem{Our group "Gong Mei Swag" was the \textbf{top 20 teams nationally} in the ATCC, with over \textbf{2,000} teams registering}
 %     \resumeItem{Led the "HeartBeat" digital transformation initiative for Teacher Chang Foundation's mental counseling services to raise youth mental health awareness and address the shortage of qualified counseling volunteers}
