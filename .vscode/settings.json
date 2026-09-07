@@ -3,5 +3,11 @@
   // LaTeX Workshop's stock "latexmk" recipe is first in the list and passes
   // -pdf, i.e. pdfLaTeX, which silently produces a different, wrong PDF.
   // Pin the built-in XeLaTeX recipe instead.
-  "latex-workshop.latex.recipe.default": "latexmk (xelatex)"
+  "latex-workshop.latex.recipe.default": "latexmk (xelatex)",
+
+  // Aux files are not cleaned by default (autoClean.run ships as "never"), so
+  // on-save builds leave .aux/.log/.fls/.fdb_latexmk/.out/.xdv in the repo root.
+  // Clean runs `latexmk -c`, which keeps the .pdf and the .synctex.gz that
+  // forward/reverse search needs; `make clean` removes the .synctex.gz too.
+  "latex-workshop.latex.autoClean.run": "onBuilt"
 }

@@ -26,7 +26,9 @@ make clean
 
 ## Formatting
 
-LaTeX source is formatted with `latexindent` configured via `.latexindent.yaml` (2-space indent, 100-column text wrap, no backups).
+LaTeX source is formatted with `latexindent` configured via `.latexindent.yaml` (2-space indent,
+trailing whitespace stripped, one `.bak` at most). The 100-column text wrap lives under
+`modifyLineBreaks`, so it only applies when latexindent is run with `-m`.
 
 ## Architecture
 
