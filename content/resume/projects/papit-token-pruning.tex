@@ -1,0 +1,20 @@
+% PAPIT -- prompt-aware image token pruning. Rice COMP 646 final project, 3-person team
+% (Henry / Kerstin Sun / Chao Hsuan Ho). Bullets cover only Henry's own commits: the
+% distill predictor, LLM-attention oracle, alignment diagnostic, architecture ablation,
+% efficiency benchmark, Pareto figure, and the paper. GradCAM scoring, the AWS run
+% scripts, and the qualitative figures were Kerstin's and are deliberately not claimed.
+%
+% Dropped for space when reflowing into three two-line bullets: the scorer is also
+% ~500x faster than the two-pass attention oracle it distils from (the kept 150x compares
+% against the CLIP-GradCAM baseline, which is the paper's real control).
+%
+% Title shows no "PAPIT:" prefix and the tech list says "LLaVA" not "LLaVA-1.5-7B",
+% both by request; the \href still points at the PAPIT repo and bullet 1 keeps the
+% full model name, where the teacher's size carries information.
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/PAPIT}{Prompt-Aware Image Token Pruning for Multimodal Inference}}} $|$ \emph{PyTorch, LLaVA, CLIP ViT, Knowledge Distillation}}{Feb. 2026 -- May 2026}
+    \resumeItemListStart
+      \resumeItem{\textbf{Attention Distillation:} Taught a \textbf{1.3M-parameter} scorer to imitate where LLaVA-1.5-7B actually looks, dropping the patches it ignores before the projector -- \textbf{10$\times$} less attention compute for the frozen LLM, and \textbf{150$\times$} cheaper than a CLIP-GradCAM pass}
+      \resumeItem{\textbf{Accuracy \& Latency:} Kept a quarter of the image tokens and still answered TextVQA about as well as the full model, \textbf{12.3} points clear of random pruning, while deciding what to keep in \textbf{0.43 ms} an image -- cheap enough to be free at inference}
+      \resumeItem{\textbf{Empirical Diagnostic:} Showed why the training-free shortcut fails: across three VQA benchmarks, what CLIP finds salient barely tracks what LLaVA attends to, which is what made learning the scorer worth the trouble}
+    \resumeItemListEnd%

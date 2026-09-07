@@ -1,0 +1,26 @@
+% COMP 530 Database Implementation -- DBMS built across assignments A1-A8.
+% A1 BufferMgr -> A2 Record -> A3 Sorting -> A4 B+Tree -> A5 SQL parser -> A6 RelOps
+% -> A7 Optimizer/Stats -> A8 Execution, finishing on TPC-H.
+%
+% No \href on purpose: the repo is course solutions, publishing them breaks course policy.
+%
+% Trimmed from 3 bullets to 2 to fit the SWE resume (the swap cost 4 lines).
+% Bullets 2 and 3 below were merged into the current "Query Processing" bullet;
+% restore the split if a page ever has room:
+%   \resumeItem{\textbf{Query Execution:} Implemented the relational operators, selection,
+%   aggregation with group-by, scan join, and a \textbf{sort-merge join} backed by external
+%   merge sort that spills runs to disk when inputs exceed the buffer pool}
+%   \resumeItem{\textbf{SQL Front End \& Optimizer:} Compiled SQL into logical plans, ordered
+%   joins by cost from cardinality statistics, and picked scan vs. sort-merge join by
+%   buffer-pool fit; ran the \textbf{12-query TPC-H} suite at scale factor 1 (\textbf{1 GB})}
+% Also dropped from bullet 1: "over the page-level reader/writer API".
+% Also dropped: the suite is 12 queries, and scale factor 1 is ~1 GB.
+%
+% Wording caveat: the course supplies scaffolding and A8 ships A7's reference solution.
+% "Built" is standard framing for this project; be ready to say so in an interview.
+  \resumeProjectEntry
+    {\textbf{Relational Database Engine from Scratch} $|$ \emph{C++, B+ Tree, Query Optimization, TPC-H}}{Aug. 2025 -- Dec. 2025}
+    \resumeItemListStart
+      \resumeItem{\textbf{Storage Engine:} Built the C++ persistence layer, a buffer manager with \textbf{LRU} eviction and page pinning, slotted-page record storage, and a \textbf{B+ tree} index supporting range scans}
+      \resumeItem{\textbf{Query Processing:} Implemented the relational operators, including a \textbf{sort-merge join} over external merge sort that spills to disk, under a SQL compiler and a cost-based optimizer that orders joins from cardinality statistics; ran \textbf{TPC-H} at scale factor 1}
+    \resumeItemListEnd%

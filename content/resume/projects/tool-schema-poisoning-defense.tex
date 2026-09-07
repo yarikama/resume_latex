@@ -1,0 +1,23 @@
+% Rice NLP final project -- tool schema poisoning attack and defense. 4-person team
+% (Henry / Vincent Chang / Kerstin Sun / Shaoyang Zhang), 78 of 96 commits Henry's.
+% Bullets cover only his work: the whole SVF line (hidden-state probing, steering vector,
+% alpha sweep), the ASR / Steal / OTSR evaluator, the multi-turn agentic loop, the four
+% inference-stack bug fixes, and the reports. Shaoyang's tool guard and Slurm scripts and
+% Vincent's Qwen 3.5 experiments are not claimed.
+%
+% No \href on purpose: the repo lives at github.com/phlivic/comp584-project, a teammate's
+% account, so a reader would find it is not Henry's. Add a link if he forks it or the
+% paper/slides go public. The title is plain black rather than RoyalBlue for the same
+% reason -- blue implies clickable.
+%
+% Dropped for space: the Stage II multi-turn negative result. Mean-difference steering
+% collapses across turns (norm of v < 0.2, cos > 0.99), so the vector is nearly zero and
+% the defense fails; single-turn works because the decision concentrates at response_last.
+% Left out because the PAPIT entry already carries one negative-result bullet.
+  \resumeProjectEntry
+    {\textbf{Defending LLM Agents Against Tool Schema Poisoning} $|$ \emph{PyTorch, Llama 3.1, Activation Steering, Slurm}}{Apr. 2026 -- May 2026}
+    \resumeItemListStart
+      \resumeItem{\textbf{Threat Model:} Reproduced a tool-schema poisoning attack where deceptive parameter descriptions make structured-output agents auto-fill private data, setting a \textbf{56\%} attack-success and \textbf{52\%} privacy-leak baseline on Llama 3.1-8B}
+      \resumeItem{\textbf{Representation-Level Defense:} Probed hidden states to locate a linear safety direction (\textbf{96\%} probe accuracy at layer 10) and steered activations along it at inference, cutting privacy leakage \textbf{14.5pp} with no loss in benign task success}
+      \resumeItem{\textbf{Defense Comparison:} Ran a 2$\times$2 single/multi-turn factorial showing the in-context reflection baseline buys its leak reduction with a \textbf{6pp} higher attack rate and \textbf{6pp} lower task success, both of which steering avoids}
+    \resumeItemListEnd%

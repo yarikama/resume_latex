@@ -1,0 +1,25 @@
+% COMP 531 Web Development -- Ricebook social network, built across hw1-hw6 + final
+% (HWs/hw1 first commit 2025-09-01, final 2025-12-06; hence the Sep-Dec range).
+%
+% No \href on purpose: as of 2026-09-07 the frontend (yarikama-ricebook-final.surge.sh)
+% still returns 200 but the Heroku backend returns 503, so the demo loads and then does
+% nothing. Add the link if the API is ever redeployed -- a working demo is worth the space.
+%
+% Trimmed from 3 bullets to 2 to fit the SWE resume. Bullets 1 and 2 below were merged
+% into the current "Full-Stack Build" bullet; restore the split if there is ever room:
+%   \resumeItem{\textbf{Frontend Architecture:} Built a \textbf{React 19} single-page app on
+%   Redux Toolkit, \textbf{21} components across auth, feed, and profile flows, with async
+%   thunks holding API state and a Tailwind component system}
+%   \resumeItem{\textbf{Backend \& Auth:} Built the \textbf{Express 5} / MongoDB API,
+%   session-cookie auth plus \textbf{Google OAuth 2.0} account linking, a follower graph,
+%   an article feed with comments, and Cloudinary-backed image upload}
+% Dropped in the merge: the 21-component count and the Tailwind design system.
+%
+% Deliberately not claimed: passwords are md5-hashed (course spec, not defensible practice),
+% and @modelcontextprotocol/sdk sits in package.json but is never imported -- no MCP work here.
+  \resumeProjectEntry
+    {\textbf{Full-Stack Social Network (Ricebook)} $|$ \emph{React, Redux Toolkit, Express, MongoDB, OAuth 2.0, Vitest}}{Sep. 2025 -- Dec. 2025}
+    \resumeItemListStart
+      \resumeItem{\textbf{Full-Stack Build:} Built a \textbf{React 19} single-page app on Redux Toolkit against an \textbf{Express 5}/MongoDB API, with session-cookie auth plus \textbf{Google OAuth 2.0} linking, a follower graph, a comment-threaded feed, and Cloudinary image upload}
+      \resumeItem{\textbf{Testing \& Deployment:} Covered the Redux store with \textbf{30} Vitest suites at \textbf{97\%} statement coverage and the API with Jasmine integration tests; deployed frontend and backend to separate hosts with CORS-aware session config}
+    \resumeItemListEnd%

@@ -1,0 +1,19 @@
+% GGJSSP -- cross-size generalization for GNN-based job shop scheduling. Rice, 3-person
+% team (Henry / Kerstin Sun / Cheng Han Lin), 78 of 96 commits Henry's. Bullets cover only
+% his work: scale-sensitivity measurement, the hetero-graph / machine-hub architecture,
+% the 5-seed factorial, the GRPO trainers, and the paper. Kerstin's GRPO-Clip, benchmark
+% download scripts and tests, and Cheng Han's alpha sweep and mixed-size training are not claimed.
+%
+% Header was shortened to keep the title and date on one line: the title dropped "-Based"
+% and the tech list dropped "(GRPO)" after Reinforcement Learning. GRPO still appears in
+% bullet 3, so the keyword is not lost.
+%
+% Link check needed: the \href points at github.com/yarikama/GGJSSP but the remote is SSH,
+% so whether the repo is public was never verified. A private repo means a 404 for readers.
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/GGJSSP}{Cross-Size Generalization for GNN Job Shop Scheduling}}} $|$ \emph{PyTorch, Graph Neural Networks, Reinforcement Learning}}{Mar. 2026 -- Apr. 2026}
+    \resumeItemListStart
+      \resumeItem{\textbf{Failure Diagnosis:} Traced the zero-shot cross-size collapse of GNN schedulers, relative scheduling error rising from \textbf{10\%} in-distribution to \textbf{376\%} on larger instances, to linear degree growth in the disjunctive graph}
+      \resumeItem{\textbf{Architectural Fix:} Proved degree-normalized aggregation and machine-hub routing are alternative paths to the same $\sim$\textbf{26\%} error ceiling via a 5-seed factorial, letting one 10$\times$10-trained policy generalize to \textbf{7.5$\times$} larger instances}
+      \resumeItem{\textbf{Research Framework:} Built the training and evaluation stack from scratch, 4 GNN encoders (SAGE, GCN, GIN, GAT) and critic-free GRPO plus PPO trainers benchmarked against dispatching-rule baselines on the FT, LA, and TA instance sets}
+    \resumeItemListEnd%
