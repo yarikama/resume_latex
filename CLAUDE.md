@@ -8,17 +8,21 @@ LaTeX resume repository with multiple resume variants (SWE vs GenAI/AI Engineer)
 
 ## Build Commands
 
-Compile any `.tex` file:
+Build both resumes and verify each still fits on one page:
+```
+make
+```
+`make` rebuilds any resume whose `.tex` or `resumestyle.sty` is newer than its PDF, then fails if a PDF is not exactly 1 page. Always use this after editing `resumestyle.sty` — an editor's on-save build only rebuilds the file you have open, leaving the other variant stale.
+
+Compile a single file (cover letters, one-off checks):
 ```
 latexmk -xelatex <filename>.tex
 ```
 
-Clean synctex files:
+Remove build artifacts (`make clean` keeps the PDFs):
 ```
 make clean
 ```
-
-The Makefile only has a `clean` target. There is no `build` or `all` target — compilation is done directly with `latexmk` + `xelatex`.
 
 ## Formatting
 
