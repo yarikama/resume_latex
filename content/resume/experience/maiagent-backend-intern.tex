@@ -1,0 +1,25 @@
+% MaiAgent -- Backend Engineer Intern (SWE resume). Split out of maiagent-backend-lead.tex.
+%
+% Reframing notes -- what this entry gives up, so it is not forgotten:
+%   * Real title was "Generative AI Intern" (see experience/maiagent-genai-intern.tex);
+%     retitled "Backend Engineer Intern" for the SWE target.
+%   * Bullet split follows the GAIE role dates: pipeline work belongs to the intern term,
+%     the API / CI-CD / open-source work to the engineer term.
+%   * The company subtitle repeats the one in maiagent-backend-lead.tex -- an unavoidable
+%     cost of splitting. Drop "-- Award-Winning B2B GenAI Startup" here if a line is needed.
+  \resumeEntry
+    {Backend Engineer Intern}{Sep. 2024 -- Dec. 2024}
+    {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}} -- Award-Winning B2B GenAI Startup}{Taipei, Taiwan}
+    \resumeItemListStart
+      % Compressed to a single line to buy back the space the entry split cost.
+      % Full version, from the old combined entry -- restore if space ever allows:
+      %   \resumeItem{\textbf{Data Pipeline \& Scaling:} Architected an async processing
+      %   pipeline with \textbf{asyncio}, \textbf{Celery}, and batch/generator patterns for
+      %   multi-level knowledge base indexing, achieving \textbf{3.5x faster} parsing while
+      %   scaling from \textbf{3M to 20M+} text chunks through a normalized schema and
+      %   backward-compatible incremental refactors}
+      % Dropped in the short version: batch/generator patterns, "multi-level" indexing,
+      % the normalized schema, and the backward-compatible incremental refactors.
+      \resumeItem{\textbf{Data Pipeline:} Built an async indexing pipeline with \textbf{asyncio} and \textbf{Celery}, \textbf{3.5x faster} parsing while scaling \textbf{3M to 20M+} text chunks}
+      \resumeItem{\textbf{Real-Time Communication:} Implemented a \textbf{WebSocket} notification system with \textbf{Redis} pub/sub for file parsing status; built event-driven architecture for agent state transitions, pushing render triggers to the frontend for live UI updates}
+    \resumeItemListEnd%
