@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-LaTeX resume repository with multiple resume variants (SWE vs GenAI/AI Engineer) and a cover letter system. All layout — packages, margins, custom commands, spacing — lives in the shared `resumestyle.sty`; each resume `.tex` holds only `\documentclass`, `\usepackage{resumestyle}`, the contact details, and its content. A layout change is made once, in the package, and applies to every variant.
+LaTeX resume repository with multiple resume variants (SWE vs GenAI/AI Engineer) and a cover letter system. It is split three ways: layout in `resumestyle.sty`, content in `content/` (one file per entry), and each resume `.tex` is a thin driver that only picks which entries appear and in what order. A layout change is made once in the package; an entry is written once in `content/` and `\input` by whichever resumes want it.
 
 ## Build Commands
 
@@ -31,7 +31,10 @@ LaTeX source is formatted with `latexindent` configured via `.latexindent.yaml` 
 ## Architecture
 
 - **Shared style**: `resumestyle.sty` carries the whole layout. Loading it is the entire preamble of a resume file.
-- **Resume variants**: `Henry_Hsu_SWE_resume.tex` (Software Engineer) and `Henry_Hsu_GAIE_resume.tex` (GenAI/AI Engineer). Both share the contact header, education, awards, and skills sections but differ in work experience bullets, project selections, and skills emphasis. Unused sections are commented out rather than removed.
+- **Content modules**: `content/` holds one file per entry — `header.tex`, `awards.tex`, `summary/`, `experience/`, `education/`, `projects/`, `extracurricular/`, `skills/`. Each file contains exactly one `\resumeEntry` / `\resumeProjectEntry` block (or one section's lines) and **must end with `%`** so `\input` does not inject a blank line, which would add a stray `\par` of vertical space.
+- **Resume variants**: `Henry_Hsu_SWE_resume.tex` (Software Engineer) and `Henry_Hsu_GAIE_resume.tex` (GenAI/AI Engineer) are drivers: `\documentclass`, `\usepackage{resumestyle}`, `\mylocation`, then `\section` scaffolding around `\input` lines. Retarget a resume by swapping `\input` lines — never paste an entry body into a driver.
+- **Module pool**: `content/` also holds entries no current resume uses (six inactive projects, three extracurricular entries). They are ready to `\input`, not commented out. Add to the pool rather than deleting an entry you are dropping from a resume.
+- **Duplicate content is intentional**: style is DRY, content is not. When a project or role needs different framing per target (e.g. `projects/chat-bar-server.tex` vs `projects/chat-bar-mud.tex`, `experience/google-swe.tex` vs `experience/google-gaie.tex`), write a second module. Do not try to parameterise one file into serving both — the point of tailoring is that the sentences differ.
 - **Cover letters**: `cover_letters/cover_letter.tex` is the tracked generic template. Company-specific letters go in `cover_letters/specific_comps/` (gitignored).
 - **Custom commands** (defined in `resumestyle.sty`, each with a doc comment above its definition):
   - `\resumeEntry{title}{date}{org}{location}` — entry header, two rows

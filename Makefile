@@ -5,14 +5,18 @@ PDFS    := $(addsuffix .pdf,$(RESUMES))
 # produces a different, wrong PDF.
 LATEXMK := latexmk -xelatex -interaction=nonstopmode
 
-.PHONY: all check clean
+.PHONY: all check clean $(PDFS)
 
 # Build every resume, then verify each still fits on one page.
 all: check
 
-# resumestyle.sty is a prerequisite: one style edit reflows every variant.
-%.pdf: %.tex resumestyle.sty
-	$(LATEXMK) $<
+# The PDF targets are deliberately phony so latexmk runs every time and makes
+# the decision itself: it knows the real dependency graph (resumestyle.sty plus
+# every \input'ed content module, recorded in the .fls file) and compares file
+# contents, so it catches same-second edits that make's mtime check misses.
+# It exits immediately when there is nothing to do.
+$(PDFS): %.pdf: %.tex
+	@$(LATEXMK) $<
 
 check: $(PDFS)
 	@status=0; \

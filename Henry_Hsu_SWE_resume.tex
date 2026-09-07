@@ -1,6 +1,9 @@
 %-------------------------
 % Henry Hsu -- resume (Software Engineer variant).
-% Layout lives in resumestyle.sty; this file holds contact details and content.
+%
+% Layout lives in resumestyle.sty. Every entry below is a module in content/;
+% this file only picks which ones appear and in what order. To retarget this
+% resume, swap an \input line -- do not paste entry bodies in here.
 %-------------------------
 
 \documentclass[letterpaper,11pt]{article}
@@ -9,97 +12,47 @@
 % Contact details -- resume data, not layout, so it stays out of the package.
 \newcommand{\mylocation}{Houston, TX 77025}
 
-%-------------------------------------------
-%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{document}
 
-%----------HEADING----------
-\begin{center}
-  {\Huge \scshape \href{https://www.yarikama.com/}{{Henry Hsu}}} \\
-  {\small\color{gray} \mylocation} \\
-  \href{tel:+1-510-996-6837}{\raisebox{-0.2\height}\faPhone\  \underline{+1-510-996-6837}} ~~
-  \href{https://www.yarikama.com/}{\raisebox{-0.2\height}\faGlobe\ \underline{www.yarikama.com}} ~~
-  \href{https://www.linkedin.com/in/yarikama/}{\raisebox{-0.2\height}\faLinkedin\ \underline{yarikama}}  ~~
-  \href{https://www.github.com/yarikama}{\raisebox{-0.2\height}\faGithub\ \underline{yarikama}} ~~
-  \href{mailto:hsuhengjui@gmail.com}{\raisebox{-0.2\height}\faEnvelope\  \underline{hsuhengjui@gmail.com}} ~~
-\end{center}
-\vspace{\resumeHeaderGap}
-
+\input{content/header}
 
 %----------SUMMARY----------
 \section{SUMMARY}
 \resumeEntryListStart
-\item\small{\textbf{Backend and platform engineer building distributed systems and the test infrastructure that keeps them reliable. Built integration test infrastructure and automated failure-triage tooling at \textbf{Google}; optimized \textbf{140+} APIs (\textbf{27.7\%} faster), scaled async data pipelines from 3M to \textbf{20M+} records, and raised test coverage from zero to \textbf{67\%} as a backend engineer and team lead. \textbf{14} merged PRs to \textbf{LlamaIndex} (15K+ stars). Pursuing M.C.S. at Rice University.}}
+  \input{content/summary/swe}
 \resumeEntryListEnd
 
 %----------WORK EXPERIENCE----------
 \section{WORK EXPERIENCE}
 \resumeEntryListStart
-  \resumeEntry
-    {Software Engineering Intern}{Jun. 2026 -- Aug. 2026}
-    {\href{https://about.google/}{\textcolor{RoyalBlue}{\textbf{Google}}}}{Taipei, Taiwan}
-    \resumeItemListStart
-      \resumeItem{\textbf{Test Infrastructure --} Built \textbf{3} integration test infrastructures from a \textbf{zero} baseline (\textbf{Java}, \textbf{Python}), onboarding \textbf{400+} test suites across \textbf{200+} smart home device types, with \textbf{90\%+} unit test coverage for the infrastructure itself}
-      \resumeItem{\textbf{Automated Failure Triage --} Built an LLM-backed service that triages scheduled integration test runs and posts root-cause summaries directly onto issue tickets, replacing manual log inspection and cutting failure narrow-down time by \textbf{20+ minutes} per issue}
-      \resumeItem{\textbf{Local Reproduction Tooling --} Extended the service to reproduce device failures locally against virtual devices instead of waiting on cloud runs, cutting manual reproduction time by \textbf{85\%}; \textbf{shipped and adopted by the team}}
-    \resumeItemListEnd
-  \resumeEntry
-    {Back-End Engineer \& GenAI Team Lead}{Sep. 2024 -- Aug. 2025}
-    {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}} -- Award-Winning B2B GenAI Startup}{Taipei, Taiwan}
-    \resumeItemListStart
-      \resumeItem{\textbf{API Optimization --} Optimized \textbf{140+} RESTful APIs through SQL query refactoring, connection pooling (Elasticsearch, Cohere, OpenAI), and Django caching; cut response time of 13 high-traffic APIs by \textbf{27.7\%} overall and eliminated N+1 queries}
-      \resumeItem{\textbf{Data Pipeline \& Scaling --} Architected an async processing pipeline with \textbf{asyncio}, \textbf{Celery}, and batch/generator patterns for multi-level knowledge base indexing, achieving \textbf{5x faster} parsing while scaling from \textbf{3M to 20M+} records through a normalized schema and backward-compatible incremental refactors}
-      \resumeItem{\textbf{Real-Time Communication --} Implemented a \textbf{WebSocket} notification system with \textbf{Redis} pub/sub for file parsing status; built event-driven architecture for agent state transitions, pushing render triggers to the frontend for live UI updates}
-      \resumeItem{\textbf{CI/CD \& Testing --} Built a \textbf{GitHub Actions} CI pipeline with pytest unit and E2E coverage, reaching \textbf{67\%} code coverage from a \textbf{zero} baseline; reduced production hotfixes by \textbf{90\%} initially and \textbf{50\%} long term; managed database migrations in the CD pipeline}
-      \resumeItem{\textbf{Open Source --} Contributed \textbf{14} merged pull requests to \textbf{LlamaIndex} (\textbf{15K+ stars}), fixing bugs and adding features across the AWS Bedrock, Claude, Elasticsearch, Cohere, OpenAI, and MCP Client integrations}
-    \resumeItemListEnd
+  \input{content/experience/google-swe}
+  \input{content/experience/maiagent-backend-lead}
 \resumeEntryListEnd
-
 
 %----------EDUCATION----------
 \section{EDUCATION}
 \resumeEntryListStart
-  \resumeEntryNoOrg
-    {Rice University - Top 20 U.S. University}{Aug. 2025 -- Dec. 2026 (Expected)}
-    \resumeEntryDetail{M.C.S., Computer Science (GPA: 4.00/4.00)}{Houston, TX}
-  \resumeEntryNoOrg
-    {National Yang Ming Chiao Tung University (NYCU) - Top 3 Taiwan University}{Sep. 2020 -- Jun. 2024}
-    \resumeEntryDetail{B.S., Industrial Engineering and Management (GPA: 4.07/4.30, Two-Time Dean's List)}{Hsinchu, Taiwan}
-    \resumeItem{Minor: Computer Science (Domain GPA: 4.13/4.30)}
+  \input{content/education/rice}
+  \input{content/education/nycu}
 \resumeEntryListEnd
-
 
 %----------PROJECTS----------
 \section{PROJECTS}
 \resumeEntryListStart
-  \resumeProjectEntry
-    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - Real-Time Multiplayer Game Server}}} $|$ \emph{C/C++ (Socket Programming, SFML), MySQL, SHA-256}}{Oct. 2023 -- Jan. 2024}
-    \resumeItemListStart
-      \resumeItem{\textbf{Server-Client Architecture:} Designed and implemented a real-time multiplayer game server using \textbf{TCP socket programming} with multi-threaded client handling, supporting concurrent connections for chat and gameplay state synchronization}
-      \resumeItem{\textbf{User Management \& Client:} Built authentication with SHA-256 password hashing and MySQL persistence plus ranking features backed by optimized queries; developed the SFML client with an event-driven loop for movement, group chat, and live state updates}
-    \resumeItemListEnd
-  \resumeProjectEntry
-    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Elderly-Care-Map-Website}{Elderly Care Map Website}}} $|$ \emph{Apache, PHP, MySQL, Google Maps API, Bootstrap5, JavaScript}}{Sep. 2023 -- Jan. 2024}
-    \resumeItemListStart
-      \resumeItem{\textbf{Database Design \& ETL:} Designed a normalized 8-table schema covering 2,000+ long-term care institutions with joins and constraints for user favorites and geolocation data; integrated government open data (CSV) through an automated ETL pipeline}
-      \resumeItem{\textbf{Full-Stack Development:} Built a map-based search platform on the Google Maps API with radius filtering, color-coded bed-capacity indicators, and real-time distance calculation; implemented user authentication and CRUD for saved institutions}
-    \resumeItemListEnd
+  \input{content/projects/chat-bar-server}
+  \input{content/projects/elderly-care-map}
 \resumeEntryListEnd
 
 %----------AWARDS----------
 \section{AWARDS}
 {\noindent\small
-  \textbf{Presidential Hackathon Winner (2024, Top 5 Nationally)} - Urban noise agent: structured-output LLM pipeline and tool calling
-  \\ \textbf{23rd Golden Peak Award (2025)} - Outstanding Commercial Product, MaiAgent AI Platform
+\input{content/awards}
 }
 
 %----------SKILLS----------
 \section{SKILLS}
 \begin{itemize}[leftmargin=0in, label={}]
-\item\small{\textbf{Languages:} Python, Java, C/C++, TypeScript $|$ \textbf{Backend:} Django, FastAPI, Express.js $|$ \textbf{Frontend:} HTML, CSS, JavaScript, React}
-\item\small{\textbf{APIs:} RESTful, WebSocket, Redis Pub/Sub $|$ \textbf{Databases:} PostgreSQL, MongoDB, Elasticsearch, Neo4j, Milvus $|$ \textbf{Async:} asyncio, Celery}
-\item\small{\textbf{Testing:} pytest, JUnit $|$ \textbf{DevOps:} GitHub Actions, Docker, git, Nginx, Shell Script $|$ \textbf{AWS:} EC2, S3, RDS, ElastiCache $|$ \textbf{Methods:} Agile, Scrum}
+  \input{content/skills/swe}
 \end{itemize}
 
 \end{document}
