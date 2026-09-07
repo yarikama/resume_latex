@@ -1,0 +1,7 @@
+{
+  // This project uses fontspec and must be built with XeLaTeX (see CLAUDE.md).
+  // LaTeX Workshop's stock "latexmk" recipe is first in the list and passes
+  // -pdf, i.e. pdfLaTeX, which silently produces a different, wrong PDF.
+  // Pin the built-in XeLaTeX recipe instead.
+  "latex-workshop.latex.recipe.default": "latexmk (xelatex)"
+}
