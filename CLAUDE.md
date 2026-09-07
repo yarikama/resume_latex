@@ -50,17 +50,12 @@ LaTeX source is formatted with `latexindent` configured via `.latexindent.yaml` 
 
 ## Cover Letter Workflow
 
-When writing a cover letter for a specific company:
+Use the **`cover-letter` skill** (`.claude/skills/cover-letter/`). It carries the full
+process — job-ad analysis, the STAR interview, the drafting standards from the Rice CCD
+and CMU GCC guidance, and the template's path/build quirks. Do not reimplement it here;
+edit the skill instead.
 
-1. **Read** both resume variants to understand the user's full experience
-2. **Analyze the job ad** — extract Must-Have vs Nice-to-Have skills, competencies, keywords
-3. **Ask STAR questions** one cluster at a time (Situation → Task → Action → Result), pausing for answers. Tag each question with the source requirement from the JD (e.g., `[A3: "Python; data pipelines"]`)
-4. **Probe** for: context, impact/metrics, scope, reach, tools/tech, constraints/challenges, leadership/communication
-5. **Calibrate verbs** — clarify actual role and autonomy (designed vs contributed; avoid "pioneered" unless warranted)
-6. **Draft body paragraphs** — smooth narrative flow (not bullets strung together), concise, evidence-driven. One STAR story per paragraph. Never assume or invent details.
-7. **Save** as `cover_letters/specific_comps/cover_letter_<company>.tex` using `cover_letters/cover_letter.tex` as template
-
-Full methodology is stored in the persistent memory file `cover_letter_methodology.md`.
+Company-specific letters are saved as `cover_letters/specific_comps/cover_letter_<company>.tex`.
 
 ## Important Notes
 

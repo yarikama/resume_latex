@@ -16,7 +16,7 @@ content/
   shared/header.tex        contact details, single source, shared with the cover letters
   resume/                  one file per entry (experience, projects, education, ...)
 cover_letters/             generic template; per-company letters are not tracked
-docs/                      reference material
+.claude/skills/            the cover-letter writing process, as a Claude Code skill
 ```
 
 Each entry lives in exactly one file under `content/resume/`, including entries no
