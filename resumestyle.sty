@@ -60,6 +60,15 @@
 % \usepackage[sfdefault]{noto-sans}
 \RequirePackage[default]{sourcesanspro}
 
+% ATS text-layer fix. The sourcesanspro font's ToUnicode CMap maps the hyphen glyph to
+% U+2011 NON-BREAKING HYPHEN, so every "-" in the source came out of pdftotext as U+2011:
+% the phone number, "real-time", "scikit-learn", every hyphenated compound. Visually
+% identical, but an ATS phone regex like \d{3}[-.\s]?\d{3}[-.\s]?\d{4} never matches,
+% and the failure is silent. This makes xdvipdfmx emit /ActualText spans so extraction
+% returns the real characters. Guarded because the primitive is XeTeX-only.
+% Verified: U+2011 count 0, page count unchanged. Do not remove.
+\ifdefined\XeTeXgenerateactualtext \XeTeXgenerateactualtext=1 \fi
+
 
 % serif
 % \usepackage{CormorantGaramond}
