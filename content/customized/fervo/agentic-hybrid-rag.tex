@@ -1,0 +1,16 @@
+% Agentic Hybrid RAG -- Fervo Agentic AI Engineer variant of projects/agentic-hybrid-rag.tex.
+% Same three facts (35% indexing token saving at 2.56% worse RAGAS, 88.2% MAR@10,
+% K-means/DBSCAN pivotal-node selection). Only the prose is tightened: the original
+% bullet 1 ran long and cost the page two lines once the tailored summary and the
+% Neo4j skills entry went in. No claim added or removed.
+%
+% Deliberately NOT written as "knowledge graph" even though the JD asks for one.
+% What was built is a Graph RAG over clustered pivotal nodes, which is arguably a
+% knowledge graph, but that is Henry's call to make, not a wording default.
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Agentic-Advanced-RAG}{Agentic Hybrid RAG}}} $|$ \emph{Graph RAG (Neo4j, Cypher), Vector RAG (Milvus), Multi-Agent (LangGraph)}}{Feb. 2024 -- Aug. 2024}
+    \resumeItemListStart
+      \resumeItem{\textbf{Self-Routing Agentic RAG:} Built a query-classification agent that routes each request to \textbf{Graph RAG}, vector RAG, or a hybrid path, picking global or local retrieval by question type}
+      \resumeItem{\textbf{ML Clustering:} Applied K-means and DBSCAN over the vector store to select pivotal nodes for a low-cost Graph RAG, saving \textbf{35\%} of indexing token cost for only 2.56\% worse RAGAS scores}
+      \resumeItem{\textbf{Hybrid Retrieval:} Fed Graph RAG results into vector retrieval with \textbf{HyDE} to balance global and detailed context, reaching an MAR@10 of \textbf{88.2\%} on multi-hop datasets}
+    \resumeItemListEnd%

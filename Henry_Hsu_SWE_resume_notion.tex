@@ -1,0 +1,57 @@
+%-------------------------
+% Henry Hsu -- resume (Software Engineer variant).
+%
+% Layout lives in resumestyle.sty. Every entry below is a module in content/;
+% this file only picks which ones appear and in what order. To retarget this
+% resume, swap an \input line -- do not paste entry bodies in here.
+%-------------------------
+
+\documentclass[letterpaper,11pt]{article}
+\usepackage{resumestyle}
+
+\begin{document}
+
+\input{content/shared/header}
+\vspace{\resumeHeaderGap}
+
+%----------SUMMARY----------
+\section{SUMMARY}
+\resumeEntryListStart
+  \input{content/customized/notion/summary}
+\resumeEntryListEnd
+
+%----------WORK EXPERIENCE----------
+\section{WORK EXPERIENCE}
+\resumeEntryListStart
+  \input{content/resume/experience/google-swe}
+  \input{content/customized/notion/maiagent-lead}
+  \input{content/customized/notion/maiagent-intern}
+\resumeEntryListEnd
+
+%----------EDUCATION----------
+\section{EDUCATION}
+\resumeEntryListStart
+  \input{content/resume/education/rice}
+  \input{content/resume/education/nycu}
+\resumeEntryListEnd
+
+%----------PROJECTS----------
+\section{PROJECTS}
+\resumeEntryListStart
+  \input{content/resume/projects/ricebook-social-network}
+  \input{content/customized/notion/relational-db-engine}
+\resumeEntryListEnd
+
+%----------AWARDS----------
+\section{AWARDS}
+{\noindent\small
+\input{content/resume/awards}
+}
+
+%----------SKILLS----------
+\section{SKILLS}
+\begin{itemize}[leftmargin=0in, label={}]
+  \input{content/customized/notion/skills}
+\end{itemize}
+
+\end{document}
