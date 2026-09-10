@@ -1,0 +1,25 @@
+% MaiAgent -- Backend Engineer Intern, Two Sigma variant (req 14018).
+%
+% Only change from content/resume/experience/maiagent-backend-intern.tex: the Data Pipeline
+% bullet is restored to its full form (the version preserved in that file's comments and in
+% cv.md), because "Building and scaling the infrastructure used to ingest data from 10,000+
+% sources daily" is a named responsibility on this JD and the compressed one-line version
+% throws away exactly the parts that answer it -- batch/generator patterns, multi-level
+% indexing. The normalized schema / incremental-refactor tail and the Real-Time
+% Communication frontend tail are both dropped again for the one-page fit.
+%
+% The Real-Time Communication bullet is dropped entirely here (it survives in the stock
+% module and in cv.md). It was the least on-message bullet for this JD -- WebSocket UI
+% notifications -- and the two printed lines it cost were what pushed this variant to a
+% second page. Dropped text:
+%   \resumeItem{\textbf{Real-Time Communication:} Implemented a \textbf{WebSocket}
+%   notification system with \textbf{Redis} pub/sub for file parsing status; built
+%   event-driven architecture for agent state transitions}
+% Real title was "Generative AI Intern" (see experience/maiagent-genai-intern.tex); retitled
+% "Backend Engineer Intern" for the SWE target, same as the stock module.
+  \resumeEntry
+    {Backend Engineer Intern}{Sep. 2024 -- Dec. 2024}
+    {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}} -- Award-Winning B2B GenAI Startup}{Taipei, Taiwan}
+    \resumeItemListStart
+      \resumeItem{\textbf{Data Pipeline \& Scaling:} Architected an async processing pipeline with \textbf{asyncio}, \textbf{Celery}, and batch/generator patterns for multi-level knowledge base indexing, achieving \textbf{3.5x faster} parsing while scaling from \textbf{3M to 20M+} text chunks}
+    \resumeItemListEnd%

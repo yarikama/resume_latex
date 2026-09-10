@@ -1,0 +1,13 @@
+% Chat Bar -- Two Sigma variant (req 14018), server-architecture framing.
+% Trimmed from content/resume/projects/chat-bar-server.tex: the SFML client half of
+% bullet 2 is dropped (no client-side component on this JD) and the space is spent
+% keeping the concurrency and persistence signal, which answers "low-latency,
+% high-performance infrastructure" and "large-scale systems". Facts unchanged; the
+% dropped clause read: "developed the SFML client with an event-driven loop for
+% movement, group chat, and live state updates".
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - Real-Time Multiplayer Game Server}}} $|$ \emph{C/C++ (Socket Programming), MySQL, SHA-256}}{Oct. 2023 -- Jan. 2024}
+    \resumeItemListStart
+      \resumeItem{\textbf{Server-Client Architecture:} Designed and implemented a real-time multiplayer game server using \textbf{TCP socket programming} with multi-threaded client handling, supporting concurrent connections for chat and gameplay state synchronization}
+      \resumeItem{\textbf{User Management:} Built authentication with SHA-256 password hashing and MySQL persistence plus ranking features backed by optimized queries}
+    \resumeItemListEnd%

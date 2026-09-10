@@ -1,0 +1,56 @@
+%-------------------------
+% Henry Hsu -- resume (GenAI / AI Engineer variant).
+%
+% Layout lives in resumestyle.sty. Every entry below is a module in content/;
+% this file only picks which ones appear and in what order. To retarget this
+% resume, swap an \input line -- do not paste entry bodies in here.
+%-------------------------
+
+\documentclass[letterpaper,11pt]{article}
+\usepackage{resumestyle}
+
+\begin{document}
+
+\input{content/shared/header}
+\vspace{\resumeHeaderGap}
+
+%----------SUMMARY----------
+\section{SUMMARY}
+\resumeEntryListStart
+  \input{content/customized/bytedance/summary-agentsec}
+\resumeEntryListEnd
+
+%----------WORK EXPERIENCE----------
+\section{WORK EXPERIENCE}
+\resumeEntryListStart
+  \input{content/resume/experience/google-gaie}
+  \input{content/resume/experience/maiagent-genai-lead}
+  \input{content/resume/experience/maiagent-genai-intern}
+\resumeEntryListEnd
+
+%----------EDUCATION----------
+\section{EDUCATION}
+\resumeEntryListStart
+  \input{content/resume/education/rice}
+  \input{content/resume/education/nycu}
+\resumeEntryListEnd
+
+%----------PROJECTS----------
+\section{PROJECTS}
+\resumeEntryListStart
+  \input{content/resume/projects/tool-schema-poisoning-defense}
+\resumeEntryListEnd
+
+%----------AWARDS----------
+\section{AWARDS}
+{\noindent\small
+\input{content/resume/awards}
+}
+
+%----------SKILLS----------
+\section{SKILLS}
+\begin{itemize}[leftmargin=0in, label={}]
+  \input{content/customized/bytedance/skills-agentsec}
+\end{itemize}
+
+\end{document}

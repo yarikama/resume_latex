@@ -1,0 +1,17 @@
+% PAPIT -- ByteDance A244211 variant. Trimmed from 3 bullets to 2 to make room for the
+% tool-schema poisoning entry on the same page. The dropped bullet is "Attention
+% Distillation" (the 1.3M scorer / 10x compute / 150x cheaper line); the two kept are the
+% ones that read as EVALUATION, which is what this req is about: a measured benchmark
+% result, and a diagnostic that explains why a cheaper method fails. Full version lives in
+% content/resume/projects/papit-token-pruning.tex and in cv.md.
+%
+% Trimmed AGAIN, 2 bullets to 1, for the one-page fit. The surviving bullet is the
+% benchmarked-result one, because it is the bullet that reads as evaluation. Also dropped:
+%   \resumeItem{\textbf{Empirical Diagnostic:} Showed why the training-free shortcut fails:
+%   across three VQA benchmarks, what CLIP finds salient barely tracks what LLaVA attends
+%   to, which is what made learning the scorer worth the trouble}
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/PAPIT}{Prompt-Aware Image Token Pruning for Multimodal Inference}}} $|$ \emph{PyTorch, LLaVA, CLIP ViT, Knowledge Distillation}}{Feb. 2026 -- May 2026}
+    \resumeItemListStart
+      \resumeItem{\textbf{Benchmarked Accuracy \& Latency:} Distilled a \textbf{1.3M-parameter} scorer from LLaVA-1.5-7B attention; kept a quarter of the image tokens and still answered TextVQA about as well as the full model, \textbf{12.3} points clear of random pruning, at \textbf{0.43 ms} an image}
+    \resumeItemListEnd%
