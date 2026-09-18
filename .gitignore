@@ -21,3 +21,6 @@ work_sample.txt
 Unofficial Academic Transcript.pdf
 *.xdv
 
+
+__pycache__/
+*.pyc
