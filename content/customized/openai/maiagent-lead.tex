@@ -1,0 +1,20 @@
+% MaiAgent -- OpenAI variant. Copy of experience/maiagent-backend-lead.tex with the
+% REAL title restored.
+%
+% Why this differs from the canonical SWE entry:
+%   * Title is "Generative AI Team Lead", which is the real title in cv.md. The canonical
+%     SWE resume retitles it "Backend Engineer", which is both less accurate and, for this
+%     reader, a wasted signal: the JD lists "Interest in AI/ML" and the Applied team builds
+%     ChatGPT and API surfaces. Title lines are also what background checks verify.
+%   * Bullets are the SWE set, NOT the GAIE set. The API Optimization bullet is this
+%     resume's only answer to the JD's "Optimize applications for speed and scale", so it
+%     stays. Swapping in maiagent-genai-lead.tex wholesale would have dropped it.
+%   * Costs nothing: title is the same single line either way.
+  \resumeEntry
+    {Generative AI Team Lead}{Dec. 2024 -- Aug. 2025}
+    {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}} -- Award-Winning B2B GenAI Startup}{Taipei, Taiwan}
+    \resumeItemListStart
+      \resumeItem{\textbf{API Optimization:} Optimized \textbf{140+} RESTful APIs through SQL query refactoring, connection pooling (Elasticsearch, Cohere, OpenAI), and Django caching; cut response time of 13 high-traffic APIs by \textbf{27.7\%} overall and eliminated N+1 queries}
+      \resumeItem{\textbf{CI/CD \& Testing:} Built a \textbf{GitHub Actions} CI pipeline with pytest unit and E2E coverage, reaching \textbf{67\%} code coverage from a \textbf{zero} baseline; reduced production hotfixes by \textbf{90\%} initially and \textbf{50\%} long term; managed database migrations in the CD pipeline}
+      \resumeItem{\textbf{Open Source:} Contributed \textbf{14} merged pull requests to \textbf{LlamaIndex} (\textbf{15K+ stars}), fixing bugs and adding features across the AWS Bedrock, Claude, Elasticsearch, Cohere, OpenAI, and MCP Client integrations}
+    \resumeItemListEnd%

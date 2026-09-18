@@ -2,12 +2,22 @@
 % Shared by every resume variant and by the cover letters, so it must not
 % depend on anything defined in resumestyle.sty. The caller owns the spacing
 % that follows it.
+% FontAwesome ships no ToUnicode CMap, so every icon lands in the PDF text
+% layer as a junk Latin character: the contact line extracted as
+% "x +1-510... c www.yarikama.com ] yarikama a yarikama". Wrapping each glyph
+% in a marked-content span with an empty ActualText makes an extractor emit
+% nothing for it, with no change to what is drawn on the page.
+% \providecommand so this file stays standalone: it is shared with the cover
+% letters and must not depend on resumestyle.sty.
+\providecommand{\atsicon}[1]{%
+  \special{pdf:code /Span <</ActualText <FEFF>>> BDC}#1\special{pdf:code EMC}%
+}
 \begin{center}
   {\Huge \scshape \href{https://www.yarikama.com/}{{Henry Hsu}}} \\
   {\small\color{gray} Houston, TX 77025} \\
-  \href{tel:+1-510-996-6837}{\raisebox{-0.2\height}\faPhone\  \underline{+1-510-996-6837}} ~~
-  \href{https://www.yarikama.com/}{\raisebox{-0.2\height}\faGlobe\ \underline{www.yarikama.com}} ~~
-  \href{https://www.linkedin.com/in/yarikama/}{\raisebox{-0.2\height}\faLinkedin\ \underline{yarikama}}  ~~
-  \href{https://www.github.com/yarikama}{\raisebox{-0.2\height}\faGithub\ \underline{yarikama}} ~~
-  \href{mailto:hsuhengjui@gmail.com}{\raisebox{-0.2\height}\faEnvelope\  \underline{hsuhengjui@gmail.com}} ~~
+  \href{tel:+1-510-996-6837}{\raisebox{-0.2\height}{\atsicon{\faPhone}}\  \underline{+1-510-996-6837}} ~~
+  \href{https://www.yarikama.com/}{\raisebox{-0.2\height}{\atsicon{\faGlobe}}\ \underline{www.yarikama.com}} ~~
+  \href{https://www.linkedin.com/in/yarikama/}{\raisebox{-0.2\height}{\atsicon{\faLinkedin}}\ \underline{yarikama}}  ~~
+  \href{https://www.github.com/yarikama}{\raisebox{-0.2\height}{\atsicon{\faGithub}}\ \underline{yarikama}} ~~
+  \href{mailto:hsuhengjui@gmail.com}{\raisebox{-0.2\height}{\atsicon{\faEnvelope}}\  \underline{hsuhengjui@gmail.com}} ~~
 \end{center}%

@@ -5,7 +5,7 @@ description: Write a tailored cover letter for a specific company or job ad, usi
 
 # Cover Letter
 
-Writes one-page, company-specific cover letters into `cover_letters/specific_comps/`,
+Writes one-page, company-specific cover letters into `applications/<company>/`,
 built on `cover_letters/cover_letter.tex`.
 
 The standards below come from the Rice Center for Career Development guidelines and
@@ -118,23 +118,41 @@ Run the checklist in `references/quality-bar.md`. The ones most often failed:
 ### 7. Build it
 
 ```
-cp cover_letters/cover_letter.tex cover_letters/specific_comps/cover_letter_<company>.tex
-cd cover_letters/specific_comps && latexmk -xelatex cover_letter_<company>.tex
+mkdir -p applications/<company>
+cp cover_letters/cover_letter.tex applications/<company>/cover_letter_<company>.tex
+# edit, then build FROM THE REPO ROOT -- never cd into the folder
+make letters
 ```
 
-Then confirm the PDF is exactly one page.
+Then confirm the PDF is exactly one page, and that the signature actually rendered.
 
 ## Template facts
 
 - **Copy `cover_letters/cover_letter.tex`.** Never write a letter from scratch, and
-  never use the flatter style of the older letters in `specific_comps/`.
-- The contact header is `\input{../content/shared/header}` — shared with the resumes,
-  so the letter's header and font match the résumé automatically. A letter in
-  `specific_comps/` is one directory deeper: the path becomes
-  `\input{../../content/shared/header}`.
-- `sign.png` lives in `cover_letters/`, is deliberately untracked, and is guarded by
-  `\IfFileExists`. A letter in `specific_comps/` needs the path adjusted or the guard
-  silently drops the signature. **Check the built PDF actually shows it.**
+  never copy the flatter style of an older letter under `applications/`.
+- **Everything builds from the repo root.** TeX resolves `\input` against the current
+  directory, not the file's own directory, so `cd applications/<company> && latexmk`
+  breaks. Use `make letters`. The one exception is the generic template itself, which
+  `make cover` still builds from inside `cover_letters/`.
+- **Never hardcode the contact block.** Always `\input{content/shared/header}`, the
+  same file the resumes use, so a letter's header and font match the resume and a
+  change of phone or address propagates everywhere at once. Only 2 of the 10 existing
+  letters do this; the other 8 pasted the details in, and three of them were still
+  carrying a stale ZIP (77030 against the canonical 77025 in `content/shared/header.tex`
+  and career-ops `config/profile.yml`) until it was caught by comparison rather than by
+  anyone reading them. A copied contact block is a fact that goes stale silently.
+- **Paths inside a letter are root-relative**, because of the rule above: the contact
+  header is `\input{content/shared/header}` (shared with the resumes, so header and
+  font match automatically) and the signature is
+  `\IfFileExists{cover_letters/sign.png}`. The template still carries the
+  `cover_letters/`-relative forms (`../content/shared/header`, `sign.png`), so
+  **rewrite both when you copy it**. The guard means a wrong signature path fails
+  silently: check the built PDF actually shows it.
 - **XeLaTeX only.** Get fonts via `\usepackage[default]{sourcesanspro}`; never
   `\setmainfont{Source Sans Pro}` (not installed system-wide — it breaks the build).
-- `specific_comps/` is gitignored. Letters there exist only on the local disk.
+  Four letters carried both lines and could not build at all until this was fixed;
+  the template is clean, so this only appears if you add it.
+- **Keep the company in the letter's filename** (`cover_letter_openai.tex`). The
+  resume in the same folder is deliberately generic (`Henry_Hsu_Resume.pdf`) because a
+  resume names no company, so attaching the wrong one is cheap. A letter names the
+  company in its first line, so attaching the wrong one is not.

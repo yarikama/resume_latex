@@ -1,0 +1,22 @@
+% MaiAgent -- merged entry, open-source-first framing (Jane Street)
+%
+% Changed vs content/resume/experience/maiagent-backend-lead.tex + -intern.tex:
+%   * MERGED the intern/engineer split into one entry (Sep. 2024 -- Aug. 2025) to buy the
+%     space the 3-bullet database project and the coursework line cost. Restore the split
+%     for any resume where career progression is the point.
+%   * OPEN SOURCE IS NOW THE LEAD BULLET. The JD gives open source its own paragraph and
+%     names the OCaml compiler, OPAM and Mercurial as projects they support. 14 merged PRs
+%     into a 15K-star codebase answers that paragraph directly, so it stops being a
+%     footnote and becomes the first thing in the entry.
+%   * Dropped: the 120% partner growth / 3K-to-20K user / CTBC-MSI-HPE business bullets,
+%     and the GenAI product framing generally. Jane Street is not buying a product story.
+%   * Kept the performance and correctness work, which is the part that reads as engineering.
+  \resumeEntry
+    {Back-End Engineer}{Sep. 2024 -- Aug. 2025}
+    {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}}}{Taipei, Taiwan}
+    \resumeItemListStart
+      \resumeItem{\textbf{Open Source:} Contributed \textbf{14} merged pull requests to \textbf{LlamaIndex} (\textbf{15K+} stars), fixing bugs and adding features across its AWS Bedrock, Claude, Elasticsearch, Cohere, OpenAI, and MCP Client integrations}
+      \resumeItem{\textbf{Performance:} Cut response time of 13 high-traffic endpoints by \textbf{27.7\%} across a \textbf{140+} RESTful API surface through SQL query refactoring, connection pooling, and Django caching, eliminating N+1 queries}
+      \resumeItem{\textbf{Concurrency \& Scale:} Rebuilt knowledge base indexing as an async pipeline on \textbf{asyncio} and \textbf{Celery} with batch/generator patterns, \textbf{3.5x faster} parsing while scaling \textbf{3M to 20M+} records through a normalized schema and backward-compatible refactors}
+      \resumeItem{\textbf{Correctness:} Took test coverage from a \textbf{zero} baseline to \textbf{67\%} with pytest unit and E2E suites on GitHub Actions, cutting production hotfixes by \textbf{90\%} initially and \textbf{50\%} long term}
+    \resumeItemListEnd%

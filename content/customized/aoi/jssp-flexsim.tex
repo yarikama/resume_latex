@@ -1,0 +1,19 @@
+% JSSP + GA + Bayesian Optimization, Flexsim -- IE framing (AOI third lane)
+%
+% Changed vs content/resume/projects/jssp-bayesian-ga.tex:
+%   * Promoted to the FIRST project slot on this resume. On the canonical resumes this
+%     project is buried; for an AOI industrial engineer it is the single most legible item
+%     on the CV, because Flexsim is a manufacturing simulation tool they use (report 023
+%     Block C: recognition beats sophistication).
+%   * Flexsim moved into the header stack line AND named in a bullet, so it survives both a
+%     human skim and an ATS keyword match.
+%   * Bullets rewritten from tool-first to outcome-first, in IE register: scheduling,
+%     capacity, cross-validation against a simulation model. Same work, same facts.
+%   * Fixed the canonical file's sentence fragment ("Hyperparameters using Bayesian
+%     Optimization in Genetic Algorithms") into a complete bullet.
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/JSSP-Simulation-and-Flexsim-Model}{Job Shop Scheduling: Genetic Algorithm \& Bayesian Optimization}}} $|$ \emph{Python, Flexsim}}{Apr. 2022 -- Jun. 2022}
+    \resumeItemListStart
+      \resumeItem{\textbf{Scheduling Optimization:} Solved the Job Shop Scheduling Problem with a metaheuristic genetic algorithm in \textbf{Python}, tuning its hyperparameters by \textbf{Bayesian Optimization} rather than by hand}
+      \resumeItem{\textbf{Simulation Cross-Validation:} Automated export of the optimizer output into a \textbf{Flexsim}-compatible format via Python file scripting, validating the schedules against the discrete-event simulation model instead of trusting the solver alone}
+    \resumeItemListEnd%
