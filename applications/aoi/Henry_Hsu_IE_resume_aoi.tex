@@ -1,0 +1,77 @@
+%-------------------------
+% Henry Hsu -- resume (Industrial Engineer variant, targeted at Applied Optoelectronics).
+%
+% THIRD LANE. modes/_profile.md defines two archetypes, GAIE and SWE, and forbids blending
+% them. This is neither: it targets AOI's three Sugar Land industrial-engineering reqs
+% (career-ops reports 023 / 024 / 025). Mixing GenAI bullets into an IE application
+% produces the worst of both, which is why this driver exists instead of a flag on an
+% existing one.
+%
+% Section order differs from the canonical resumes ON PURPOSE: EDUCATION sits above WORK
+% EXPERIENCE. All three AOI reqs open their Qualifications with "Bachelor's degree in
+% Industrial Engineering", so the degree is the first thing the screener checks. On the
+% GAIE and SWE resumes the work history is the lead and education stays below.
+%
+% make does not build this driver (RESUMES lists only the two canonical resumes):
+%   latexmk -xelatex Henry_Hsu_IE_resume_aoi.tex
+% and check the page count yourself -- must be exactly 1.
+%-------------------------
+
+\documentclass[letterpaper,11pt]{article}
+\usepackage{resumestyle}
+
+\begin{document}
+
+\input{content/shared/header}
+\vspace{\resumeHeaderGap}
+
+%----------SUMMARY----------
+\section{SUMMARY}
+\resumeEntryListStart
+  \input{content/customized/aoi/summary}
+\resumeEntryListEnd
+
+%----------EDUCATION----------
+\section{EDUCATION}
+\resumeEntryListStart
+  \input{content/customized/aoi/nycu-ie}
+  \input{content/resume/education/rice}
+\resumeEntryListEnd
+
+%----------WORK EXPERIENCE----------
+\section{WORK EXPERIENCE}
+\resumeEntryListStart
+  \input{content/customized/aoi/google-swe}
+  \input{content/customized/aoi/maiagent}
+\resumeEntryListEnd
+
+%----------PROJECTS----------
+\section{PROJECTS}
+\resumeEntryListStart
+  \input{content/customized/aoi/jssp-flexsim}
+  \input{content/customized/aoi/gnn-jssp-scaling}
+\resumeEntryListEnd
+
+%----------LEADERSHIP----------
+\section{LEADERSHIP}
+\resumeEntryListStart
+  \input{content/customized/aoi/nycu-student-association}
+\resumeEntryListEnd
+
+% AWARDS is deliberately ABSENT from this variant. Both canonical award lines describe AI
+% work -- "Urban noise agent: structured-output LLM pipeline and tool calling" and
+% "MaiAgent AI Platform" -- so the section costs ~4 lines to broadcast exactly the signal
+% this lane exists to suppress: an AI engineer passing through an IE role. LEADERSHIP was
+% kept over it because the IE&M Student Association presidency reinforces the IE identity
+% and is the only cross-functional-coordination evidence in any primary file, which all
+% three AOI reqs ask for. Restore AWARDS for any GAIE or SWE target:
+%   \section{AWARDS}
+%   {\noindent\small \input{content/resume/awards}}
+
+%----------SKILLS----------
+\section{SKILLS}
+\begin{itemize}[leftmargin=0in, label={}]
+  \input{content/customized/aoi/skills}
+\end{itemize}
+
+\end{document}

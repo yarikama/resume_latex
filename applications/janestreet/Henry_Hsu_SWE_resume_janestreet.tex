@@ -1,0 +1,75 @@
+%-------------------------
+% Henry Hsu -- resume (SWE variant, targeted at Jane Street Software Engineer, New Grad).
+% Role: https://www.janestreet.com/join-jane-street/position/8594541002/
+%
+% Why this driver differs from Henry_Hsu_SWE_resume.tex:
+%   * EDUCATION sits above WORK EXPERIENCE. Jane Street hires new grads on fundamentals
+%     ("we're more interested in how you think and learn than what you currently know"),
+%     so Rice 4.00/4.00 plus a 6/64 class rank and the CS/math coursework are load-bearing
+%     rather than supporting detail.
+%   * PROJECTS carry more weight than usual and the database engine leads them. For this
+%     reader a C++ storage engine with a cost-based optimizer outranks a GenAI product story.
+%   * The MaiAgent entry leads with open source, answering the JD's own OSS paragraph.
+%
+% make does not build this driver (RESUMES lists only the two canonical resumes):
+%   latexmk -xelatex Henry_Hsu_SWE_resume_janestreet.tex
+% and check the page count yourself -- must be exactly 1.
+%-------------------------
+
+\documentclass[letterpaper,11pt]{article}
+\usepackage{resumestyle}
+
+\begin{document}
+
+\input{content/shared/header}
+\vspace{\resumeHeaderGap}
+
+% SUMMARY is deliberately ABSENT from this variant.
+% The canonical SWE resume opens with one, but here it restated what the rest of the page
+% already proves (Rice GPA, the database engine, LlamaIndex, 27.7%, class rank) and spent
+% ~5 lines doing it. Jane Street's JD says they care about "how you think and learn" rather
+% than a self-description, so those lines went to AWARDS instead, which carries independent
+% evidence the rest of the resume does not. content/customized/janestreet/summary.tex is
+% kept in the pool: re-add the block below for any target that expects a summary.
+%   \section{SUMMARY}
+%   \resumeEntryListStart
+%     \input{content/customized/janestreet/summary}
+%   \resumeEntryListEnd
+
+%----------EDUCATION----------
+\section{EDUCATION}
+\resumeEntryListStart
+  \input{content/resume/education/rice}
+  \input{content/customized/janestreet/nycu-cs}
+\resumeEntryListEnd
+
+%----------WORK EXPERIENCE----------
+\section{WORK EXPERIENCE}
+\resumeEntryListStart
+  \input{content/resume/experience/google-swe}
+  \input{content/customized/janestreet/maiagent}
+\resumeEntryListEnd
+
+%----------PROJECTS----------
+\section{PROJECTS}
+\resumeEntryListStart
+  \input{content/customized/janestreet/relational-db-engine}
+  \input{content/resume/projects/chat-bar-server}
+  % gnn-jssp-scaling was tried here as a third project (the 10%-to-376% scale-failure
+  % diagnosis is strong 'how you think' evidence for this reader) but pushed the page to 2.
+  % Re-add it only by dropping something else.
+\resumeEntryListEnd
+
+%----------AWARDS----------
+\section{AWARDS}
+{\noindent\small
+\input{content/customized/janestreet/awards}
+}
+
+%----------SKILLS----------
+\section{SKILLS}
+\begin{itemize}[leftmargin=0in, label={}]
+  \input{content/customized/janestreet/skills}
+\end{itemize}
+
+\end{document}

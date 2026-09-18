@@ -1,0 +1,81 @@
+%-------------------------
+% Henry Hsu -- resume (SWE variant, targeted at OpenAI Software Engineer,
+% Applied Emerging Talent (2027), San Francisco).
+% Role: https://jobs.ashbyhq.com/openai/55150071-fce8-48f5-aea4-14ed78b83511
+% Evaluation: career-ops reports/026-openai-2026-09-16.md (4.2/5)
+%
+% Why this driver differs from Henry_Hsu_SWE_resume.tex:
+%   * MaiAgent entries carry their REAL titles ("Generative AI Team Lead", "Generative AI
+%     Intern") instead of the canonical SWE resume's "Backend Engineer" retitling. More
+%     accurate, and it is the cheapest possible AI signal: same line count either way.
+%     Bullets stay the SWE set so the 140+ API / 27.7% optimization evidence survives.
+%   * PAPIT is ADDED to PROJECTS, framed as inference efficiency so it answers both
+%     "Interest in AI/ML" and "Optimize applications for speed and scale".
+%   * The relational database engine STAYS (Henry's call, 2026-09-16). It was cut in the
+%     first pass and put back; the page was paid for by compressing Ricebook to one bullet
+%     and tightening the SKILLS rows, NOT by touching any canonical module.
+%   * Ricebook stays and is NOT negotiable for this target: React is the JD's first stated
+%     technical requirement and Ricebook is the only React evidence on the page.
+%
+% SUMMARY is deliberately ABSENT from this variant (Henry's call, 2026-09-16).
+% Reasoning: a resume screen at this company is very likely LLM-read, and an LLM reads the
+% whole document, so the summary's "first three seconds" advantage does not apply. The
+% ~5 lines it cost went to the third project instead. Same decision as the Jane Street
+% variant. Re-add for any target with a human-first screen:
+%   \section{SUMMARY}
+%   \resumeEntryListStart
+%     \input{content/resume/summary/swe}
+%   \resumeEntryListEnd
+%
+% make does not build this driver (RESUMES lists only the two canonical resumes):
+%   latexmk -xelatex Henry_Hsu_SWE_resume_openai.tex
+% and check the page count yourself -- must be exactly 1.
+%-------------------------
+
+\documentclass[letterpaper,11pt]{article}
+\usepackage{resumestyle}
+
+\begin{document}
+
+\input{content/shared/header}
+\vspace{\resumeHeaderGap}
+
+%----------WORK EXPERIENCE----------
+\section{WORK EXPERIENCE}
+\resumeEntryListStart
+  \input{content/resume/experience/google-swe}
+  \input{content/customized/openai/maiagent-lead}
+  \input{content/customized/openai/maiagent-intern}
+\resumeEntryListEnd
+
+%----------EDUCATION----------
+\section{EDUCATION}
+\resumeEntryListStart
+  \input{content/resume/education/rice}
+  \input{content/resume/education/nycu}
+\resumeEntryListEnd
+
+%----------PROJECTS----------
+\section{PROJECTS}
+\resumeEntryListStart
+  \input{content/customized/openai/papit}
+  \input{content/customized/openai/ricebook}
+  \input{content/resume/projects/relational-db-engine}
+  % Three projects fit only because Ricebook is the one-bullet OpenAI variant and the
+  % SKILLS rows were tightened. Restoring Ricebook's second bullet pushes this to 2 pages
+  % (measured). If a line is ever needed here, merge PAPIT's two bullets back into one.
+\resumeEntryListEnd
+
+%----------AWARDS----------
+\section{AWARDS}
+{\noindent\small
+\input{content/resume/awards}
+}
+
+%----------SKILLS----------
+\section{SKILLS}
+\begin{itemize}[leftmargin=0in, label={}]
+  \input{content/customized/openai/skills}
+\end{itemize}
+
+\end{document}

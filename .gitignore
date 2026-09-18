@@ -1,3 +1,6 @@
+build/
+cover_letters/build/
+
 *.aux
 *.log
 *.out
