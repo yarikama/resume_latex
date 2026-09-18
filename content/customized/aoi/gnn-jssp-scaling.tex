@@ -1,0 +1,28 @@
+% GGJSSP -- scheduling-at-scale framing (AOI third lane)
+%
+% Changed vs content/resume/projects/gnn-jssp-scaling.tex:
+%   * Title and stack line reframed from ML research toward the scheduling problem. The
+%     canonical header leads "Cross-Size Generalization for GNN Job Shop Scheduling" with
+%     PyTorch/GNN/RL; an IE reader needs "scheduling breaks when the plant gets bigger",
+%     which is a capacity-planning lesson, not an ML result (report 023 Block E row 4).
+%   * GRPO / PPO / encoder-ablation vocabulary de-emphasized: the third bullet is dropped
+%     and "critic-free GRPO" does not appear. PyTorch and GNN stay in the stack line so the
+%     ML signal is not erased, just subordinated.
+%   * Dropped to 2 bullets, and bullet 2 compressed, to buy vertical space for the IE
+%     coursework bullet in education. The dropped third bullet (4 GNN encoders, critic-free
+%     GRPO plus PPO, FT/LA/TA benchmarks) is the research-framework bullet -- restore it for
+%     any GAIE or MLE target, where it is the strongest of the three.
+%
+% Attribution, carried over unchanged from the canonical module: Rice, 3-person team
+% (Henry / Kerstin Sun / Cheng Han Lin), 78 of 96 commits Henry's. Bullets cover only his
+% work. Kerstin's GRPO-Clip, benchmark download scripts and tests, and Cheng Han's alpha
+% sweep and mixed-size training are not claimed.
+%
+% Link check still needed: the \href points at github.com/yarikama/GGJSSP but the remote is
+% SSH, so whether the repo is public was never verified. A private repo means a 404.
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/GGJSSP}{Scheduling Models That Break at Scale: A Cross-Size Study}}} $|$ \emph{PyTorch, Graph Neural Networks}}{Mar. 2026 -- Apr. 2026}
+    \resumeItemListStart
+      \resumeItem{\textbf{Failure Diagnosis:} Traced the collapse of learned schedulers on larger instances, relative scheduling error rising from \textbf{10\%} in-distribution to \textbf{376\%} out of it, to linear degree growth in the disjunctive graph}
+      \resumeItem{\textbf{Architectural Fix:} Cut that error to a $\sim$\textbf{26\%} ceiling, letting one 10$\times$10-trained policy generalize to \textbf{7.5$\times$} larger instances}
+    \resumeItemListEnd%

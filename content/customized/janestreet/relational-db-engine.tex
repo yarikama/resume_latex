@@ -1,0 +1,25 @@
+% Relational DB engine -- 3-bullet version restored for Jane Street.
+%
+% Changed vs content/resume/projects/relational-db-engine.tex:
+%   * RESTORED THE 3-BULLET SPLIT. The canonical module was trimmed to 2 bullets to fit the
+%     SWE resume and its own header comment preserves the dropped text with the note
+%     "restore the split if a page ever has room". This resume makes room for it, because
+%     for Jane Street this project is the single strongest artifact on the CV: storage
+%     engine, query execution, and a cost-based optimizer are exactly the systems layer
+%     their JD describes ("design and build the systems and tools that run the firm").
+%   * Restored specifics the canonical trim dropped: the page-level reader/writer API,
+%     the 12-query TPC-H suite, and scale factor 1 being ~1 GB.
+%   * Promoted to the first project slot.
+%
+% No \href on purpose: the repo is course solutions and publishing them breaks course policy.
+%
+% Wording caveat carried over from the canonical module: COMP 530 supplies scaffolding and
+% A8 ships A7's reference solution. "Built" is standard framing for this project; be ready
+% to say exactly that in an interview, because Jane Street will ask what you wrote yourself.
+  \resumeProjectEntry
+    {\textbf{Relational Database Engine from Scratch} $|$ \emph{C++, B+ Tree, Query Optimization, TPC-H}}{Aug. 2025 -- Dec. 2025}
+    \resumeItemListStart
+      \resumeItem{\textbf{Storage Engine:} Built the C++ persistence layer over a page-level reader/writer API: a buffer manager with \textbf{LRU} eviction and page pinning, slotted-page record storage, and a \textbf{B+ tree} index supporting range scans}
+      \resumeItem{\textbf{Query Execution:} Implemented the relational operators, selection, aggregation with group-by, scan join, and a \textbf{sort-merge join} backed by external merge sort that spills runs to disk when inputs exceed the buffer pool}
+      \resumeItem{\textbf{SQL Front End \& Optimizer:} Compiled SQL into logical plans, ordered joins by cost from cardinality statistics, and chose scan vs. sort-merge join by buffer-pool fit; ran the \textbf{12-query TPC-H} suite at scale factor 1 (\textbf{1 GB})}
+    \resumeItemListEnd%

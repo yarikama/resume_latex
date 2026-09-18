@@ -1,0 +1,26 @@
+% MaiAgent -- single merged entry (AOI third lane)
+%
+% Changed vs the canonical split (experience/maiagent-backend-lead.tex +
+% maiagent-backend-intern.tex):
+%   * MERGED back into one entry spanning Sep. 2024 -- Aug. 2025. The canonical SWE resume
+%     splits intern from engineer to show progression; an IE screener does not read that
+%     distinction and the split costs an entry header plus a repeated company subtitle,
+%     roughly 3 lines. Restore the split for any SWE target.
+%   * Bullets lead with the measured outcome and put technology second, which is the IE
+%     register (report 023 Block E row 5).
+%   * The pipeline bullet keeps "normalized schema" and "backward-compatible incremental
+%     refactors" explicitly: that is the closest honest analogue to maintaining a BOM or an
+%     MES system of record through change, which is report 024's central gap.
+%   * Dropped vs canonical: the LlamaIndex open-source bullet (strong for GAIE, noise here)
+%     and the WebSocket / Redis pub-sub bullet (strong for SWE, noise here).
+%   * Title "Backend Engineer" follows the canonical SWE reframing. Real title was
+%     "Generative AI Team Lead" (see experience/maiagent-genai-lead.tex).
+  \resumeEntry
+    {Backend Engineer}{Sep. 2024 -- Aug. 2025}
+    {\href{https://docs.maiagent.ai/maiagent-user-guide/maiagent-user-guide-en/}{\textcolor{RoyalBlue}{\textbf{MaiAgent Co., Ltd.}}} -- Award-Winning B2B Software Startup}{Taipei, Taiwan}
+    \resumeItemListStart
+      \resumeItem{\textbf{Throughput \& Latency:} Cut response time of 13 high-traffic endpoints by \textbf{27.7\%} across a \textbf{140+} API surface by removing repeated work rather than adding capacity: SQL query refactoring, connection pooling, caching, and N+1 elimination}
+      \resumeItem{\textbf{Capacity Scaling:} Scaled an indexing pipeline from \textbf{3M to 20M+} records at \textbf{3.5x faster} parsing, through a normalized schema and backward-compatible incremental refactors rather than a rewrite, so the system stayed live throughout}
+      \resumeItem{\textbf{Defect Reduction:} Cut production hotfixes by \textbf{90\%} initially and \textbf{50\%} long term, building CI coverage from a \textbf{zero} baseline to \textbf{67\%}}
+      \resumeItem{\textbf{Requirements to Delivery:} Defined the product roadmap for a \textbf{10-person} company and owned features end to end, from feasibility evaluation through production release}
+    \resumeItemListEnd%

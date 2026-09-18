@@ -1,0 +1,24 @@
+% PAPIT -- OpenAI variant. Two bullets, framed as inference efficiency rather than research.
+%
+% Why this framing:
+%   * The JD says "Interest in AI/ML (direct experience not required)", so a research-shaped
+%     entry would spend a whole block on an explicitly optional requirement. Framed as
+%     inference efficiency it ALSO answers "Optimize applications for speed and scale",
+%     which is a central JD responsibility.
+%   * The canonical 3-bullet version's "Empirical Diagnostic" bullet (CLIP saliency does not
+%     track LLaVA attention) is the research-shaped one and is dropped here. It is the best
+%     bullet for an MLE/research target; keep using projects/papit-token-pruning.tex there.
+%   * Kept at 2 bullets. It was briefly cut to 1 (ByteDance-variant shape) while making
+%     room for the relational database engine, but tightening the SKILLS rows freed the
+%     lines instead, so both bullets survive. If this variant ever needs a line again,
+%     merging these two back into one is the cheapest cut on the page after Ricebook.
+%   * Facts are identical to projects/papit-token-pruning.tex, only the connectives changed
+%     (no "--" as a sentence connector, per Henry's house rule).
+%   * Attribution unchanged: both bullets cover Henry's own commits (distill predictor,
+%     LLM-attention oracle, efficiency benchmark). Teammate work is not claimed.
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/PAPIT}{Prompt-Aware Image Token Pruning for Multimodal Inference}}} $|$ \emph{PyTorch, LLaVA, CLIP ViT, Knowledge Distillation}}{Feb. 2026 -- May 2026}
+    \resumeItemListStart
+      \resumeItem{\textbf{Inference Efficiency:} Distilled a \textbf{1.3M-parameter} scorer from LLaVA-1.5-7B attention to drop the image patches the model ignores before the projector, cutting attention compute for the frozen LLM \textbf{10$\times$} and running \textbf{150$\times$} cheaper than a CLIP-GradCAM pass}
+      \resumeItem{\textbf{Accuracy \& Latency:} Kept a quarter of the image tokens and still answered TextVQA about as well as the full model, \textbf{12.3} points clear of random pruning, while deciding what to keep in \textbf{0.43 ms} an image, cheap enough to be free at inference}
+    \resumeItemListEnd%
