@@ -30,6 +30,22 @@ LETTER_PDFS := $(LETTER_TEX:.tex=.pdf)
 # XeLaTeX is required -- the preamble uses fontspec. A pdfLaTeX build silently
 # produces a different, wrong PDF.
 # -auxdir keeps .aux/.log/.fls/.fdb_latexmk/.out/.xdv out of the working tree.
+# Reproducible builds. XeLaTeX stamps the wall clock into the PDF's
+# /CreationDate and /ID, so re-running make with no source change produced
+# byte-different PDFs and dirtied eleven tracked binaries every time. Pinning
+# SOURCE_DATE_EPOCH makes the same input give the same bytes, so `git status`
+# after a build means a real change.
+#
+# It is a fixed constant rather than something derived from git: the PDFs are
+# committed alongside the sources they are built from, so any git-derived
+# timestamp moves the moment you commit and the tree is dirty again on the next
+# build. The cost is that a PDF's stated creation date stays at the value below
+# until someone bumps it -- metadata nobody reads, traded for a clean tree.
+# Bump it (any `date +%s`) when you want the PDFs to claim a newer date.
+SOURCE_DATE_EPOCH := 1789689600
+export SOURCE_DATE_EPOCH
+export FORCE_SOURCE_DATE = 1
+
 LATEXMK := latexmk -xelatex -interaction=nonstopmode -auxdir=build
 ORPHANS := python3 tools/check-orphans.py
 ATS     := python3 tools/check-ats.py
