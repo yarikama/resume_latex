@@ -24,3 +24,10 @@ Unofficial Academic Transcript.pdf
 
 __pycache__/
 *.pyc
+
+# Per-application cover letters and supplements stay OFF this PUBLIC repo.
+# They name every company applied to, and seven of them discuss OPT and visa
+# status -- a candidate controls when that is disclosed, and git history cannot
+# really be withdrawn. The resumes are fine to publish: they name no employer.
+applications/*/cover_letter_*
+applications/*/*_supplement.*
