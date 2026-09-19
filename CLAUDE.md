@@ -33,6 +33,8 @@ latexmk -xelatex <filename>.tex
 
 Intermediates (`.aux`, `.log`, `.fls`, `.fdb_latexmk`, `.out`, `.xdv`) go to `build/` via latexmk's `-auxdir`, not the repo root: six per driver across eleven drivers was 66 of the 97 files sitting next to the sources. The **PDF still lands beside its `.tex`**, because that is the file you attach to an application and git tracks it. `build/` and `cover_letters/build/` are gitignored. A one-off `latexmk -xelatex <file>.tex` without `-auxdir` will scatter intermediates back into the root; pass `-auxdir=build` or just use `make`.
 
+Builds are **reproducible**: `SOURCE_DATE_EPOCH` is pinned in the Makefile, so the same sources give byte-identical PDFs and `git status` after a build reflects a real change rather than a new timestamp. Without it XeLaTeX stamps the wall clock into `/CreationDate` and `/ID` and every `make` marked all eleven tracked PDFs modified. It is a fixed constant rather than anything git-derived, because the PDFs are committed alongside the sources they are built from, so a git-derived timestamp would move the moment you commit and dirty the tree again on the next build. A PDF's stated creation date therefore stays put until the constant is bumped; that is metadata nobody reads, traded for a tree that tells the truth.
+
 Remove build artifacts (`make clean` keeps the PDFs):
 ```
 make clean
