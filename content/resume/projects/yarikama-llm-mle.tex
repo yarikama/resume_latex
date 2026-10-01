@@ -1,0 +1,19 @@
+% yarikama.com, MLE framing (inference and evaluation). Same project as
+% yarikama-platform-swe.tex and yarikama-llm-gaie.tex. No training happened here:
+% fine-tuning the autocomplete model is planned, not done, so nothing below says it was.
+%
+% Sources, checked 2026-09-30: homelab docs/14-ask-chat-plan.md, docs/15-gpu-sharing.md,
+% docs/10-autocomplete-plan.md; backend services/autocomplete.py.
+%   4.6x: KV cache per token, Qwen3.5 hybrid attention 32 KB vs Qwen3 147 KB.
+%   24k: --max-model-len after the 2026-10-01 context increase (README agrees).
+%   158 ms / 2.2x: full autocomplete suggestion, 0.8B vs 344 ms for the 2B, in-pod.
+%   "statistically equal": 35/38/40% first-word match on 40 samples, CI about +-15pp.
+%   97%: correct-source citation, n=25.
+% Not claimed: the 75% autocomplete acceptance rate (6 of 8 suggestions, too small).
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://www.yarikama.com}{Self-Hosted LLM Inference on a Single 8 GB GPU}}} $|$ \emph{vLLM, Qwen3.5 (AWQ), Kubernetes, Prometheus}}{Jan. 2026 -- Present}
+    \resumeItemListStart
+      \resumeItem{\textbf{Inference Under 8 GB:} Co-served a 4-bit 4B chat model and a 0.8B autocomplete model on one laptop GPU; picked a hybrid-attention model with a \textbf{4.6$\times$} smaller KV cache per token, which let a \textbf{24k} context fit}
+      \resumeItem{\textbf{Model Benchmarking:} Compared 3 candidates per task on held-out sets, choosing a 0.8B autocomplete model \textbf{2.2$\times$} faster than the 2B (\textbf{158 ms}) at statistically equal accuracy, and a 4B chat model at \textbf{97\%} citation accuracy}
+      \resumeItem{\textbf{Confidence-Gated Decoding:} Stopped each suggestion at the first token below a probability threshold, at sentence end, or on repetition, and logged every outcome (accepted, typed along, rejected) as fine-tuning data}
+    \resumeItemListEnd%

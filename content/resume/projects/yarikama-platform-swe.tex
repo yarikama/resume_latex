@@ -1,0 +1,26 @@
+% yarikama.com, SWE framing, weighted toward Kubernetes, CI/CD and observability by
+% Henry's request (2026-09-30). One project across three repos, all Henry's alone:
+% portfolio-back-end (FastAPI, public), portfolio-front-end (React, public, hosted on
+% Vercel, NOT on the cluster) and the private homelab repo (k3s, Argo CD, monitoring).
+% Sibling framings: yarikama-llm-gaie.tex (GenAI) and yarikama-llm-mle.tex (inference).
+%
+% Sources, checked 2026-09-30: backend README (deploy flow, ~5 min merge to live,
+% health-gated rollout), backend tests (147 test functions), ci.yaml (GitHub Actions,
+% Python 3.10-3.12 against PostgreSQL and Redis service containers); homelab
+% infra/monitoring/ (kube-prometheus-stack, loki.yaml, tempo.yaml) and
+% docs/06-observability.md (Alertmanager -> Gmail, Watchdog heartbeat to Healthchecks.io).
+%
+% Two bullets because the SWE page has no slack: Ricebook, which this replaced, had two,
+% and a three-bullet version overflowed to 2 pages. Cut for space, ready to swap in:
+%   \resumeItem{\textbf{Rate Limiting \& Jobs:} Wrote sliding-log and token-bucket limits as
+%   atomic Redis Lua scripts with per-rule fail-open/closed, plus an at-least-once Redis
+%   Streams job queue with claim-based retries and a dead-letter stream}
+%   Also true, unused: PostgreSQL on CloudNativePG with WAL archiving and daily backups to
+%   R2, point-in-time recovery to 30 days, restore actually tested (homelab docs/05).
+% Deliberately not claimed: any user or traffic number (none is measured).
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/portfolio-back-end}{yarikama.com: Self-Hosted Platform on Kubernetes}}} $|$ \emph{k3s, Argo CD, GitHub Actions, Prometheus, Grafana, Loki}}{Jan. 2026 -- Present}
+    \resumeItemListStart
+      \resumeItem{\textbf{GitOps CI/CD:} Deployed a FastAPI/PostgreSQL/Redis backend to a self-managed k3s cluster: GitHub Actions runs \textbf{147} tests and pushes the image, then Argo CD rolls it out in \textbf{\textasciitilde5 min} with zero downtime}
+      \resumeItem{\textbf{Observability:} Ran Prometheus, Grafana, Loki, Tempo and Alertmanager in-cluster, tracing requests across SQL, Redis and LLM calls with OpenTelemetry, with email alerts and a dead-man's-switch heartbeat}
+    \resumeItemListEnd%

@@ -1,0 +1,20 @@
+% yarikama.com, GenAI framing. Same project as yarikama-platform-swe.tex and
+% yarikama-llm-mle.tex; this one leads with the cited Q&A chat.
+%
+% Sources, checked 2026-09-30: backend README (cache-augmented generation, ~13k-token
+% corpus, citation ids validated server-side), backend eval/ask/ (40 questions: 25
+% answerable en/zh, 5 proper nouns, 5 off-topic, 5 injection), homelab
+% docs/14-ask-chat-plan.md (model comparison and prompt v2 rerun).
+%   3.9 s / 0.17 s: cold vs. prefix-cached time to first token, prompt v2 run (3.93 s, 0.17 s).
+%   97% vs 37%: correct-source citation on the 25 answerable questions, Qwen3.5-4B AWQ
+%   vs Qwen3.5-2B. n=25, say so if asked.
+%   80% -> 100%: off-topic refusals, prompt v1 vs v2 (5 questions). q39 fake
+%   "site owner" instruction answered HACKED under v1, refused under v2.
+% Not claimed: q38 (tone hijack) still succeeds under v2; no traffic numbers exist.
+  \resumeProjectEntry
+    {\textbf{\textcolor{RoyalBlue}{\href{https://www.yarikama.com}{Self-Hosted LLM Q\&A Platform (yarikama.com)}}} $|$ \emph{vLLM, Qwen3.5, FastAPI, Redis, Kubernetes, React}}{Jan. 2026 -- Present}
+    \resumeItemListStart
+      \resumeItem{\textbf{Cache-Augmented Generation:} Answered visitor questions over the whole site (\textbf{\textasciitilde13k} tokens) from one cached prompt prefix on vLLM instead of RAG, cutting time to first token from \textbf{3.9 s} cold to \textbf{0.17 s}}
+      \resumeItem{\textbf{Eval-Driven Model Selection:} Built a \textbf{40-question} bilingual eval set (answerable, off-topic, injection) and compared 3 small LLMs; Qwen3.5-4B cited the right source \textbf{97\%} of the time vs. \textbf{37\%} for the 2B}
+      \resumeItem{\textbf{Grounding \& Injection Defense:} Dropped citations to nonexistent documents server-side and hardened the prompt against the eval set, raising off-topic refusals from \textbf{80\%} to \textbf{100\%} and blocking fake owner-instruction injections}
+    \resumeItemListEnd%
