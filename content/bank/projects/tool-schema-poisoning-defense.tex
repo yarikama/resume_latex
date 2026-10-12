@@ -1,0 +1,176 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       tool-schema-poisoning-defense
+% title:    Defending LLM Agents Against Tool Schema Poisoning
+% dates:    Apr. 2026 -- May 2026
+% link:     none -- the repo is private and is not in Henry's GitHub account
+% team:     4-person team (Rice COMP 584); Henry: native function-calling agent,
+%           reflection-wrapper baseline, inference-stack fixes and speed-ups, multi-turn
+%           agent loop, hidden-state probing, steering vector and strength sweep,
+%           evaluation-code fix and refactor, cluster job setup, experiment reports
+% status:   claimable
+% tech:     PyTorch, Hugging Face Transformers, Llama-3.1-8B-Instruct (bf16, native
+%           function calling), forward-hook activation steering, scikit-learn probes,
+%           PCA / t-SNE, upstream AMA attack framework, OpenAI API (gpt-5.4-nano), vLLM,
+%           Slurm (university GPU cluster), AWS EC2 (A10G)
+% signals:  AI safety, LLM security, agent security, tool use, function calling,
+%           guardrails, red teaming, adversarial evaluation, activation steering,
+%           representation engineering, interpretability, probing, LLM agents,
+%           evaluation, debugging, Llama, PyTorch, Hugging Face, Slurm, AWS
+% summary:  Reproduces a tool-schema poisoning attack, in which deceptive tool metadata
+%           leads a function-calling agent to hand private data to an attacker's tool,
+%           on Llama-3.1-8B, and defends at the representation level: a mean-difference
+%           steering vector at layer 10 cuts privacy leakage 14.5pp in single-turn runs
+%           without the attack-rate and task-success costs of a prompt-level wrapper.
+% verified: 2026-10-09 against the team's private repo comp584-project (main, 55c2302)
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - The attack and its poisoned-tool generator are the upstream AMA method; Henry
+%     reproduced it. Write "reproduced", never that he designed or created the attack.
+%   - Attack success, steal rate and task success (OTSR) are upstream metric
+%     definitions. Henry fixed the task-success check before the reported runs and
+%     moved the metrics into a module after them; never credit him with authoring the
+%     metrics or the evaluator.
+%   - Steal rate is the mean string similarity between the private values and what the
+%     attacker's tool received. Call it privacy leakage, never a share of tasks.
+%   - Task success is measured on the attacked tasks; there is no separate benign set,
+%     so never describe it as performance on benign tasks.
+%   - Steering was evaluated single-turn only, so every steering-versus-wrapper
+%     comparison is single-turn. Quote the wrapper's +6pp attack success and -6pp task
+%     success from the single-turn pair.
+%   - The steering vector is the difference between the safe and unsafe class means at
+%     layer 10, last response token. The probe located that layer and showed the split
+%     is linear; never write that the probe's weights steer the model.
+%   - 96% is 5-fold cross-validated linear-probe accuracy on 112 runs (56 per class).
+%   - Every headline number is one seed of 100 attacks on Llama-3.1-8B-Instruct on an
+%     AWS A10G. The Slurm cluster runs were earlier baselines that were re-run after
+%     the inference fixes; never tie a headline number to Slurm.
+%   - 86% to 49% is gpt-5.4-nano, the model the first baselines used, not Llama.
+%   - Steering strength 10 and above broke the model; quote strength 5 as the operating
+%     point, never as robust across strengths.
+% -------------------------------------------------------------------------------------
+% FACET: Attack reproduction                      angles: security, red teaming, evaluation
+% Evidence: comp584-project EXPERIMENT.md:457-522 (Run 007: 100 attacks, attack success
+%           56%, steal 52.3%, task success 42%), :604-606 (Run A); run007_baseline.xlsx
+%           in the 2026-04-21 working-tree snapshot recomputes to 56.0 / 52.25 / 42.0;
+%           upstream AMA code imported in commit 88d9aba
+% Notes:    labels used before: Threat Model, Attack Evaluation.
+\resumeItem{\textbf{Threat Model:} Reproduced a tool-schema poisoning attack in which deceptive tool and parameter descriptions lead a function-calling agent to fill private data into an attacker's tool, setting a \textbf{56\%} attack-success and \textbf{52\%} privacy-leak baseline on Llama 3.1-8B over 100 attacks}
+% -------------------------------------------------------------------------------------
+% FACET: Measurement validity                     angles: evaluation, agents, debugging
+% Evidence: comp584-project commit f91a2a3 (FunctionAgentAttack replaces the ReAct
+%           agent); EXPERIMENT.md:38 (attacker_tool_injection() forced the attacker's
+%           tool into every step), :194-209 (gpt-5.4-nano attack success 86% -> 49%,
+%           steal 84.1% -> 49%)
+\resumeItem{\textbf{Measurement Validity:} Found that the upstream ReAct agent forced the attacker's tool into every workflow step, inflating attack success, and replaced it with a native function-calling agent, re-baselining gpt-5.4-nano from \textbf{86\%} to \textbf{49\%} attack success}
+% -------------------------------------------------------------------------------------
+% FACET: Inference-stack audit            angles: debugging, LLM inference, reliability
+% Evidence: comp584-project EXPERIMENT.md:440-453 (four bugs); commits 723af5a (tools
+%           passed to apply_chat_template; brace-matching tool-call parser), 493bdeb
+%           (attention mask dropped every <|eot_id|>), 4a5e041 (follow-up call removed);
+%           re-baselined as Runs 007 / 008 (EXPERIMENT.md:457-591)
+\resumeItem{\textbf{Inference-Stack Audit:} Found and fixed four bugs in the Llama inference path before any steering run, tool schemas never reaching the chat template, an attention mask that hid every turn separator, a follow-up call polluting the captured hidden states and a parser dropping nested JSON, then re-ran the baselines on the corrected stack}
+% -------------------------------------------------------------------------------------
+% FACET: Inference speed-ups                            angles: performance, LLM inference
+% Evidence: comp584-project commits 003dad2 and e23ee2e (upstream cache-free beam search
+%           replaced by generate() with a KV cache), 0082e18 and 322ff19 (model kernel
+%           cached as a singleton so Llama loads once per process); EXPERIMENT.md:512,
+%           :606 (100-attack single-turn runs in about 4 minutes on one A10G)
+% Notes:    nothing was timed before and after; quote only the post-fix run time.
+\resumeItem{\textbf{Inference Speed-Ups:} Replaced the upstream framework's cache-free beam search with KV-cached generation and cached the model as a singleton so Llama 3.1-8B loaded once instead of per task, bringing a 100-attack run to about \textbf{4 minutes} on one A10G}
+% -------------------------------------------------------------------------------------
+% FACET: Hidden-state probing             angles: interpretability, probing, research
+% Evidence: comp584-project commits cfbd605, 5e00f08, 1646d62 (hidden states at five
+%           token positions, linear and MLP probes per layer); EXPERIMENT.md:629-646
+%           (112 runs; last response token, layer 10: linear 0.964, MLP 0.956; last
+%           input token 0.491); analysis/REPORT_V2.md:65-92
+\resumeItem{\textbf{Hidden-State Probing:} Extracted Llama 3.1-8B hidden states at five token positions across every layer and trained linear and MLP probes, finding leaking and non-leaking runs linearly separable at the end of the generated tool call (\textbf{96\%} at layer 10, linear matching MLP) and inseparable at the last input token}
+% -------------------------------------------------------------------------------------
+% FACET: Activation steering               angles: AI safety, guardrails, representation
+% Evidence: comp584-project commits 17fedd8 (vector computation), 42b92a9 (forward-hook
+%           injection), 67412af (pipeline integration), 003dad2 (only the newest token
+%           steered under a KV cache); analysis/outputs/steering/steering/
+%           single_compute_l10.log (layer 10, norm 1.237, cos 0.954);
+%           EXPERIMENT.md:659-688 (strength 5: attack success 56 -> 50%, steal 52.3 ->
+%           37.8%, task success 42 -> 42%)
+% Notes:    labels used before: Representation-Level Defense, Safety Guardrail.
+\resumeItem{\textbf{Representation-Level Defense:} Steered Llama 3.1-8B at inference along the mean difference between safe and leaking hidden states at layer 10, cutting privacy leakage \textbf{14.5pp} and attack success 6pp with task success unchanged, with no fine-tuning and no extra prompt tokens}
+% -------------------------------------------------------------------------------------
+% FACET: Steering strength sweep                angles: experiment design, robustness
+% Evidence: comp584-project EXPERIMENT.md:659-673 (strengths 0, 1, 2, 5, 10, 20; at 10
+%           and 20 every metric is 0); commit 03bd483 (earlier five-scenario sweep,
+%           strengths 0 to 4)
+\resumeItem{\textbf{Steering Strength Sweep:} Swept steering strength from 0 to 20 and found a narrow working window: leakage fell to its minimum at strength 5, while strength 10 and above broke the model outright (\textbf{0\%} task success)}
+% -------------------------------------------------------------------------------------
+% FACET: Defense comparison                                angles: evaluation, AI safety
+% Evidence: comp584-project EXPERIMENT.md:675-688 (single-turn: wrapper 62% / 38.6% /
+%           36% vs steering 50% / 37.8% / 42% for attack success / steal / task
+%           success); :595-616 (the 2x2 single / multi-turn baseline grid);
+%           analysis/REPORT_V2.md:142-158
+% Notes:    label used before: Defense Comparison. The steering side exists single-turn
+%           only.
+\resumeItem{\textbf{Defense Comparison:} Benchmarked steering against an in-context reflection wrapper in single-turn runs: both cut leakage about 14pp, but the wrapper raised attack success \textbf{6pp} and lowered task success 6pp, while steering lowered attack success 6pp and kept task success}
+% -------------------------------------------------------------------------------------
+% FACET: Defense stacking                             angles: research, negative result
+% Evidence: comp584-project EXPERIMENT.md:682, :686-688 (steering plus wrapper: attack
+%           success 55%, steal 37.4%, task success 39%); analysis/REPORT_V2.md:149, :158
+\resumeItem{\textbf{Defense Stacking:} Tested steering combined with the reflection wrapper and showed the two do not stack: leakage improved only \textbf{0.4pp} over steering alone (37.4\% vs.\ 37.8\%) while the wrapper's side effects returned, attack success back to 55\% and task success down to 39\%}
+% -------------------------------------------------------------------------------------
+% FACET: Reflection-wrapper baseline              angles: guardrails, prompting, AI safety
+% Evidence: comp584-project commit f95ed75 (reflection_wrapper.py, the Stage I defense),
+%           f8b220d (schema-level variant, defense/reflection_schema.py);
+%           defense/reflection_wrapper.py:22-33 (prompt); EXPERIMENT.md:138-150
+%           (gpt-5.4-nano, function-calling agent: steal 49% -> 11%), :573-579 (Llama:
+%           steal 52.3% -> 38.6%)
+% Notes:    the schema-level variant has no recorded result.
+\resumeItem{\textbf{Prompt-Level Guardrail:} Built the in-context reflection wrapper used as the baseline defense, a system prompt that makes the agent read every parameter description and leave out any private data it asks for, cutting gpt-5.4-nano's privacy leakage from \textbf{49\%} to \textbf{11\%}, plus a schema-level variant that forces a safety check into every tool call}
+% -------------------------------------------------------------------------------------
+% FACET: Multi-turn agent loop                                 angles: agents, tool use
+% Evidence: comp584-project commits 205b449 (--multi_turn / --max_rounds), 123a4d4
+%           (assistant and role=tool message threading); EXPERIMENT.md:595-609 (grid run
+%           with up to 10 rounds)
+\resumeItem{\textbf{Agentic Loop:} Extended the single-call attack harness into a multi-turn agent loop of up to 10 tool rounds with standard assistant and tool message threading, and ran the single- versus multi-turn baseline grid on it}
+% -------------------------------------------------------------------------------------
+% FACET: Evaluation code               angles: software engineering, testing, evaluation
+% Evidence: comp584-project commit e0ec16b (task-success check changed from every tool
+%           to any tool, workflow-failure counter fixed, before the reported runs);
+%           c249e8f (upstream metrics moved into defense/evaluator.py with behaviour
+%           parity, checked against six synthetic cases listed in the commit message);
+%           44a399d, ab2f433, cbbefa5 (defense package: runner with a mock client,
+%           dataset module, steering inference runner)
+% Notes:    the metric definitions are upstream; no test file is committed.
+\resumeItem{\textbf{Evaluation Code:} Fixed the upstream task-success check, which required an agent to call every tool and so undercounted function-calling agents, then refactored the upstream attack, leakage and task-success metrics into a dependency-free module with behaviour parity, checked against six synthetic cases}
+% -------------------------------------------------------------------------------------
+% FACET: Cluster runs                                        angles: HPC, infrastructure
+% Evidence: comp584-project commits 32d372a (job environment, defense job script),
+%           a8205b5 (vLLM tool-call parser flags); EXPERIMENT.md:228, :298 (Slurm jobs
+%           8241982 and 8244239 on L40S)
+% Notes:    these early runs were later re-run on the corrected stack; the headline
+%           numbers come from AWS A10G runs.
+\resumeItem{\textbf{Cluster Runs:} Ran the early Llama 3.1 baselines as Slurm jobs on the university GPU cluster (L40S, vLLM), fixing the job environment and adding the defense job script and native tool-call parsing to the vLLM server}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - Any multi-turn steering result: no multi-turn steering run exists.
+%   - Speed-up multiples ("about 50x", "hours to 5-10 minutes"): commit-message
+%     estimates; nothing was timed before and after.
+%   - An earlier solo scaffold in a separate private repo (one commit, Apr. 5, 2026)
+%     recorded attack success falling from 14% to 0% with a safety wrapper on
+%     gpt-4.1-nano over 200 scenarios. The results are untracked local files, and the
+%     scaffold was dropped when the team adopted the upstream framework.
+%   - The schema-level reflection variant (commit f8b220d) was built but never run.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Attack success and leakage are different failures: the wrapper barely changed
+%     whether the attacker's tool was called but cut what was filled into it, so attack
+%     success alone misjudges a defense.
+%   - Why native function calling: the upstream ReAct planner wrote the attacker's tool
+%     into every step, so the model had little choice; passing tools natively let it
+%     choose, and the 86% to 49% drop is that coercion leaving the measurement.
+%   - Why mean-difference steering: the linear probe matched the MLP probe, so a linear
+%     direction suffices; a difference of class means needs no training, adds no prompt
+%     tokens, and under a KV cache only the newest token is steered.
+%   - Steering strength has a narrow window on this model: 5 helped and 10 broke
+%     generation, so the strength has to be tuned per model.

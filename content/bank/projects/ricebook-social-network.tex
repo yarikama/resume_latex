@@ -1,0 +1,123 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       ricebook-social-network
+% title:    Full-Stack Social Network (Ricebook)
+% dates:    Sep. 2025 -- Dec. 2025
+% link:     none -- course repos are private
+% team:     solo; Henry: every part, from the first static registration, posts and profile
+%           pages to the React front end and the Express/MongoDB back end of the final
+%           project (Rice COMP 531)
+% status:   claimable
+% tech:     React 19, Redux Toolkit 2, React Router 7, Vite 7, Tailwind CSS 4, shadcn/ui
+%           (Radix), Vitest 3, Express 5, MongoDB (Mongoose 8), Passport (Google OAuth 2.0),
+%           multer, Cloudinary, Jasmine 5, Heroku, surge
+% signals:  full-stack, React, Redux, JavaScript, front end, single-page app, REST API,
+%           Node.js, Express, MongoDB, authentication, OAuth 2.0, sessions, file upload,
+%           search, pagination, testing, Vitest, Jasmine, deployment
+% summary:  A social network built over a semester of web-development homework: a React 19
+%           and Redux Toolkit single-page app on an Express 5 and MongoDB API, with session
+%           and Google OAuth sign-in and account linking, a follower graph, a searchable and
+%           paginated feed of posts with comments, and Cloudinary image upload, deployed to
+%           separate front-end and back-end hosts.
+% verified: 2026-10-09 against RiceWebDevCourse/final-frontend-yarikama (main 51d799c) and
+%           final-backend-yarikama (main 845b133), with hw1-yarikama through hw6-yarikama
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - Coursework (Rice COMP 531), solo. Never imply real users or production use.
+%   - Comments are flat (author, text, date): never threaded, never replies.
+%   - The front-end tests are 30 Vitest tests in 6 files on the Redux store. Count tests,
+%     never call the files suites, and never claim a coverage percentage.
+%   - The UI primitives are generated shadcn/ui components. Claim the 21 hand-written
+%     components, never a component library or design system of Henry's own.
+%   - The async thunks are hand-written functions, not createAsyncThunk.
+%   - Claim no security property beyond the sign-in flows the facets describe.
+%   - The MCP SDK listed in the back end's package.json is never imported: there is no MCP
+%     work here.
+%   - No live link: the card has none, so no module may add one.
+% -------------------------------------------------------------------------------------
+% FACET: Front-end architecture                           angles: front end, React, Redux
+% Evidence: final-frontend-yarikama package.json:17-54 (React 19.1, Redux Toolkit 2.10,
+%           React Router 7.9, Tailwind 4.1, Vitest 3.2); src/components/auth, common, main
+%           and profile (3 + 3 + 10 + 5 = 21 components); src/components/ui (8 generated
+%           shadcn/ui primitives) and components.json; src/store/authActions.js:17-70,
+%           src/store/profileSlice.js:58 (thunks written as plain async functions of
+%           dispatch)
+% Notes:    labels used before: Frontend Architecture, Full-Stack Build.
+\resumeItem{\textbf{Front-End Architecture:} Built a \textbf{React 19} single-page app on Redux Toolkit and React Router, \textbf{21} components across auth, feed and profile flows, with hand-written async thunks holding API state and shadcn/ui primitives styled with Tailwind}
+% -------------------------------------------------------------------------------------
+% FACET: Back end and sessions                             angles: backend, REST, Node.js
+% Evidence: final-backend-yarikama package.json:18-37 (Express 5.1, Mongoose 8.20,
+%           Passport, Cloudinary, Jasmine 5); src/auth.js:5-33 (sessions stored in MongoDB
+%           and looked up from the cookie), :54-61, :146-149 (routes); src/db/ (user,
+%           profile, article, comment and session models); src/articles.js:121-140
+%           (comments added and edited), :183-188; src/profile.js:97-129;
+%           src/following.js:64-67
+% Notes:    labels used before: Backend & Auth, Full-Stack Build.
+\resumeItem{\textbf{Back End \& Auth:} Built the \textbf{Express 5}/MongoDB REST API for profiles, posts, comments and follows, with session-cookie auth backed by a session collection in MongoDB}
+% -------------------------------------------------------------------------------------
+% FACET: Google OAuth and account linking                             angles: auth, OAuth
+% Evidence: final-backend-yarikama src/oauth.js:20-57 (a first sign-in creates the user
+%           and profile), :117-125 (5-minute link token in an HttpOnly cookie), :69-92
+%           (unlink, with the last-method guard at :77-82), :99-110 (linked providers),
+%           :225-244 (routes); final-frontend-yarikama
+%           src/components/profile/AccountLinkCard.jsx
+\resumeItem{\textbf{Google OAuth \& Account Linking:} Added \textbf{Google OAuth 2.0} sign-in through Passport that creates an account on first use, linked Google to an existing account through a short-lived link token, and refused to unlink an account's last login method}
+% -------------------------------------------------------------------------------------
+% FACET: Social graph and feed                             angles: data modeling, MongoDB
+% Evidence: final-backend-yarikama src/following.js:10-67 (follow, unfollow, list);
+%           src/articles.js:19-22 (the feed holds the user's and followed authors' posts);
+%           src/db/article.js:4-13; src/db/comment.js:3-9
+% Notes:    labels used before: part of Full-Stack Build ("a follower graph").
+\resumeItem{\textbf{Social Graph \& Feed:} Stored follows as per-user following lists and built each user's feed from their own and followed authors' posts, each with a title, text, an optional image and a flat list of comments}
+% -------------------------------------------------------------------------------------
+% FACET: Feed search and pagination                               angles: backend, search
+% Evidence: final-backend-yarikama src/articles.js:9-38 (page, limit, case-insensitive
+%           regex over title, text and author, newest first), :79-81 (total pages);
+%           final-frontend-yarikama commits ad5a42d (paginated feed state in the posts
+%           slice) and 96f11f8 (search handed to the API)
+\resumeItem{\textbf{Feed Search \& Pagination:} Moved feed search to the server as a case-insensitive MongoDB query over title, text and author, returned newest first in pages with a total page count}
+% -------------------------------------------------------------------------------------
+% FACET: Image upload                                  angles: file upload, cloud storage
+% Evidence: final-backend-yarikama src/uploadCloudinary.js:1-44 (multer, then Cloudinary's
+%           upload stream); src/articles.js:186-188; src/profile.js:121 (avatar); commit
+%           845b133 (remove-image API); final-frontend-yarikama commit c2ad2c4 (edit and
+%           remove a post's image)
+\resumeItem{\textbf{Image Upload:} Streamed avatar and post images from multer to Cloudinary, and let authors replace or remove a post's image after publishing}
+% -------------------------------------------------------------------------------------
+% FACET: Session race fix                                    angles: debugging, front end
+% Evidence: final-frontend-yarikama commit 8ad876f (src/services/api.js,
+%           src/services/userService.js, src/store/authActions.js); src/App.jsx:17-28 (the
+%           handler logs out and returns to the landing page)
+\resumeItem{\textbf{Session Race Fix:} Fixed a login race in which the profile request sent right after sign-in could return 401 and fire the app-wide session-expired handler, logging the user straight back out, by letting the login and registration flows skip that handler}
+% -------------------------------------------------------------------------------------
+% FACET: Testing                                         angles: testing, Vitest, Jasmine
+% Evidence: final-frontend-yarikama src/store/__tests__/ (6 files, 27 describe blocks, 30
+%           tests); final-backend-yarikama src/articles.spec.js, src/auth.spec.js,
+%           src/profile.spec.js (3, 3 and 2 tests), junit-report.xml (2025-12-05: 8 tests,
+%           0 failures)
+% Notes:    labels used before: Testing & Deployment.
+\resumeItem{\textbf{Testing:} Covered the Redux store's slices and thunks with \textbf{30} Vitest tests and the articles, auth and profile endpoints with Jasmine integration tests}
+% -------------------------------------------------------------------------------------
+% FACET: Deployment                                          angles: deployment, cookies
+% Evidence: final-backend-yarikama Procfile; index.js:16-17 (trusts the platform's proxy),
+%           :27-30 (credentialed cross-origin requests); src/auth.js:54-61 (cookie flags);
+%           final-frontend-yarikama src/services/api.js:1-10 (requests carry credentials)
+% Notes:    labels used before: Testing & Deployment.
+\resumeItem{\textbf{Deployment:} Deployed the front end and the API to separate hosts, issuing the session cookie as HttpOnly, Secure and SameSite=None behind the platform's HTTPS proxy so sign-in works across the two sites}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - Test coverage of the final code: never measured.
+%   - A working live demo: not re-checked.
+%   - Jasmine results after the last back-end commits (Dec. 6, 2025): the only report is
+%     from Dec. 5.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Search started in the client's posts slice and moved into the API's MongoDB query
+%     (96f11f8), where it pages through the same filtered result set.
+%   - Account linking keeps the signed-in username behind a 5-minute link token in an
+%     HttpOnly cookie across Google's redirect, then attaches the Google id to that user.
+%   - The race fix: one global 401 handler logs the user out, and the profile fetch right
+%     after sign-in is now exempt from it.

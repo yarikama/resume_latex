@@ -1,0 +1,108 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       chat-bar
+% title:    Chat Bar: Online Multiplayer Map Game with Group Chat
+% dates:    Dec. 2023 -- Jan. 2024
+% link:     https://github.com/yarikama/Chat_Bar (public)
+% team:     2-person NYCU Network Programming final project; Henry: SFML game client, login
+%           and registration client, client TCP layer, JSON packet layer, multi-person chat
+%           rooms (client and server side), disconnect handling
+% status:   claimable
+% tech:     C++11, BSD sockets (TCP, select, non-blocking I/O through fcntl), SFML
+%           (graphics, audio), nlohmann/json, MySQL Connector/C++, OpenSSL SHA-1,
+%           fork/exec, GDB, Valgrind
+% signals:  networking, socket programming, TCP, client-server, real-time, non-blocking I/O,
+%           event loop, multiplayer game, game client, C++, protocol design,
+%           serialization, JSON, MySQL
+% summary:  A real-time multiplayer 2D map game in C++: players walk an SFML map, invite
+%           nearby players into chat rooms that others can join, and client and server
+%           exchange newline-delimited JSON packets over TCP; the server multiplexes
+%           clients with select() and keeps accounts and chat-time rankings in MySQL.
+% verified: 2026-10-09 against github.com/yarikama/Chat_Bar (main, a fork that carries the
+%           full history)
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - The server is one single-threaded select() loop, with login and game in two
+%     separate processes. Never describe thread-based concurrency.
+%   - Password hashing is SHA-1 and lives in the server code, which is not Henry's. Never
+%     claim the hashing, and never name any SHA-2 variant.
+%   - The server core is not Henry's: its select() loops, the login and registration
+%     handler, the MySQL tables and the ranking SQL. On the server, claim only the
+%     multi-person rooms and the disconnect handling he added.
+%   - The leaderboard, both its UI and its queries, is not Henry's. Never describe the
+%     queries as tuned or indexed.
+%   - It is a graphical SFML map game with chat. Never call it a text game or give it a
+%     genre beyond that.
+%   - The friend system, friend chat and character selection are future work in the
+%     project report, never features.
+% -------------------------------------------------------------------------------------
+% FACET: Real-time game client         angles: C++, networking, real-time, game client
+% Evidence: clientMain.cpp:773-855 (main loop: SFML events, then every pending packet
+%           drained each frame and dispatched by mode), :755 (60 FPS cap, 53eba8d);
+%           clientTCP.cpp:70-106 (non-blocking receive; EAGAIN returns an empty packet);
+%           commits 8215172, 253fe3b, b01e0e7, 9ab7261; README §4.1.3 (non-blocking so the
+%           60 Hz loop never freezes)
+% Notes:    labels used before: User Management & Client.
+\resumeItem{\textbf{Real-Time Game Client:} Built the \textbf{SFML} client of a multiplayer map game as a 60 FPS loop that drains a non-blocking TCP socket every frame, so movement, chat-room icons and messages stay live without freezing the window}
+% -------------------------------------------------------------------------------------
+% FACET: Packet protocol                          angles: protocol design, serialization
+% Evidence: elementTCP.cpp:1-87 and elementTCP.h (Packet: mode, sender, receiver, x, y,
+%           message; JSON round trip with per-field error handling; 53eba8d);
+%           clientTCP.cpp:29-68 (newline-delimited send, line-based receive, parse errors
+%           caught); header.h:31-43 (message modes); README §2.2, §4.1.1
+\resumeItem{\textbf{Packet Protocol:} Designed the client-server packet (mode, sender, receiver, coordinates, message) and its newline-delimited \textbf{JSON} serialization with nlohmann/json, so a malformed or merged packet raises a parse error instead of corrupting game state}
+% -------------------------------------------------------------------------------------
+% FACET: Multi-person chat rooms           angles: networking, server, state management
+% Evidence: 229856c "group talk finish and error handling" (client and server);
+%           serverTCP.cpp:175-181 (join a room through a member already in it), :208-228
+%           (leave a room; delete it when empty and tell every map), :242-249 (join from a
+%           room's icon), :385-392 (broadcast to one room only); clientMain.cpp:92-199
+%           (room icons, nearest room); README §2.1.2, §2.4
+% Notes:    the two-person invite flow and the first room list are a teammate's; this
+%           facet is the extension to rooms of any size.
+\resumeItem{\textbf{Group Chat Rooms:} Extended two-person chat into multi-person rooms on client and server: players join through a room's map icon or a member, messages broadcast to that room only, and an emptied room disappears from every player's map}
+% -------------------------------------------------------------------------------------
+% FACET: Disconnect handling                            angles: reliability, networking
+% Evidence: serverTCP.cpp:317-349 (remove_player: notify the player's room, drop the
+%           player from it, delete the room if empty, broadcast the player off every map;
+%           229856c, b19262c); clientTCP.cpp:55-58, :93-96 (the client exits cleanly when
+%           the server closes); README §2.5
+\resumeItem{\textbf{Disconnect Handling:} Made a dropped player leave cleanly: the server tells the player's chat room, removes them from it, deletes the room if it empties and clears them from every map, so the game and the other chats carry on}
+% -------------------------------------------------------------------------------------
+% FACET: Login client                                         angles: C++, client, Unix
+% Evidence: login.cpp:5-61 (login and registration over a blocking connection to the
+%           separate login server), :24-26 (fork() and execlp() into the game client with
+%           the player's name), :65-231 (SFML form and status messages); commits 88984d2,
+%           e603122, d72c417, 783d7a6, 0b70c80; README §1.1, §2.1.1
+\resumeItem{\textbf{Login Client:} Built the SFML login and registration screen over a blocking connection to a separate login server, then fork()ed and exec()ed into the game client on success so players never type a server address}
+% -------------------------------------------------------------------------------------
+% FACET: Proximity interaction                             angles: game logic, C++ design
+% Evidence: clientMain.cpp:32-91 (player), :92-199 (chat-room icons), :200-273 (other
+%           players in an unordered_map with the nearest one tracked), :532-575 (invite or
+%           join prompt for the nearest player or room); header.h:63 (chat radius 100);
+%           commits c719aa7, cfae52a, 14368f2, 203666d
+% Notes:    the other-players class is about half a teammate's.
+\resumeItem{\textbf{Proximity Interaction:} Structured the client into player, other-player, chat-room-icon and chat classes that track the nearest player or room as everyone moves and offer an invite or a join only within a 100-unit chat radius}
+% -------------------------------------------------------------------------------------
+% FACET: Remote play                                       angles: networking, deployment
+% Evidence: d6d69a2 "hamachi remote" (server address moved to the VPN), 5fa55eb "ufw allow"
+%           (game and login ports opened); README §1.3, §4.1.4
+\resumeItem{\textbf{Remote Play:} Ran remote multiplayer sessions over a Hamachi VPN when the home router blocked inbound connections, opening the game and login ports in the ufw firewall}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - Any capacity or latency figure (players, rooms, messages per second): never
+%     measured. The report's "unlimited players" is a design statement.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Why non-blocking on the client: the SFML loop runs at 60 Hz, and a blocking read
+%     would freeze rendering whenever no packet arrives. Login stays blocking because it
+%     waits on the user anyway.
+%   - Why JSON instead of raw strings: typed fields (floats, names) in one packet, and two
+%     packets merged in the stream fail to parse instead of being misread.
+%   - Mode isolation: the client keeps handling map packets while a chat is open, so a
+%     player who joins mid-chat appears at once.
+%   - Duplicate self: the client drops packets whose sender is the local player, which
+%     fixed a ghost copy after re-login.

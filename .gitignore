@@ -31,3 +31,8 @@ __pycache__/
 # really be withdrawn. The resumes are fine to publish: they name no employer.
 applications/*/cover_letter_*
 applications/*/*_supplement.*
+
+# Project notes unsafe for a public repo: teammates' names and splits, contested
+# authorship, interview caveats, retracted phrases. content/bank/projects/ is the
+# public half; see CLAUDE.md.
+content/bank/private/

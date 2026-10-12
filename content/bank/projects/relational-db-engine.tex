@@ -1,0 +1,141 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       relational-db-engine
+% title:    Relational Database Engine
+% dates:    Aug. 2025 -- Dec. 2025
+% link:     none -- course solutions; publishing them breaks course policy
+% team:     2-person team (Rice COMP 530); Henry: buffer manager (LRU, pinning), record
+%           storage, external merge sort, B+ tree, SQL semantic checker, aggregation with
+%           hash group-by, sort-merge join, memoized DP join-order optimizer, and the
+%           execution layer with both optional optimizations
+% status:   claimable
+% tech:     C++, SCons, QUnit, LRU buffer pool, B+ tree, external merge sort, hash
+%           aggregation, sort-merge join, dynamic programming, cost-based optimization, SQL
+%           (course-supplied flex/bison parser), TPC-H
+% signals:  databases, database internals, storage engine, buffer management, indexing,
+%           B+ tree, query processing, query optimization, cost-based optimizer, join
+%           algorithms, external sorting, SQL, type checking, C++, systems programming, TPC-H
+% summary:  Eight course assignments that build a relational database engine in C++, one
+%           layer at a time. Henry wrote the LRU buffer manager, record storage, external
+%           merge sort, B+ tree, SQL semantic checker, hash aggregation, sort-merge join, a
+%           dynamic-programming join-order optimizer, and the execution layer under which
+%           the engine completed the 12-query TPC-H suite at scale factor 1.
+% verified: 2026-10-09 against yarikama/rice-comp-530-a1 through -a8 (private; a8 at
+%           feature/logicalJoin 9becc3c), plus Henry's attestation for the TPC-H run
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - Coursework (Rice COMP 530), built by a 2-person team over eight assignments. Never
+%     imply production use, and never write "from scratch".
+%   - Each assignment's starter code ships the course's own versions of the earlier layers.
+%     Claim each component as written in its own assignment, and claim TPC-H as the
+%     execution layer completing the suite on the engine, never as Henry's own code running
+%     end to end.
+%   - Claim only the components on the team line; selection and the scan join are not
+%     among them. Name the operators he wrote, never "the relational operators" as a set.
+%   - The SQL parser, the cardinality statistics and the operator interfaces came with
+%     the course. Claim the work built on them, never them.
+%   - Records are packed back to back after a small page header. There is no slot
+%     directory, so never describe the page layout as slotted.
+%   - The scan vs. sort-merge choice follows a rule the assignment specifies: claim
+%     implementing it, never designing it.
+%   - The TPC-H run is Henry-attested and no output was kept: claim that the 12 queries
+%     completed at scale factor 1, never a timing or a result.
+% -------------------------------------------------------------------------------------
+% FACET: Buffer manager                                angles: storage, memory management
+% Evidence: rice-comp-530-a1 A1/Main/BufferMgr/headers/MyDB_BufferManager.h:39-57
+%           (temporary and pinned pages), :59-63 (temporary pages live in the temp file),
+%           :89-95 (the LRU list); A1/Main/BufferMgr/source/MyDB_BufferManager.cc:67-89
+%           (evict when no frame is free), :194-212 (LRU eviction skips pinned pages and
+%           writes dirty ones back)
+% Notes:    labels used before: Storage Engine (merged with record storage and the B+ tree).
+\resumeItem{\textbf{Buffer Manager:} Wrote the C++ buffer pool with \textbf{LRU} eviction, page pinning, write-back of dirty pages on eviction, and anonymous temporary pages that spill to a temp file when the pool is full}
+% -------------------------------------------------------------------------------------
+% FACET: Record storage                                      angles: storage, data layout
+% Evidence: rice-comp-530-a2 A2/Main/DatabaseTable/source/MyDB_PageReaderWriter.cc:13-18
+%           (page header reset), :35-51 (append at the used-bytes offset);
+%           A2/Main/DatabaseTable/source/MyDB_TableReaderWriter.cc,
+%           MyDB_PageRecordIterator.cc, MyDB_TableRecordIterator.cc
+% Notes:    the page-level reader/writer API named in earlier wording is this
+%           course-defined interface, which the team implemented.
+\resumeItem{\textbf{Record Storage:} Implemented the page and table reader/writers over the buffer manager, packing records back to back after a small page header, with iterators over the records of a page or a whole table}
+% -------------------------------------------------------------------------------------
+% FACET: External merge sort                          angles: algorithms, external memory
+% Evidence: rice-comp-530-a3 A3/Main/DatabaseTable/source/Sorting.cc:139-182 (sort phase:
+%           pages sorted, then merged into runs of runSize pages on temporary pages),
+%           :93-137 (k-way merge through a min-heap), :201 (entry point)
+\resumeItem{\textbf{External Merge Sort:} Wrote a two-phase external merge sort that sorts a table into buffer-sized runs on temporary pages, then merges every run at once through a min-heap, so tables larger than the buffer pool sort in bounded memory}
+% -------------------------------------------------------------------------------------
+% FACET: B+ tree index                                  angles: indexing, data structures
+% Evidence: rice-comp-530-a4 A4/Main/DatabaseTable/headers/MyDB_BPlusTreeReaderWriter.h:
+%           42-50 (range iterators, sorted and unsorted), :55-56, :75-94 (append, and split
+%           around the median), :68 (discoverPages)
+\resumeItem{\textbf{B+ Tree Index:} Built a \textbf{B+ tree} index on the buffer-managed pages, splitting nodes around the median on insert and answering range queries with sorted or unsorted range iterators}
+% -------------------------------------------------------------------------------------
+% FACET: SQL semantic checker                       angles: SQL, compilers, type checking
+% Evidence: rice-comp-530-a5 A5/Main/SQL/headers/ParserTypes.h:305-328 (FROM), :340-358
+%           (SELECT and WHERE types), :366-401 (GROUP BY), :414-430 (semanticCheck);
+%           A5/Main/SQL/headers/ExprTree.h:173-197 (attribute resolution), :240-497 (type
+%           rules); 625 lines added over the starter (cce2f3d to main)
+\resumeItem{\textbf{SQL Semantic Checker:} Wrote the semantic checker for parsed SQL, rejecting unknown tables and attributes, duplicate aliases, ill-typed arithmetic and comparisons, and GROUP BY violations such as a non-aggregate SELECT term missing from the GROUP BY}
+% -------------------------------------------------------------------------------------
+% FACET: Hash aggregation                               angles: query processing, hashing
+% Evidence: rice-comp-530-a6 A6/Main/RelOps/source/Aggregate.cc:14-72 (per-group sums and
+%           counts, AVG derived from them), :96-100 (hash of the grouping values), :102-119
+%           (collision check by value), :137 (the hash table)
+\resumeItem{\textbf{Hash Aggregation:} Implemented GROUP BY aggregation (SUM, AVG, COUNT) over a hash table keyed on the grouping values, resolving hash collisions by comparing the values themselves}
+% -------------------------------------------------------------------------------------
+% FACET: Sort-merge join                                  angles: query processing, joins
+% Evidence: rice-comp-530-a6 A6/Main/RelOps/source/SortMergeJoin.cc:62-75 (runs of half
+%           the buffer pool; each side's selection applied while sorting), :90-115 (left
+%           records sharing a key collected onto pages), :144-221 (the merge), :229 (run)
+\resumeItem{\textbf{Sort-Merge Join:} Wrote a \textbf{sort-merge join} that externally sorts both inputs in runs of half the buffer pool, applying each side's selection while it sorts, then merges them, buffering every left record that shares a key so duplicate keys join correctly}
+% -------------------------------------------------------------------------------------
+% FACET: Join-order optimizer                              angles: query optimization, DP
+% Evidence: rice-comp-530-a7 A7/Main/Execution/source/SFWQuery.cc:62-107 (entry; a memo of
+%           2^n entries at :93-96), :202-215 (memo lookup), :262-282 (every split of a
+%           subset), :286-314 (each predicate to the left, the right or the join),
+%           :333-335 (cost: estimated join output plus both children), :256 (memo store);
+%           every commit Henry's
+% Notes:    labels used before: SQL Front End & Optimizer.
+\resumeItem{\textbf{Join-Order Optimizer:} Wrote the optimizer that turns a SQL query into a logical plan, searching join orders by memoized dynamic programming over table subsets (bushy plans included), pushing each predicate to the side it references and costing each plan by the estimated sizes of its intermediate results}
+% -------------------------------------------------------------------------------------
+% FACET: Query execution                            angles: query execution, optimization
+% Evidence: rice-comp-530-a8 at 9becc3c (branch feature/logicalJoin):
+%           A8/Main/Execution/source/MyDB_LogicalOps.cc:66-92 (key value taken from an
+%           equality predicate on the tree's sort attribute), :144-159 (B+ tree selection,
+%           else a regular one), :167-185 (a table-scan input enters the join as its base
+%           table plus its predicate), :238-300 (operator choice at :267-294; temporary
+%           inputs freed at :296-297); commits 23ce808 (B+ tree scans), e597319 and ee6a9db
+%           (selections folded into the join); spec.md section 3, items 2-3 (both
+%           optional); every commit Henry's
+% Notes:    labels used before: Query Processing, Query Execution.
+\resumeItem{\textbf{Query Execution:} Wrote the execution layer that runs optimized plans through the operators, with both optional optimizations: a B+ tree lookup when an equality predicate fixes a table's indexed attribute, and base-table selections folded into join inputs so they write no temporary table}
+% -------------------------------------------------------------------------------------
+% FACET: TPC-H                                                angles: benchmarking, scale
+% Evidence: Henry-attested 2026-10-09 (no output was kept), on the final A8 version
+%           (Henry, 2026-10-11); context: rice-comp-530-a8
+%           queries/1.sql to 12.sql; spec.md sections 2 and 4 (scale factor 1, about 1 GB;
+%           all 12 queries in one session); TPC-H/*.tbl, 1,100,565,575 bytes;
+%           A8/Main/Execution/headers/MyDB_LogicalOps.h:170-183 at 9becc3c (the
+%           assignment's join rule)
+\resumeItem{\textbf{TPC-H:} Completed the \textbf{12-query TPC-H} suite at scale factor 1 (\textbf{\textasciitilde1.1 GB}) through the execution layer, picking a scan join or a sort-merge join for each join by whether the smaller input fits in half the buffer pool}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - Any TPC-H timing, result or output: none was kept.
+%   - Any performance number for an operator, the sort or the optimizer: none was measured.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Why records are packed: pages here are append-only, with no in-place update or
+%     delete, so a slot directory would buy nothing until records move or get deleted.
+%   - Why sort-merge past half the pool: the scan join pins one whole input in memory to
+%     hash it, which stops fitting once that input needs more than half the buffer pool.
+%   - Why the memo is a bitmask: subproblems are table subsets, so 2^n entries are each
+%     solved once, and trying every split of a subset covers bushy plans as well as
+%     left-deep ones.
+%   - Hash aggregation's collisions: the key XORs the grouping values' hashes, so a bucket
+%     confirms a group by comparing the values.
+%   - Duplicate keys in the merge: every left record sharing the current key is collected
+%     onto pages first, so each matching right record joins against all of them.

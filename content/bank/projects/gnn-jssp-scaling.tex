@@ -1,0 +1,204 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       gnn-jssp-scaling
+% title:    Cross-Size Generalization for GNN Job Shop Scheduling (GGJSSP)
+% dates:    Mar. 2026 -- Apr. 2026
+% link:     https://github.com/yarikama/GGJSSP (public)
+% team:     3-person team (Rice); Henry: training and evaluation stack (environment,
+%           GNN encoders, GRPO, GRPO+KL and PPO trainers (attested), dispatching-rule
+%           baselines, benchmark download scripts), encoder comparison (attested),
+%           scale-sensitivity diagnostic, heterogeneous machine-hub graph and encoder,
+%           validation-based checkpoint selection, multi-seed AWS sweeps, final paper
+% status:   claimable
+% tech:     PyTorch (hand-written message passing, no PyG or DGL), job-shop-lib,
+%           GraphSAGE, GIN, GAT, GCN, PNA, heterogeneous GNN, GRPO, PPO, pytest, uv,
+%           AWS EC2 (c7i.8xlarge), Taillard / FT / LA benchmarks
+% signals:  graph neural networks, reinforcement learning, GRPO, PPO, combinatorial
+%           optimization, scheduling, operations research, size generalization,
+%           distribution shift, ablation, experiment design, multi-seed evaluation,
+%           benchmarking, research, PyTorch, AWS
+% summary:  Diagnoses why GNN job-shop schedulers trained on 10x10 instances collapse on
+%           larger ones, tracing it to machine-conflict degree growing with the job
+%           count, and compares fixes in a 5-seed factorial: degree-normalized
+%           aggregation and machine-hub routing each reach about 26% relative
+%           scheduling error zero-shot on Taillard instances up to 100x20.
+% verified: 2026-10-09 against github.com/yarikama/GGJSSP (origin/experiment/v4,
+%           4dcb238) and the submitted report (GGJSSP_submission.zip); the encoder
+%           comparison's credit attested 2026-10-11
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - The collapse example is a sum-aggregation GIN trained on 10x10 and scored
+%     zero-shot on Taillard 15x15: 135.77% RSE, against 25.92% for mean-aggregation
+%     SAGE, both single checkpoints. Quote no other number as the collapse and no
+%     in-distribution figure for that GIN.
+%   - The 26% result is the 5-seed factorial's 8-group Taillard average (mean
+%     aggregation with machine-conflict edges 25.88%, attention 25.71%, hub-only sum
+%     26.21%). The variants agree within one standard deviation: write "showed", never
+%     that it was proved, and call 26% the level the fixes reach, not a ceiling.
+%   - Checkpoint rules differ by variant (validation-best for mean aggregation, final
+%     weights for sum and attention); the attention variant's validation-best
+%     checkpoint scores 26.16%.
+%   - 7.5x is one checkpoint (one seed, homogeneous mean-aggregation SAGE trained on
+%     10x10) scoring 24.90% on Taillard 50x15. Never attach it to the factorial or to
+%     the hub architecture.
+%   - The hub-only gain over keeping machine-conflict edges holds under sum
+%     aggregation, at 2.99pp on average and 5.43pp at most (50x15), and it does not
+%     grow steadily with size.
+%   - The training-time comparison sets L2D's published 6.2 h (its own hardware)
+%     against per-seed wall-clock on a shared AWS CPU instance: write "about 3x less
+%     training time", never a general speed claim.
+%   - GRPO versus PPO is one seed on the homogeneous SAGE encoder.
+%   - The encoder comparison is one GRPO checkpoint per encoder. SAGE beats the best
+%     dispatching rule only on the six 10x10 FT/LA instances (16.43% vs MOR 21.91%); on
+%     all 43 FT/LA instances MOR wins (20.65% vs 22.30%).
+%   - Say degree-normalized aggregation, never degree-invariant.
+%   - Scale sensitivity is a post-hoc diagnostic; never claim it predicts error.
+%   - Claim only the parts on the team line. The GRPO-Clip trainer, the original test
+%     suite, the alpha sweep and homogeneous multi-size training are teammates' work.
+% -------------------------------------------------------------------------------------
+% FACET: Failure diagnosis              angles: research, debugging, distribution shift
+% Evidence: GGJSSP docs/Eval_result/eval_result_v2.md:527-543 (10x10-trained GIN on
+%           Taillard 15x15: 135.77% RSE; random dispatch 61.78%), :545-561 (SAGE
+%           25.92%); submitted report project_report.tex:163-176 (at most two
+%           precedence neighbors, n-1 machine-conflict neighbors);
+%           scripts/plot_feature_distribution.py (commit 41cda59)
+% Notes:    label used before: Failure Diagnosis.
+\resumeItem{\textbf{Failure Diagnosis:} Traced the zero-shot collapse of GNN schedulers on larger instances to machine-conflict degree growing with the job count while precedence degree stays at two: a sum-aggregation GIN trained on 10$\times$10 scored \textbf{136\%} relative scheduling error on Taillard 15$\times$15, worse than random dispatch, against 26\% for mean aggregation}
+% -------------------------------------------------------------------------------------
+% FACET: Scale-sensitivity diagnostic       angles: research, metrics, interpretability
+% Evidence: GGJSSP scripts/measure_ss.py (commit 519c9d4);
+%           docs/Eval_result/exp_a_results.txt (commit 092bbef; job-axis SS at 15x10:
+%           GIN 2.29, SAGE-sum 2.34, GAT 0.036, SAGE-mean 0.004); submitted report
+%           project_report.tex:290-306, :536-552; its author contributions credit
+%           Henry with the per-axis SS framework (:660-662)
+\resumeItem{\textbf{Scale-Sensitivity Diagnostic:} Defined a per-axis diagnostic that measures how node-embedding norms drift with instance size, comparing job-axis and machine-axis growth at equal operation counts: from 10$\times$10 to 15$\times$10, GIN's sum-aggregation embeddings grew \textbf{229\%} against 0.4\% for mean aggregation}
+% -------------------------------------------------------------------------------------
+% FACET: Machine-hub graph                  angles: graph ML, architecture, scalability
+% Evidence: GGJSSP ggjssp/hetero.py (commits 2ffb295, 7e5b577, 0245e5a, d0404f7);
+%           ggjssp/models/encoders/hetero_gin.py (2ffb295; attention on
+%           machine-conflict edges in 41a5410); tests/test_hetero.py (cbd2fa9);
+%           submitted report project_report.tex:222-250 (constant per-operation
+%           degree; about 2,000 vs 200,000 edges at 100x20)
+\resumeItem{\textbf{Graph Architecture:} Replaced the dense machine-conflict edges with machine hub nodes in a heterogeneous graph and wrote its HeteroGIN encoder, giving every operation a constant degree at any instance size and cutting a 100$\times$20 graph from about 200,000 edges to about \textbf{2,000}}
+% -------------------------------------------------------------------------------------
+% FACET: Topology ablation                           angles: ablation, experiment design
+% Evidence: GGJSSP docs/Eval_result/eval_result_v4.md:313-325 (5 seeds, sum
+%           aggregation, final checkpoints: 26.21 +/- 1.43 vs 29.20 +/- 2.48; per-group
+%           gaps 1.72 to 5.43pp); commit 0245e5a; submitted report
+%           project_report.tex:323-360
+\resumeItem{\textbf{Topology Ablation:} Isolated the machine-conflict edges as the cause: with the encoder, sum aggregation and checkpoint rule held fixed, removing them won on all \textbf{8} Taillard size groups over 5 seeds, by 3.0pp on average and up to 5.4pp at 50$\times$15, with 1.7$\times$ lower seed-to-seed standard deviation}
+% -------------------------------------------------------------------------------------
+% FACET: Alternative-paths factorial       angles: research, experiment design, statistics
+% Evidence: GGJSSP docs/Eval_result/phase2_summary.md:100 (mean aggregation with
+%           machine-conflict edges 25.88 +/- 0.40), :142 (attention, final weights
+%           25.71 +/- 0.30), :156 (homogeneous SAGE 29.72 +/- 1.64);
+%           eval_result_v4.md:325 (hub-only sum 26.21 +/- 1.43); commit 2dc461f;
+%           submitted report project_report.tex:362-404
+% Notes:    label used before: Architectural Fix.
+\resumeItem{\textbf{Architectural Fix:} Showed with a 5-seed topology-by-aggregator factorial that degree-normalized aggregation and machine-hub routing are alternative fixes reaching the same \textasciitilde\textbf{26\%} error zero-shot on Taillard 15$\times$15 to 100$\times$20 (25.9\%, 25.7\% and 26.2\%), against 29.7\% for the homogeneous graph}
+% -------------------------------------------------------------------------------------
+% FACET: Machine-feature confound check            angles: ablation, confound control
+% Evidence: GGJSSP commit cbd2fa9 (six machine-level observers added to the environment
+%           and the hub nodes); docs/Eval_result/phase2_summary.md:60-72 (26.07 +/-
+%           0.83) vs eval_result_v4.md:325 (26.21); commit 2dc461f
+\resumeItem{\textbf{Confound Check:} Added six machine-level state features to the hub nodes and found no change (26.07\% vs.\ 26.21\%), showing the hub graph's \textbf{3.5pp} gain over the homogeneous graph comes from removing edges, not from extra machine signals}
+% -------------------------------------------------------------------------------------
+% FACET: Checkpoint selection          angles: ML engineering, evaluation, reproducibility
+% Evidence: GGJSSP commit ea63ba0 (training-rollout-best checkpoint 146% on TA01-10 vs
+%           the same seed's final weights 26.63%); commit cbd2fa9 (greedy makespan on a
+%           fixed 100-instance validation set every 20 epochs, all four trainers);
+%           submitted report project_report.tex:258-269
+\resumeItem{\textbf{Checkpoint Selection:} Caught a lucky-epoch trap in which the checkpoint saved at the best training rollout scored \textbf{146\%} error while the same seed's final weights scored 26.6\%, and replaced it with greedy makespan on a fixed 100-instance validation set every 20 epochs, across all four trainers}
+% -------------------------------------------------------------------------------------
+% FACET: Multi-seed AWS sweeps             angles: cloud, infrastructure, orchestration
+% Evidence: GGJSSP scripts/run_phase2_aws.sh (commit c6a6ef4),
+%           scripts/run_phase3_multisize.sh (c6a6ef4, 2dc461f),
+%           scripts/aggregate_phase2_results.py (e1f3183); submitted report
+%           project_report.tex:271-279, :945-950 (25 + 3 runs of 0.6 to 2.2 h, eight
+%           in parallel on a c7i.8xlarge)
+\resumeItem{\textbf{Multi-Seed Sweeps:} Orchestrated \textbf{28} multi-seed training runs on an AWS c7i.8xlarge, eight at a time at 0.6 to 2.2 hours each, and scripted the aggregation of per-seed Taillard results into mean and standard-deviation tables}
+% -------------------------------------------------------------------------------------
+% FACET: Training-cost frontier                                angles: efficiency, cost
+% Evidence: GGJSSP scripts/plot_training_pareto.py:31-43 (commit 05b683f; attention
+%           variant 2.18 h per seed; L2D 6.2 h as published);
+%           docs/Eval_result/phase2_summary.md:142 (25.71%);
+%           docs/Eval_result/sota_published.csv:2 (L2D 25.46%, as re-reported);
+%           submitted report project_report.tex:572-598
+\resumeItem{\textbf{Training Cost:} Mapped training time against error for every variant and showed the attention variant reaches 25.7\%, within \textbf{0.3pp} of the published L2D scheduler, with about 3$\times$ less training time per seed}
+% -------------------------------------------------------------------------------------
+% FACET: Multi-size training                           angles: research, negative result
+% Evidence: GGJSSP scripts/run_phase3_multisize.sh; docs/Eval_result/
+%           phase2_summary.md:32-44 (3 seeds: 25.86 +/- 0.20); eval_result_v4.md:325
+%           (one size: 26.21 +/- 1.43); commit baa1afc; submitted report
+%           project_report.tex:418-430
+\resumeItem{\textbf{Multi-Size Training:} Tested whether training the hub model on five instance sizes closes the remaining gap to ScheduleNet and found it does not (25.9\% vs.\ 26.2\%), its only effect a \textbf{7$\times$} smaller seed-to-seed spread}
+% -------------------------------------------------------------------------------------
+% FACET: GRPO vs. PPO                                       angles: reinforcement learning
+% Evidence: GGJSSP docs/Eval_result/eval_result_v2.md:15-32 (SAGE, 10x10, one seed,
+%           FT/LA cross-size RSE: GRPO 22.30%, GRPO+KL 26.13%, GRPO-Clip 26.90%, PPO2
+%           34.36%); docs/paper_draft_zh.md:621-624 (about 11 vs 40 min); submitted
+%           report project_report.tex:554-570; trainers: git (grpo.py 0059a33,
+%           grpo_kl.py 4bed47f, ppo2.py 6f325d5) + Henry-attested 2026-10-09
+\resumeItem{\textbf{GRPO vs.\ PPO:} Compared critic-free GRPO with PPO on the same encoder: GRPO reached \textbf{22.3\%} cross-size error in about 11 minutes against PPO's 34.4\% in 40, partly because PPO's critic, trained at one size, extrapolates poorly to others}
+% -------------------------------------------------------------------------------------
+% FACET: Research framework              angles: ML engineering, RL, built from scratch
+% Evidence: GGJSSP commits 0059a33 (GRPO trainer, SAGE encoder, shared training loop
+%           in trainers/base.py), 6f325d5 (PPO2, GIN, GAT), 4bed47f (GRPO+KL;
+%           dispatching rules SPT, MWKR, MOR, Random), 4c08def (GCN), 87e4b01 (PNA),
+%           519c9d4 (chain-aware SAGE variants), 53ab8ef (job-shop-lib environment);
+%           trainers: git + Henry-attested 2026-10-09; submitted report
+%           project_report.tex:924-934 (plain PyTorch, no PyTorch Geometric)
+% Notes:    label used before: Research Framework.
+\resumeItem{\textbf{Research Framework:} Built the training and evaluation stack from scratch in plain PyTorch with hand-written message passing: SAGE, GCN, GIN, GAT and PNA encoders, critic-free GRPO, GRPO+KL and PPO trainers on one shared loop, and dispatching-rule baselines, benchmarked on the FT, LA and Taillard instance sets}
+% -------------------------------------------------------------------------------------
+% FACET: Benchmark data                                 angles: data engineering, tooling
+% Evidence: GGJSSP scripts/download_benchmarks.py (commits 231809a, 0f8a7a0; Taillard
+%           via JSPLIB in 6b5f801), scripts/download_best_known.py (commit f1f3056)
+\resumeItem{\textbf{Benchmark Data:} Wrote the scripts that fetch and parse the FT, LA and Taillard instance sets and their best-known makespans, the reference that every relative scheduling error is measured against}
+% -------------------------------------------------------------------------------------
+% FACET: Zero-shot transfer                                      angles: generalization
+% Evidence: GGJSSP docs/Eval_result/eval_result_v2.md:491-507 (Taillard 20x20: 10x10
+%           model 28.88% vs a 20x20-trained model 30.39%), :509-525 (Taillard 50x15:
+%           24.90%; MWKR 29.01%); one checkpoint, checkpoints/grpo_sage_10x10/best.pt
+\resumeItem{\textbf{Zero-Shot Transfer:} Showed one mean-aggregation policy trained only on 10$\times$10 instances held 24.9\% error on Taillard 50$\times$15, \textbf{7.5$\times$} the operations, and beat a model trained at 20$\times$20 on 20$\times$20 instances (28.9\% vs.\ 30.4\%)}
+% -------------------------------------------------------------------------------------
+% FACET: Self-state ablation                                angles: ablation, model design
+% Evidence: GGJSSP docs/Eval_result/eval_result_v2.md:593-617 (10x10 instances:
+%           concatenation 16.43% vs addition 49.99%; random dispatch 46.03%), :627-685
+%           (sum + LayerNorm 138.96% cross-size); commit 41cda59; submitted report
+%           project_report.tex:432-462
+\resumeItem{\textbf{Self-State Ablation:} Showed the encoder must concatenate a node's own state with its aggregated neighborhood rather than add them: addition raised in-distribution error from \textbf{16.4\%} to 50.0\%, worse than random dispatch, and LayerNorm on a sum aggregator still left 139\% cross-size error}
+% -------------------------------------------------------------------------------------
+% FACET: Encoder comparison              angles: ablation, model selection, benchmarking
+% Evidence: GGJSSP docs/Eval_result/eval_result_v2.md:218-243 (one GRPO checkpoint per
+%           encoder, trained on 10x10, scored on the six 10x10 FT/LA instances: SAGE
+%           16.43%, PNA 34.74%, GAT 54.06%, GCN 58.04%; MOR 21.91%), :247-273 (all 43
+%           FT/LA instances: SAGE 22.30%, PNA 32.13%, GAT 47.29%, GCN 53.20%, GIN
+%           69.82%); results committed 2026-03-19 to 03-24 (6b5f801 to 4e4f493);
+%           Henry-attested 2026-10-11
+\resumeItem{\textbf{Encoder Comparison:} Benchmarked five GNN encoders trained with GRPO on 10$\times$10 instances: on 10$\times$10 test instances mean-aggregation SAGE led at \textbf{16.4\%} error, ahead of the best dispatching rule's 21.9\%, and on all 43 FT and LA instances both degree-normalized encoders, SAGE and PNA, beat GAT, GCN and GIN}
+% -------------------------------------------------------------------------------------
+% FACET: Paper                                                   angles: research, writing
+% Evidence: GGJSSP docs/paper_draft_zh.md (v3 drafts, every line Henry's by git blame;
+%           commits c6a6ef4 through 05b683f), commit 4dcb238 (English 8-page
+%           NeurIPS-format report from that draft)
+\resumeItem{\textbf{Research Paper:} Wrote the project paper's v3 draft and its 8-page NeurIPS-format English version around three findings: the degree-shift diagnosis, the alternative-paths factorial and the negative multi-size result}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - Matching L2D with 46x less training (eval_result_v2.md:561): one seed against an
+%     approximate published figure, superseded by the 5-seed training-cost comparison.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Why degree matters: a sum aggregator's output grows with the neighbor count, and
+%     each operation has at most two precedence neighbors but n-1 machine-conflict
+%     neighbors, so embeddings drift as instances grow. Mean aggregation normalizes
+%     the count; hub nodes remove the dense edges altogether.
+%   - Why hubs also scale: edges grow as O(nm) instead of O(n^2 m), about 2,000 against
+%     200,000 at 100x20, which matters for batched inference and attention encoders.
+%   - The lucky-epoch trap: saving the checkpoint with the best training rollout keeps
+%     a lucky draw on one easy instance; a fixed validation set removes the luck.
+%   - Why GRPO: group-relative advantages need no critic, and a critic trained at one
+%     size extrapolates poorly to others.

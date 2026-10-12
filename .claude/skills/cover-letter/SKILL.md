@@ -40,9 +40,17 @@ come out generic. Also establish:
 
 ### 2. Read his material
 
-- `Henry_Hsu_SWE_resume.tex` and `Henry_Hsu_GAIE_resume.tex` (both — the framing
-  differs and the right one depends on the role)
-- `content/resume/` for the full pool, including entries no current resume uses
+- `general_resume/SWE/Henry_Hsu_SWE_resume.tex` and
+  `general_resume/GAIE/Henry_Hsu_GAIE_resume.tex` (both — the framing differs and the
+  right one depends on the role)
+- `make bank`, then the bank files for any project worth featuring
+  (`content/bank/projects/<id>.tex`, plus the gitignored `content/bank/private/<id>.md`
+  when it exists). The bank is the complete, verified record of every project and the
+  source of truth for project facts:
+  - claim only from its facets, within the card's CONSTRAINTS;
+  - never from its UNVERIFIED or INTERVIEW NOTES blocks;
+  - never from a project whose `status` is not `claimable`.
+- `content/resume/` for every other entry, including ones no current resume uses
 - The `star_stories.md` memory file for detail already collected in past sessions.
   **Check it first** — do not re-ask questions he has already answered.
 
@@ -52,8 +60,8 @@ Produce, and show him:
 
 - **Must-have vs nice-to-have** requirements, separated.
 - **At least three qualifications** the employer is actually seeking.
-- **Three of his achievements** that map onto those, and which resume entry each
-  comes from.
+- **Three of his achievements** that map onto those, and which resume entry (or, for
+  a project, which bank facet) each comes from.
 - **Gaps** — requirements he has no evidence for. Say so plainly. A letter that
   quietly skips a must-have is a weaker letter than one that reframes an adjacent
   strength.

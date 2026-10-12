@@ -1,0 +1,140 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       genai-tutoring-multiagent
+% title:    GenAI Tutoring System with Multi-Agent RAG
+% dates:    May 2024 -- Aug. 2024
+% link:     https://github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system (public)
+% team:     2-person team repo; Henry: Chroma ingestion and search layer, Streamlit app and
+%           agent step callback, model selection and agent limits, LeetCode solver crew,
+%           embedding comparison
+% status:   claimable
+% tech:     CrewAI, LangChain, Chroma, Streamlit, GPT-4o, GPT-4, GPT-3.5-turbo, Llama 3 8B
+%           (Ollama), OpenAI, GPT4All and LlamaCpp embeddings, pdfplumber
+% signals:  multi-agent, agentic AI, CrewAI, LLM application, RAG, retrieval, vector
+%           database, Chroma, embeddings, LLM evaluation, model comparison, local LLM,
+%           Streamlit, EdTech, award
+% summary:  A CrewAI multi-agent tutor over Chroma retrieval: given a student's question and
+%           answer, agents grade it, trace the mistake to a textbook chapter and retrieve
+%           similar past entrance-exam questions; a second crew solves LeetCode problems,
+%           and a Streamlit app shows every agent step. Top 3 of 50 teams in a Computer
+%           Science AI workshop.
+% verified: 2026-10-09 against the 2-person team repo (main, per-file history) and
+%           github.com/yarikama/Multi-agent-with-RAG-a-demo-of-senior-high-school-solver-system
+%           (main, README)
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - The tutoring crew's five roles, their prompts and the hand-offs between them are team
+%     work. Henry's own agent code is the LeetCode crew; on the tutoring crew his part is
+%     the wiring: the Streamlit app, model choice, memory and iteration caps, and the
+%     retrieval layer the agents search.
+%   - The error-book agent retrieves similar past exam questions for the student's
+%     misconception. Never describe it as detecting or identifying exams.
+%   - The benchmark comes from the README's report and is small: always counts with their
+%     totals (14 chemistry questions, 25 LeetCode problems), never percentages and never a
+%     bare "outperformed". The LeetCode rows rest on the README alone; lead with chemistry.
+%   - The LLM comparison (run time, report quality) and the embedding comparison
+%     (similarity probes) are qualitative: never attach a number to either.
+%   - Never name the embedding model the finished system ran on: the README and the
+%     committed code name different ones.
+%   - The award is Henry-attested; neither repo records it.
+%   - Authorship is evidenced by the team repo's per-file history. The linked repo is a
+%     later upload, so its history is not evidence of who wrote what.
+% -------------------------------------------------------------------------------------
+% FACET: Competition result                                   angles: achievement, award
+% Evidence: Henry-attested 2026-10-09 (Top 3 of 50 teams and the Outstanding Award, Computer
+%           Science AI workshop); no artifact in either repo
+\resumeItem{\textbf{Competition Achievement:} Placed \textbf{Top 3} of 50 teams in the Computer Science AI workshop, winning the Outstanding Award}
+% -------------------------------------------------------------------------------------
+% FACET: Multi-agent tutor                       angles: multi-agent, agentic AI, EdTech
+% Evidence: team repo multiagent/agents.py:28-119 (mentor, textbook analyst, homework
+%           grader, error-book creator, report writer), multiagent/tasks.py:5-77,
+%           multiagent/crew.py:10-89 (sequential crew, hand-offs to the report writer);
+%           Henry's wiring: 9d0a1a3 (crew moved from a command-line prompt into the
+%           Streamlit app, question and answer taken separately), 287b552 (model and
+%           temperature passed to every agent), b31a24b and 4ce7fcf (memory and iteration
+%           caps), e785a5f (retrieval tool module)
+% Notes:    the roles, prompts and hand-offs are not Henry's code (see CONSTRAINTS), so the
+%           item claims the integration only. Labels used before: Multi-Agent Framework.
+\resumeItem{\textbf{Multi-Agent Tutor:} Integrated a five-agent \textbf{CrewAI} tutor, which grades a student's answer, traces the mistake to a textbook chapter and retrieves similar past exam questions, into a Streamlit app backed by Chroma retrieval}
+% -------------------------------------------------------------------------------------
+% FACET: RAG pipeline                           angles: RAG, retrieval, vector database
+% Evidence: team repo chroma.py:8-19 (page-and-chunk IDs), :25-43 (only chunks with new IDs
+%           are added), :51-59 (one store per corpus: answers, exam papers, textbooks);
+%           document_process.py:27-33 (RecursiveCharacterTextSplitter, 1,000 characters,
+%           100 overlap); multiagent/tools.py:8-34 (top-k similarity search, default k 3);
+%           first written in 0fbc29d, a229068, 530ea63 and 20a485a, store loop e785a5f,
+%           tool module e785a5f and c4d9fdc; corpus: linked README "Dataset"
+%           (senior-high textbooks; ten years each of the GSAT and AST papers with
+%           published worked solutions)
+% Notes:    the PDF loader (pdfplumber) and the tool wrapper's source citations are a
+%           teammate's additions, not Henry's.
+\resumeItem{\textbf{RAG Pipeline:} Built the \textbf{Chroma} ingestion and search layer the agents query, with separate stores for senior-high textbooks, ten years of Taiwan's two university entrance exams and their worked solutions, chunked at 1,000 characters and keyed by page-and-chunk IDs so re-ingestion adds only new chunks}
+% -------------------------------------------------------------------------------------
+% FACET: Agent transparency UI                       angles: LLM app, UX, observability
+% Evidence: team repo serve.py:9-99 (every commit Henry's): model picker and temperature
+%           :23-30 and :79-84, Markdown report download :47-51; multiagent/agents.py:8-26
+%           (CrewAI step callback rendering each step's tool, tool input, log and retrieved
+%           context; 9d0a1a3, b31a24b), :29-41 (OpenAI models or local Llama 3 through
+%           Ollama; 287b552); llama3_setup/Modelfile (Llama 3 8B, b31a24b)
+% Notes:    labels used before: Interactive UI.
+\resumeItem{\textbf{Agent Transparency UI:} Built the \textbf{Streamlit} app with a CrewAI step callback that streams each agent's tool call, tool input, ReAct reasoning and retrieved context, plus a model picker (GPT-4o, GPT-4, GPT-3.5, a local Llama 3 8B via Ollama), a temperature control and a Markdown report download}
+% -------------------------------------------------------------------------------------
+% FACET: Coding solver crew                         angles: multi-agent, code generation
+% Evidence: team repo df7eb7f "add leetcode solver": multiagent/agents.py:122-196 (manager,
+%           problem analyst, programmer, report writer), multiagent/tasks.py:81-133,
+%           multiagent/crew.py:91-161 (sequential crew; the programmer works from the
+%           analysis, the report writer from both), serve.py:73-99, test.py (Two Sum run)
+\resumeItem{\textbf{Coding Solver Crew:} Added a four-agent \textbf{CrewAI} crew for LeetCode problems in which a manager plans, an analyst restates the problem and its core concepts, a programmer writes code from that analysis, and a report writer returns the concepts with the solution}
+% -------------------------------------------------------------------------------------
+% FACET: Benchmark                                      angles: LLM evaluation, results
+% Evidence: linked README "Evaluation Metric": multi-agent with RAG on GPT-4o, chemistry
+%           7/7 non-calculation and 4/7 calculation, LeetCode Easy 9/10, Medium 8/10,
+%           Hard 1/5; without RAG 5/7, 4/7 and 10/10, 7/10, 0/5; single GPT-4o 3/7, 2/7
+%           and 10/10, 6/10, 0/5
+% Notes:    the chemistry set is the multiple-choice section of a northern-Taiwan mock
+%           entrance exam. Team result.
+\resumeItem{\textbf{Benchmark:} On 14 chemistry multiple-choice questions from a Taiwanese mock entrance exam, the multi-agent RAG system on GPT-4o answered \textbf{11} correctly, against 9 without retrieval and 5 for a single GPT-4o; on 25 LeetCode problems it solved 18, against 17 and 16}
+% -------------------------------------------------------------------------------------
+% FACET: Embedding evaluation                       angles: embeddings, RAG, evaluation
+% Evidence: team repo embedding.py:16-129 (d816597: eight exam-domain Chinese sentences;
+%           pairwise cosine similarity, "math - algebra + geometry" arithmetic,
+%           near-duplicate discrimination, out-of-vocabulary term, PCA plot, repeat
+%           stability); linked README "Change The Embedding Function in RAG" (OpenAI and
+%           GPT4All strong, LlamaCpp weakest)
+\resumeItem{\textbf{Embedding Evaluation:} Compared OpenAI text-embedding-3-large, LlamaCpp and GPT4All embeddings on exam-domain Chinese sentences with similarity, vector-arithmetic, discrimination and stability probes, ruling out LlamaCpp as the weakest}
+% -------------------------------------------------------------------------------------
+% FACET: LLM selection                                angles: model comparison, LLMOps
+% Evidence: linked README "LLM Model Configuration" (GPT-4, GPT-4o, GPT-3.5-turbo and
+%           Llama 3 compared on run time and report structure and completeness; GPT-4o
+%           chosen as the most stable); the switch that made it possible:
+%           multiagent/agents.py:29-41, serve.py:23-24 (287b552)
+% Notes:    team comparison, qualitative.
+\resumeItem{\textbf{LLM Selection:} Compared GPT-4o, GPT-4, GPT-3.5-turbo and a local Llama 3 8B as the agents' model on run time and report quality, choosing GPT-4o for the most stable multi-agent reports}
+% -------------------------------------------------------------------------------------
+% FACET: Agent cost control                          angles: cost, reliability, agents
+% Evidence: team repo multiagent/agents.py (memory=True and max_iter per agent, report
+%           writer uncapped; b31a24b, 4ce7fcf, df7eb7f); multiagent/tools.py:9 (default
+%           top-3, down from 5 in b31a24b); linked README "Difficulties We Faced" (token
+%           cost, non-converging agents, a capped report writer failing to report)
+\resumeItem{\textbf{Agent Cost Control:} Capped each agent's iterations, enabled agent memory and cut retrieval from top-5 to top-3 to curb token use and non-converging agent loops, leaving the report writer uncapped because capping it lost the final report}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - Retrieval in the LeetCode crew: the committed crew has no retrieval tool attached
+%     and no LeetCode store is committed.
+%   - Which embedding model the finished system ran on.
+%   - A paper-reading mode, a working chat mode or a thesis-helper mode: the README or the
+%     app menu names them, but none has a working handler in the committed code.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Why several agents: each specialist searches its own store with its own question,
+%     breaking a broad question into smaller retrievals; the report writer merges them.
+%   - Why separate stores: textbooks, exam papers and worked solutions answer different
+%     questions, and splitting them keeps each agent's context on its own material.
+%   - Why caps: CrewAI agents iterate until satisfied, which burns tokens and can loop on
+%     a weaker model; capping every agent except the report writer kept runs finite.
+%   - What the callback shows: the tool each agent calls, its input, the ReAct log and the
+%     retrieved passages with their source IDs, so a student can see why an answer
+%     was given.

@@ -1,0 +1,104 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       jssp-bayesian-ga
+% title:    Job Shop Scheduling with a Genetic Algorithm and Bayesian Optimization
+% dates:    May 2023
+% link:     https://github.com/yarikama/JSSP-Simulation-and-Flexsim-Model (public)
+% team:     3-person NYCU Simulation course team; Henry: GA solver for JSSP, Bayesian
+%           hyperparameter tuning, batch runs and the Excel export that drives the Flexsim
+%           model (the repo's history is his)
+% status:   claimable
+% tech:     Python (NumPy, pandas, bayes_opt, Matplotlib, openpyxl), Flexsim, Excel
+% signals:  operations research, scheduling, job shop scheduling, combinatorial
+%           optimization, metaheuristics, genetic algorithm, Bayesian optimization,
+%           hyperparameter tuning, discrete-event simulation, automation, benchmarking,
+%           industrial engineering
+% summary:  Solves job shop scheduling with a genetic algorithm whose population size,
+%           crossover rate and mutation rate are tuned per instance by Bayesian
+%           optimization, then exports each best schedule to Excel tables that drive a
+%           Flexsim discrete-event model admitting jobs only in the GA's order; on six
+%           20x15 DMU benchmark instances the makespans land 8.8-15.7% above the best-known
+%           upper bounds.
+% verified: 2026-10-09 against github.com/yarikama/JSSP-Simulation-and-Flexsim-Model
+%           (main), including its written report and slides
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - The work is May 2023. The January 2024 commits only tidy files and add the report,
+%     so never extend the date range.
+%   - The gap is 8.8-15.7% above the best-known upper bound (mean 12.5%) on six 20x15 DMU
+%     instances. Always say "above the best-known upper bound"; never "optimal" or
+%     "near-optimal".
+%   - "Cross-validation" here means replaying the GA's schedule in the Flexsim model, not
+%     statistical cross-validation, and it covers only the 20x15 instances. Write
+%     "cross-checked in simulation".
+%   - The GA's selection, crossover and mutation operators follow the GA course's
+%     template, which the project slides credit. Claim adapting the GA to JSSP, the
+%     schedule decoder, the Bayesian tuning and the automation; never a GA written from
+%     scratch.
+%   - Describe the Flexsim model as the project's model; Henry's code is what feeds it.
+%   - It is a course project on benchmark instances: never imply it ran on a real shop
+%     floor.
+% -------------------------------------------------------------------------------------
+% FACET: Scheduling GA                       angles: optimization, metaheuristics, Python
+% Evidence: GA.py:181-190 (chromosome: each job repeated once per machine, shuffled),
+%           :192-206 (decoder: each operation starts once its machine and its previous
+%           operation are free; fitness = minus makespan), :211-286 (binary tournament,
+%           one-point crossover, mutation, elitist replacement), :296-331 (300
+%           generations per run); 7a2a74f (GA_done), 8836722
+\resumeItem{\textbf{Scheduling GA:} Solved job shop scheduling with a genetic algorithm in \textbf{Python}, decoding each job-repetition chromosome into machine start times and evolving it by tournament selection, one-point crossover and elitist replacement to minimise makespan}
+% -------------------------------------------------------------------------------------
+% FACET: Bayesian hyperparameter tuning           angles: Bayesian optimization, tuning
+% Evidence: GA.py:8 (bayes_opt), :365-377 (BayesianOptimization over the whole GA run:
+%           population 20-260, crossover rate 0.48-0.90, mutation rate 0.00001-0.2; 5
+%           random starts, 20 guided trials); README "超參數優化"; slides (tuning meant to
+%           replace guessing parameters by hand)
+\resumeItem{\textbf{Bayesian Tuning:} Tuned the GA's population size, crossover rate and mutation rate per instance with \textbf{Bayesian optimization} rather than by hand, running 5 random and 20 guided trials of the full GA}
+% -------------------------------------------------------------------------------------
+% FACET: Simulation input automation                       angles: automation, scripting
+% Evidence: GA.py:334-391 (one run walks every instance file in a folder), :94-121 and
+%           :123-179 (Rank, Source, Parameter and Route sheets for Flexsim), :28-48 and
+%           :75-92 (Time and Sequence sheets of the best solution), :50-73 (Gantt chart);
+%           README "自動 Flexsim 腳本驗證"; slides (automation steps 1-5)
+\resumeItem{\textbf{Automated Export:} Automated the hand-off from solver to simulation: one run reads every instance file in a folder, solves and tunes each, and writes the best schedule's Rank, Route, Source and Sequence tables and a Gantt chart to Excel for Flexsim to import}
+% -------------------------------------------------------------------------------------
+% FACET: Order-enforcing simulation model           angles: simulation, industrial eng.
+% Evidence: README "流程概念" steps 1-10 and the written report p. 2 (15 machines, each
+%           behind a buffer; a machine admits a job only when it is next in that machine's
+%           GA sequence; a message on machine exit makes the buffer check again);
+%           "Scheduling & Simulation .../final.fsm"
+% Notes:    worded as the project's model; Henry's part is the export that feeds it.
+\resumeItem{\textbf{Simulation Model:} Fed each GA schedule into a \textbf{Flexsim} discrete-event model of 15 machines whose buffers admit a job only when it is next in that machine's GA sequence, so the simulation follows the GA's order instead of first-come-first-served}
+% -------------------------------------------------------------------------------------
+% FACET: Simulation cross-check                                angles: validation, testing
+% Evidence: README "自動 Flexsim 腳本驗證" (one click checks whether the GA's schedule can
+%           be realised in simulation) and "自動化備註" (built for the 20x15 instances
+%           only); written report p. 1
+\resumeItem{\textbf{Simulation Cross-Check:} Set up a cross-check that replays the solver's 20$\times$15 schedules in discrete-event simulation, validating the solver against the Flexsim model instead of trusting its makespan alone}
+% -------------------------------------------------------------------------------------
+% FACET: Benchmark results                                   angles: benchmarking, results
+% Evidence: README "排程結果與討論" table and written report p. 2 (LB, UB and makespan for
+%           six DMU instances); gaps: 275/2669 = 10.3%, 241/2731 = 8.8%,
+%           403/2563 = 15.7%, 429/2749 = 15.6%, 442/3475 = 12.7%, 482/4035 = 11.9%
+% Notes:    all six are 20 jobs by 15 machines (one size cell in the table reads 20x20;
+%           the instance name says 20x15). Two instances have LB = UB, so their
+%           best-known value is optimal.
+\resumeItem{\textbf{Benchmark Results:} Reached makespans \textbf{8.8--15.7\%} above the best-known upper bounds (mean 12.5\%) on six 20-job, 15-machine DMU benchmark instances}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - A recorded run in which the Flexsim makespan matches the GA's: the cross-check
+%     exists, but no comparison is recorded.
+%   - Simulation of any instance size other than 20x15.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Why Bayesian optimization: one GA run is 300 generations, so a grid over three
+%     hyperparameters is expensive; a Gaussian-process surrogate picks promising settings
+%     in 25 runs.
+%   - Why this encoding: a permutation with each job repeated once per machine always
+%     decodes to a feasible schedule, so crossover and mutation never need repair.
+%   - Why the buffer gate: Flexsim dispatches first-come by default; gating each machine
+%     on the GA's sequence makes the simulation follow the plan, and the exit message
+%     keeps a job from waiting when nothing new enters the buffer.
+%   - Gap context: two of the six instances have proven optimal values.

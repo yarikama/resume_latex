@@ -1,0 +1,72 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       tetris-ai-agents
+% title:    AI Game Agents Tetris Arena
+% dates:    Apr. 2023 -- May 2023
+% link:     https://github.com/ChuEating1005/GA/tree/master/Final_Project (public)
+% team:     4-person team (NYCU genetic-algorithms course); Henry: the GA agent and the agent
+%           comparison (Henry-attested 2026-10-11); the game and the DQN are teammates' work
+% status:   claimable
+% tech:     Python, PyGame, pygad (genetic algorithm, multiprocessing), Keras / TensorFlow
+%           (Deep Q-Network), NumPy
+% signals:  game AI, genetic algorithm, metaheuristics, reinforcement learning, deep
+%           reinforcement learning, DQN, heuristic evaluation, parallel computing, model
+%           comparison, Python, PyGame
+% summary:  A team-built PyGame Tetris with Normal, AI and Training modes: a genetic
+%           algorithm (pygad) evolves weights for six board-evaluation features, a Deep
+%           Q-Network adapted from an MIT-licensed open-source bot is wired to the same
+%           game, and the team compares GA weight sets, weights from a published paper and
+%           the DQN on score and training time.
+% verified: 2026-10-09 against the linked repo (master, Final_Project) and its slide deck;
+%           Henry's share attested 2026-10-11
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - Henry's parts are attested, not evidenced: every commit in the repo is a teammate's.
+%     Claim only the GA agent and the agent comparison as his, and word the game and the
+%     DQN as the team's (see TEAM CONTEXT below).
+%   - The agents are the GA and the DQN, plus a control using a published paper's
+%     weights. Never claim any other learning method or library.
+%   - The modes are Normal, AI and Training; never claim any other mode.
+%   - The DQN is adapted from an MIT-licensed open-source Tetris bot: never present it as
+%     written from scratch.
+%   - No human score is recorded: never compare the agents with human players.
+% -------------------------------------------------------------------------------------
+% TEAM CONTEXT -- teammates' work; mention only as the setting, never as Henry's
+%   Tetris game and modes:
+%     a PyGame Tetris with hold and next-piece boxes and Normal, AI and Training modes,
+%     where Training mode scores each placement by its rank among the GA agent's candidate
+%     moves ("[Tetris] Game/Tetris_UI.py":135-179, :934-1080; deck slides 2-16).
+%   DQN agent: a Keras Deep Q-Network adapted from an MIT-licensed open-source Tetris bot,
+%     wired into the game, trained for 3,000 and 30,000 iterations (Final_Project/DQN/,
+%     "[Tetris] Game/Tetris_dqnAgent.py"; deck slides 48-51). The menu's AI mode runs the
+%     GA agent; the DQN play mode is not on the menu.
+% -------------------------------------------------------------------------------------
+% FACET: GA agent                              angles: genetic algorithm, metaheuristics
+% Evidence: Final_Project/GA_Traning/train_1.py to train_3.py (pygad.GA with 6 genes: row
+%           and column transitions, wells, holes, cleared lines plus one height measure;
+%           fitness = points won over a full game); train_2.py and train_3.py set
+%           parallel_processing to cpu_count(); deck slides 17-41. Henry's part: Henry-attested
+%           2026-10-11 (the commits are a teammate's).
+\resumeItem{\textbf{GA Agent:} Evolved weights for six board-evaluation features (row and column transitions, wells, holes, cleared lines and a height measure) with pygad, scoring each weight set by the points it wins over full games and spreading fitness evaluation across CPU cores}
+% -------------------------------------------------------------------------------------
+% FACET: Agent comparison                            angles: experimentation, evaluation
+% Evidence: deck slides 48-52 (three GA weight sets, a control using weights from a
+%           published deep-learning paper, two DQN runs: training time, average and best
+%           scores); the experiment-results workbook in GA_Traning/
+%           Henry's part: Henry-attested 2026-10-11.
+% Notes:    the third GA set (1.5 hours on a 4-core laptop) averaged 4,309,000 points.
+\resumeItem{\textbf{Agent Comparison:} Compared three GA weight sets, a published paper's weights and two DQN runs: the two best GA sets trained about 1.5 days and hit the \textbf{20,000,000}-point cap in every sample game, while the DQN trained in 0.5--7 hours but averaged 14,111--35,719 points}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - Any comparison with human players: the deck asserts one, but no human score exists.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - GA versus DQN: the GA converged slowly (days per weight set) but scored far higher
+%     here; the DQN trained in hours and scored lowest.
+%   - Hold piece: the GA agent scores both the falling piece and the held one before
+%     choosing, as a human player would.
+%   - Parallel fitness: each game is independent, so pygad spreads fitness evaluation
+%     across CPU cores.

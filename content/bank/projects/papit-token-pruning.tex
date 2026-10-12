@@ -1,0 +1,167 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       papit-token-pruning
+% title:    Prompt-Aware Image Token Pruning for Multimodal Inference (PAPIT)
+% dates:    Feb. 2026 -- May 2026
+% link:     https://github.com/yarikama/PAPIT (public)
+% team:     3-person team (Rice COMP 646); Henry: distilled scorer (feature cache,
+%           streaming trainer, architecture and supervision-target ablations),
+%           LLM-attention oracle, CLIP alignment diagnostic, latency benchmark, papit
+%           package and CLI, Fig. 1 hero figure, Pareto figure, final paper rewrite;
+%           slides and 5-minute video made with teammates (attested 2026-10-11)
+% status:   claimable
+% tech:     PyTorch, Hugging Face Transformers, LLaVA-1.5-7B (fp16), CLIP ViT-L/14 and
+%           its text encoder, Grad-CAM, knowledge distillation (KL loss), uv,
+%           AWS g5.2xlarge (A10G), Apple Silicon (MPS)
+% signals:  multimodal LLM, vision-language model, LLaVA, CLIP, knowledge distillation,
+%           model compression, token pruning, efficient inference, attention analysis,
+%           interpretability, benchmarking, latency, ablation, research, PyTorch,
+%           Hugging Face, AWS, GPU
+% summary:  Prunes LLaVA-1.5-7B's image tokens before the projector with a
+%           1.3M-parameter MLP distilled from the LLM's own layer-8 attention, after a
+%           diagnostic showed training-free CLIP saliency is uncorrelated with what the
+%           LLM attends to; at a quarter of the tokens it nearly matches the unpruned
+%           model on TextVQA.
+% verified: 2026-10-09 against github.com/yarikama/PAPIT (main, 202c9e6); the slides'
+%           and video's authorship attested 2026-10-11
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - 10x is an analytic estimate of self-attention FLOPs at a quarter of the tokens
+%     (prompt of about 50 tokens). Write "attention compute", never speed, latency or
+%     total compute: no end-to-end LLaVA timing was measured.
+%   - 0.43 ms times the scorer MLP alone on an A10G; the ViT features and the question's
+%     CLIP text embedding are computed outside the timed block. It is the cost of
+%     deciding which tokens to keep, never end-to-end latency.
+%   - 12.3 points is one cell: TextVQA at a quarter of the tokens, 100 questions (36.0
+%     vs 23.7 random, 36.7 unpruned). Always name TextVQA and the quarter; never
+%     generalize it to other benchmarks or to "accuracy".
+%   - 150x is measured against the CLIP-GradCAM scorer (65.23 ms), the paper's control.
+%   - About 500x is measured against a two-pass oracle at layer 16 (216.17 ms), while the
+%     scorer distils layer 8. Never put "the oracle it distils from" next to 500x.
+%   - The cache holds 100K pairs; every predictor trained on a 20K subset of it. Use
+%     100K for the cache only.
+%   - Every accuracy cell is 100 questions (binomial standard error about 5 points).
+%     Quote cells one at a time with dataset and retention; never average them into a
+%     general claim.
+%   - The alignment diagnostic compares CLIP-GradCAM saliency with LLaVA's last-layer
+%     attention on three benchmarks. Say "barely tracks" or "uncorrelated"; never
+%     extend it to every training-free method.
+%   - The lead figure shows six selected cases in which the distilled scorer answers
+%     correctly and the CLIP scorer does not. Never present them as typical.
+%   - Claim only the parts on the team line. The GradCAM scorer, the dataset loaders,
+%     the AWS run scripts and the GQA qualitative figure (Fig. 3) are teammates' work,
+%     and the slides and video are joint work: never claim them as Henry's alone.
+% -------------------------------------------------------------------------------------
+% FACET: Attention distillation          angles: distillation, compression, efficiency
+% Evidence: PAPIT report/PAPIT.tex:178-201 (MLP over each patch feature joined with the
+%           question embedding, KL to head-averaged layer-8 attention);
+%           scripts/train_distill_arch.py:57-72 (MLP4Scorer, 1.28M parameters);
+%           report/PAPIT.tex:203-212 (relative attention FLOPs 0.10 at k=25%);
+%           commits 65608db, b489fac, c176291
+% Notes:    labels used before: Attention Distillation, Inference Efficiency.
+\resumeItem{\textbf{Attention Distillation:} Distilled LLaVA-1.5-7B's layer-8 attention into a \textbf{1.3M-parameter} MLP that scores every image patch against the question in one pass, so the patches the LLM would ignore are dropped before the projector, for \textbf{10$\times$} less attention compute in the frozen LLM at a quarter of the tokens}
+% -------------------------------------------------------------------------------------
+% FACET: Scoring cost                           angles: latency, benchmarking, efficiency
+% Evidence: PAPIT outputs/efficiency_distill.csv (20 images per scorer, recomputed:
+%           0.43 / 65.23 / 216.17 ms, ratios 152x and 503x);
+%           scripts/run_efficiency_distill.py:63-97 (only the predictor call is timed);
+%           report/PAPIT.tex:213-220; commits c264d92, 0c3c547
+% Notes:    the 150x control is CLIP-GradCAM, the paper's baseline; the 500x oracle is
+%           layer 16, not the layer-8 target.
+\resumeItem{\textbf{Scoring Cost:} Benchmarked four patch scorers on an A10G: the distilled scorer decides which tokens to keep in \textbf{0.43 ms} an image, \textbf{150$\times$} cheaper than a CLIP-GradCAM pass and about 500$\times$ cheaper than a two-pass LLaVA attention oracle at layer 16}
+% -------------------------------------------------------------------------------------
+% FACET: TextVQA at a quarter of the tokens                 angles: evaluation, accuracy
+% Evidence: PAPIT outputs/distill100k_attn_L8_textvqa.csv (recomputed at k=25%, 100
+%           questions: 36.0 scorer, 23.7 random, 20.0 CLIP-GradCAM, 36.7 unpruned);
+%           report/PAPIT.tex:309-314; commit c176291
+% Notes:    labels used before: Accuracy & Latency, Benchmarked Accuracy & Latency. The
+%           0.43 ms clause belongs to the Scoring cost facet and can be cut.
+\resumeItem{\textbf{Accuracy \& Latency:} Kept a quarter of the image tokens and still answered TextVQA about as well as the full model (36.0 vs.\ 36.7), \textbf{12.3} points clear of random pruning, while deciding what to keep in \textbf{0.43 ms} an image}
+% -------------------------------------------------------------------------------------
+% FACET: Other accuracy points                                        angles: evaluation
+% Evidence: PAPIT outputs/distill100k_attn_L8_gqa.csv and _vqa_v2.csv (recomputed, 100
+%           questions per cell: GQA k=50% 56.0 vs 57.0 unpruned; VQAv2 k=50% 83.3 vs
+%           83.3; VQAv2 k=75% 85.0 vs 83.3); report/PAPIT.tex:288-316
+\resumeItem{\textbf{Accuracy at Half the Tokens:} At half the image tokens the distilled scorer came within a point of the full model on GQA (56.0 vs.\ 57.0) and matched it on VQAv2 (\textbf{83.3}), and at three quarters it scored 85.0 on VQAv2 against the full model's 83.3}
+% -------------------------------------------------------------------------------------
+% FACET: CLIP alignment diagnostic                   angles: research, interpretability
+% Evidence: PAPIT outputs/alignment_gqa.csv, _textvqa.csv, _vqav2.csv (100 images each,
+%           recomputed: mean Spearman rho -0.018 / -0.016 / 0.014, no image above 0.3;
+%           top-10% Jaccard 0.047 / 0.039 / 0.046 vs 0.053 for random picks);
+%           scripts/run_attention_alignment.py; report/PAPIT.tex:331-367;
+%           commits 5a051be, 35e43f6
+% Notes:    label used before: Empirical Diagnostic.
+\resumeItem{\textbf{Empirical Diagnostic:} Showed why the training-free shortcut fails: across 300 images from GQA, TextVQA and VQAv2, CLIP-GradCAM patch saliency was uncorrelated with LLaVA's own attention (Spearman $\rho \approx 0$) and its top 10\% of patches overlapped the LLM's less than random picks, which is what made a learned scorer worth building}
+% -------------------------------------------------------------------------------------
+% FACET: Oracle layer sweep                         angles: research, experiment design
+% Evidence: PAPIT scripts/run_fastv_oracle.py (commit 9eaecfb);
+%           outputs/fastv_oracle_multilayer.csv (GQA, 100 questions, recomputed:
+%           layer 16 0.61 vs random 0.53 at k=25%; layer 2 0.49; layer 31 0.50);
+%           report/PAPIT.tex:369-404
+\resumeItem{\textbf{Oracle Layer Sweep:} Built a two-pass LLM-attention oracle and swept it across five LLaVA layers on GQA, finding that mid-layer attention (layers 8 to 24) beats random pruning, \textbf{0.61} vs.\ 0.53 at layer 16 with a quarter of the tokens, while layer 2, where FastV prunes, falls below random in this setting}
+% -------------------------------------------------------------------------------------
+% FACET: Supervision-target ablation            angles: distillation, ablation, research
+% Evidence: PAPIT outputs/distill100k_attn_{L8,L16,L24,rollout}_*.csv (12 evaluations,
+%           recomputed mean gain over random across 9 benchmark-retention cells: +3.0 /
+%           +2.4 / +2.1 / -5.4 points); commit c176291 (val KL 0.094 / 0.135 / 0.167 /
+%           0.256); report/PAPIT.tex:414-420
+\resumeItem{\textbf{Supervision-Target Ablation:} Trained the scorer on four LLaVA attention targets and evaluated each on 9 benchmark-retention cells: layer 8 gained most over random (\textbf{+3.0} points on average) although layer 16 is the stronger oracle, and attention rollout fell below random, so the target was chosen for distillability rather than oracle strength}
+% -------------------------------------------------------------------------------------
+% FACET: Architecture sweep                               angles: model design, ablation
+% Evidence: PAPIT commit b489fac (5K held-out cache, layer-16 target; top-10% Jaccard /
+%           val KL: bilinear 0.92M 0.343 / 0.43, MLP2 0.59M 0.536 / 0.12, MLP4 1.28M
+%           0.621 / 0.087, cross-attention 1.58M 0.613 / 0.089);
+%           scripts/train_distill_arch.py:31-102; report/PAPIT.tex:409-413
+\resumeItem{\textbf{Architecture Sweep:} Compared bilinear, 2-layer MLP, residual 4-layer MLP and cross-attention scorers on a held-out split and kept the \textbf{1.3M}-parameter residual MLP, which edged out the larger cross-attention model (val KL 0.087 vs.\ 0.089) at 0.62 top-10\% Jaccard with LLaVA's attention}
+% -------------------------------------------------------------------------------------
+% FACET: Training-data pipeline                angles: data pipeline, scale, infrastructure
+% Evidence: PAPIT commit b489fac (prep_distill_dataset.py: 50K GQA + 30K VQAv2 + 20K
+%           TextVQA; build_distill_cache_multi.py: one prompt-only LLaVA pass caches
+%           four attention targets at about 3.8 pairs/s); docs/scope_c_postmortem.md:54
+%           (118 GB, 7.3 GPU-hours), :66-78; scripts/train_distill_arch.py:128-196
+%           (ShardedCacheDataset); commit c176291
+\resumeItem{\textbf{Feature Cache:} Cached ViT features, question embeddings and four LLaVA attention targets for \textbf{100K} image-question pairs from three benchmarks (118 GB, 7.3 GPU-hours, one forward pass per pair), and wrote a sharded streaming loader so training fit in a single GPU instance's memory}
+% -------------------------------------------------------------------------------------
+% FACET: Package and CLI                     angles: software engineering, tooling, demo
+% Evidence: PAPIT commit d65058b (notebook prototype split into the papit package: core,
+%           integration, benchmark, data, ocr, risk; about 1,370 lines of package code);
+%           papit/integration/llava.py:295-352 (_build_inputs_embeds splices the kept
+%           tokens into inputs_embeds; git blame: 377 of 492 lines Henry's);
+%           pyproject.toml:27-28 (papit console script); commits 7eb3fe7 (--generate
+%           demo), c7df86b (MPS), 8d281b6 (docs/demo.md)
+\resumeItem{\textbf{Package \& CLI:} Turned a notebook prototype into an installable \texttt{papit} package and command-line tool, writing the LLaVA hook that splices the kept tokens into the model's input embeddings, an end-to-end demo mode that runs all four scorers on one image, and Apple Silicon support}
+% -------------------------------------------------------------------------------------
+% FACET: Paper figures                              angles: communication, visualization
+% Evidence: PAPIT scripts/make_hero_figure.py (commits 5e08164, bbd10ba, 5326106,
+%           449aaf8, c4a6065, all Henry's); report/PAPIT.tex:72-84 (Fig. 1);
+%           scripts/make_pareto.py (commit 11e552f); report/PAPIT.tex:263-273 (Fig. 2)
+\resumeItem{\textbf{Paper Figures:} Built the paper's lead figure from real model runs, six questions across three benchmarks and three retention levels showing the patches each scorer keeps and LLaVA's actual answer, plus the accuracy-versus-FLOPs Pareto plot across all three benchmarks}
+% -------------------------------------------------------------------------------------
+% FACET: Paper                                                   angles: research, writing
+% Evidence: PAPIT commit c264d92 (4-page rewrite around three findings) and every later
+%           commit to the paper (git log -- report/PAPIT.tex); report/PAPIT.pdf
+\resumeItem{\textbf{Research Paper:} Rewrote the team's report into a 4-page CVPR-format paper built on three findings, the training-free pipeline, the negative alignment result and the distilled scorer, and made every later revision}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - "Matches the oracle's downstream accuracy" (README, commit 0c3c547): the oracle ran
+%     on GQA only, on a separate draw of questions, so no like-for-like comparison
+%     exists.
+%   - Any end-to-end LLaVA speed-up, latency or memory saving from pruning: never
+%     measured on main.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Why prune before the projector: the LLM never sees the dropped tokens, so the
+%     quadratic attention cost shrinks; a mean "anchor" token keeps a summary of the
+%     dropped patches, and position IDs are re-packed.
+%   - Why layer 8 and not 16: layer 16 is the strongest oracle, but layer-8 targets are
+%     the easiest to imitate (val KL 0.094 vs 0.135), and the student's accuracy follows
+%     how well it imitates, not how good the teacher is.
+%   - Why random pruning is a strong baseline: it keeps spatial coverage, and at half
+%     the tokens or more the number of kept tokens matters more than which ones.
+%   - Debugging story: the 118 GB cache did not fit in RAM, and training died three
+%     times with no traceback because the kernel's OOM killer leaves none (only dmesg
+%     shows it); a sharded streaming loader plus a 20K subset that fit the page cache
+%     fixed it.

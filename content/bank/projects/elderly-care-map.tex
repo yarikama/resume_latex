@@ -1,0 +1,128 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       elderly-care-map
+% title:    Elderly Care Map Website
+% dates:    May 2023 -- Jun. 2023
+% link:     https://github.com/yarikama/Elderly-Care-Map-Website (public)
+% team:     4-person NYCU database course project; Henry: MySQL schema, map search page
+%           (address and county/district search, vacancy-coloured pins, distance, radius
+%           circle), member registration and login, save-from-map favorites, part of the
+%           data load; web scraping for the data, jointly with teammates (attested)
+% status:   claimable
+% tech:     PHP (mysqli), MySQL, phpMyAdmin, Google Maps JavaScript API (Geocoder,
+%           geometry library), JavaScript (fetch), Bootstrap 5, jQuery, Python (Beautiful
+%           Soup, Selenium; attested)
+% signals:  database design, relational schema, SQL, MySQL, foreign keys, joins, full-stack
+%           web, PHP, JavaScript, maps, geocoding, geospatial, open data, healthcare
+% summary:  A map search site for Taiwan's long-term care institutions, built on an 8-table
+%           MySQL schema loaded with 1,072 institutions from government data: users search
+%           by address or by county and district, institutions appear as pins coloured by
+%           vacant beds with their distance from the user, and members save favorites.
+% verified: 2026-10-09 against github.com/yarikama/Elderly-Care-Map-Website (main, a fork
+%           that carries the full history)
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - The site covers 1,072 institutions, the row count of the source CSV. Never round
+%     it up.
+%   - The data was loaded once: the CSV imported by hand into a staging table through
+%     phpMyAdmin, then a one-off INSERT ... SELECT script that is mostly a teammate's.
+%     Never describe the load as automated or recurring.
+%   - The radius buttons only draw a 0.5, 1 or 1.5 km circle; markers always come from
+%     the address's county and district. Never claim results are limited by radius.
+%   - Distance is straight-line, from the searched address or the browser's location,
+%     computed per search. Never call it route distance or continuous tracking.
+%   - The favorites list and delete pages, the institution and search-result pages and
+%     the admin back office are teammates' work. Henry's favorites part is the save
+%     button on each map pin.
+%   - The scraper (Python, Beautiful Soup, Selenium) was built jointly with teammates
+%     (Henry-attested; not in the repo): word it as shared work ("co-built"), as data
+%     collection only, never with a count or a schedule. Nothing
+%     configures a web server: never claim Apache.
+%   - Say "8 tables linked by 7 foreign keys"; never claim a formal normal form.
+% -------------------------------------------------------------------------------------
+% FACET: Database design                             angles: database design, SQL, MySQL
+% Evidence: database/Schema.sql:7-82 (institution; its 1:1 capacity, info and address
+%           tables; service-type and favorites junction tables; member; service websites),
+%           :129-155 (7 foreign keys), :84-127 (district lookup, 2 staging tables);
+%           55d6331 (Schema_v0), 0e533fa; function/search_addr.php:66-70 (4-table join)
+% Notes:    labels used before: Database Design & ETL.
+\resumeItem{\textbf{Database Design:} Designed the 8-table \textbf{MySQL} schema, splitting each institution's address and coordinates, contact details and bed capacity into 1:1 tables, with junction tables for service types and members' favorites, linked by 7 foreign keys}
+% -------------------------------------------------------------------------------------
+% FACET: Map search                       angles: full-stack, JavaScript, geocoding, maps
+% Evidence: assets/js/search.js:85-179 (geocode the typed address, read its county and
+%           district, fetch that district's institutions), :181-265 (markers and info
+%           windows); assets/js/main.js:58-101 (the same from the browser's location on
+%           load; 177a8ce, 1cbc49b); function/search_addr.php:65-80 (JSON endpoint,
+%           4-table join, prepared statement); b81ab02, f3fba61, 5c00db9
+% Notes:    labels used before: Full-Stack Development.
+\resumeItem{\textbf{Map Search:} Built the \textbf{Google Maps} search page: a typed address or the browser's location is geocoded to its county and district, and every institution there appears as a pin whose info window lists contact details and beds by care type}
+% -------------------------------------------------------------------------------------
+% FACET: Bed vacancy pins                               angles: UX, data visualization
+% Evidence: assets/js/search.js:200-208 (vacant beds = total beds minus residents; green
+%           above 10, yellow 1-10, red none), :238-240 (totals in the info window);
+%           index.php:26-37 (legend); 177a8ce, f249c06, f8102b6, 54455d0
+\resumeItem{\textbf{Vacancy Pins:} Coloured each institution's pin by vacant beds, total beds minus residents: green above 10, yellow for 1--10 and red when full, so families can see at a glance where a bed is free}
+% -------------------------------------------------------------------------------------
+% FACET: Distance to user                                              angles: geospatial
+% Evidence: assets/js/search.js:193-198 (computeDistanceBetween from the geometry library,
+%           in km to 2 decimals), :228 (shown in the info window); assets/js/main.js:81,
+%           :91 (from the browser's location on load); 1cbc49b
+\resumeItem{\textbf{Distance to User:} Showed each institution's straight-line distance in kilometres from the searched address or the user's location, computed with the Maps geometry library}
+% -------------------------------------------------------------------------------------
+% FACET: County and district search                         angles: full-stack, SQL, UX
+% Evidence: assets/js/search.js:12-78 (cascading menus; recentre on the district and load
+%           its institutions); function/search_addr.php:26-63 (counties, districts and
+%           their institutions as JSON); the district-centroid CSV in database/ (371 rows)
+%           loaded into Taiwan_city_dist (Schema.sql:84-92, Insertion.sql:114-121);
+%           c32debe, b6e00d2
+\resumeItem{\textbf{County and District Search:} Added cascading county and district menus backed by a 371-row table of district centroids, recentring the map on the chosen district and loading its institutions from a PHP JSON endpoint}
+% -------------------------------------------------------------------------------------
+% FACET: Radius circle                                                  angles: UX, maps
+% Evidence: assets/js/search.js:117-129 (a circle of the chosen radius around the searched
+%           address); index.php:20-25 (buttons for none, 0.5, 1 and 1.5 km); f249c06
+% Notes:    the circle is visual only; see CONSTRAINTS.
+\resumeItem{\textbf{Radius Circle:} Drew a 0.5, 1 or 1.5 km circle around the searched address so users can see which institutions lie within that range}
+% -------------------------------------------------------------------------------------
+% FACET: Member accounts                                    angles: full-stack, PHP, auth
+% Evidence: member_register.php and member_register_confirm.php:27-29 (duplicate e-mail
+%           check), member_verify.php:1-40 (session login; administrators to the back
+%           office, members to the map), member_login.php, member_info.php,
+%           member_update.php, member_logout.php (d7a5cf7); save button
+%           assets/js/search.js:242-245 (f50c057, fef2654) with a duplicate check in
+%           process.php:30-38 (02bc612)
+\resumeItem{\textbf{Member Accounts:} Built registration with a duplicate e-mail check, session login that sends members to the map and administrators to the back office, and profile editing in \textbf{PHP}, plus a save button on each map pin that skips institutions already saved}
+% -------------------------------------------------------------------------------------
+% FACET: Data load                                        angles: SQL, data integration
+% Evidence: database/Schema.sql:94-127 (staging tables), :157-158 (CSV imported through
+%           phpMyAdmin; ed1a85a); database/Insertion.sql:90-112 (each institution's up to
+%           four service types into the junction table; d2ca485), :114-121 (district
+%           centroids; c32debe); database/final.csv (1,072 rows)
+% Notes:    the institution, address, info and capacity inserts in Insertion.sql are a
+%           teammate's.
+\resumeItem{\textbf{Data Load:} Imported 1,072 institutions from a government CSV into a staging table and wrote the SQL that fans each institution's up to four service types into the service junction table and loads the district-centroid table}
+% -------------------------------------------------------------------------------------
+% FACET: Data collection                            angles: web scraping, data pipeline
+% Evidence: Henry-attested 2026-10-10 (Henry and teammates scraped institution data with
+%           Beautiful Soup and Selenium together; the scraper was never committed to the repo)
+% Notes:    the sentence used before: "Utilized Beautiful Soup and Selenium for data
+%           collection and web scraping".
+\resumeItem{\textbf{Data Collection:} Co-built a Beautiful Soup and Selenium scraper for institution data with teammates, merging its output with the government open-data CSV before loading it into MySQL}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - A link from an address to Google Maps navigation: the README's feature list (the
+%     proposal) names it, but no code implements it.
+%   - An Apache server: no file or commit in the repo or its history configures one.
+%   - Data from more than one source: the README lists three government sources, but
+%     only one CSV is committed.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Why 1:1 tables for one institution: contact details and bed counts change on their
+%     own schedules, and the map query joins only what a pin needs.
+%   - Why a district-centroid table: choosing a district from the menu recentres the map
+%     without a geocoding call.
+%   - Why a staging table: import the raw CSV once, then reshape it with INSERT ...
+%     SELECT, including one row per service type.
+%   - Vacancy colours: total beds minus residents, with thresholds at 10 and 0.

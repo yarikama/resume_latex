@@ -49,8 +49,9 @@ export FORCE_SOURCE_DATE = 1
 LATEXMK := latexmk -xelatex -interaction=nonstopmode -auxdir=build
 ORPHANS := python3 tools/check-orphans.py
 ATS     := python3 tools/check-ats.py
+BANK    := python3 tools/check-bank.py
 
-.PHONY: all ats check clean cover letters orphans $(RESUME_PDFS) $(LETTER_PDFS)
+.PHONY: all ats bank check clean cover letters orphans $(RESUME_PDFS) $(LETTER_PDFS)
 
 # Build every resume, verify each still fits on one page, then the letters and
 # the tracked generic template.
@@ -90,6 +91,7 @@ check: $(RESUME_PDFS)
 	done; \
 	$(ORPHANS) $(RESUME_PDFS) || true; \
 	$(ATS) $(RESUME_PDFS) || true; \
+	$(BANK) || true; \
 	exit $$status
 
 # Orphan lines are a WARNING, never a gate. Unlike the page count, which is
@@ -108,6 +110,14 @@ orphans:
 # expects Experience / Education / Skills headings that a letter never carries.
 ats:
 	@$(ATS) $(RESUME_PDFS)
+
+# The project catalog: one card per file in content/bank/projects/, the complete
+# record of every project and the source of truth for project facts. Read it
+# before choosing which projects go on a resume. `make check` runs the same
+# script without --list, which checks the bank and that every project module
+# carries a `% bank: <id>` marker that agrees with its card. A warning, not a gate.
+bank:
+	@$(BANK) --list
 
 # The generic template is the one letter still built from inside its own
 # directory: it \input's ../content/shared/header and sign.png relative to

@@ -1,0 +1,100 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       fitness-motion-classification
+% title:    AI Fitness Motion Classification
+% dates:    Mar. 2024
+% link:     https://github.com/yarikama/motion_classification (public)
+% team:     solo
+% status:   claimable
+% tech:     MediaPipe Pose, OpenCV, Keras / TensorFlow (LSTM), scikit-learn (Random Forest,
+%           K-means, PCA), NumPy, TensorBoard, Matplotlib
+% signals:  computer vision, pose estimation, human activity recognition, video
+%           classification, sequence modeling, LSTM, deep learning, Random Forest,
+%           unsupervised learning, clustering, feature engineering, data curation, model
+%           comparison
+% summary:  Classifies squat, bench-press and deadlift videos from MediaPipe pose landmarks.
+%           46 curated YouTube Shorts are cut into fixed-length clips; an LSTM on 33-keypoint
+%           sequences reaches 80.52% test accuracy, a Random Forest on 6 joint angles
+%           reaches 88.31%, and K-means serves as the unsupervised baseline.
+% verified: 2026-10-09 against github.com/yarikama/motion_classification (main)
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - The dataset is 46 videos (17 bench press, 16 deadlift, 13 squat). Never a smaller
+%     count.
+%   - 80.52% is the LSTM on keypoint sequences; 88.31% is the Random Forest on the 6 joint
+%     angles. Never attach both numbers to keypoints, and never call the Random Forest a
+%     keypoint model.
+%   - Both numbers are on 70-frame clips. Report them as test accuracy on held-out clips.
+%   - K-means results are ranges over repeated runs: report ranges, never a single number,
+%     and never as a classifier result.
+%   - Never state the LSTM's layer count or its training hyperparameters: the README and
+%     the notebook record different values.
+% -------------------------------------------------------------------------------------
+% FACET: Pose feature extraction          angles: computer vision, feature engineering
+% Evidence: dection.ipynb (code cells counted from 0) cell 7 (3D joint angle, +360 keeps it
+%           positive), cell 9 (six angles: both elbows, shoulders and knees), cell 11
+%           (33 landmarks x (x, y, z, visibility) per frame, one keypoint file and one angle
+%           file per clip), cell 16 (MediaPipe Pose, model complexity 2); README §二-3,
+%           §二-4; data70/ holds 761 clips
+% Notes:    labels used before: Video Data Extraction.
+\resumeItem{\textbf{Pose Feature Extraction:} Extracted 33 \textbf{MediaPipe} pose keypoints (x, y, z, visibility) per frame from 46 workout videos and derived 6 joint angles (both shoulders, elbows and knees) from the 3D landmarks, saving each fixed-length clip as keypoint and angle sequences}
+% -------------------------------------------------------------------------------------
+% FACET: Data curation                                    angles: data quality, datasets
+% Evidence: README §二-1 (YouTube Shorts with many reps, short, no unrelated footage, filmed
+%           from the front, back, side and diagonals), §二-2 (each video's first clip
+%           dropped as set-up, a short last clip dropped), §四-1 (tutorial videos first:
+%           accuracy oscillating between 0.2 and 0.4); README §六-2 lists all 46 videos
+\resumeItem{\textbf{Data Curation:} Rebuilt the dataset from 46 multi-rep YouTube Shorts filmed from several angles after tutorial videos left the model oscillating at 20--40\% accuracy, dropping each video's set-up clip and any short final clip}
+% -------------------------------------------------------------------------------------
+% FACET: LSTM sequence classifier                 angles: deep learning, sequence models
+% Evidence: README §三-1 (keypoints only; "Test: Accuracy: 0.8052, Test Loss: 0.4708" on
+%           70-frame clips; gradients exploded until the learning rate was lowered);
+%           dection.ipynb cells 25-29 (stacked Keras LSTM, dense head, softmax over 3
+%           classes, TensorBoard callback); LSTM_e200_f70.keras; Logs/ (2024-03-13)
+% Notes:    the LSTM confused deadlifts with squats, whose set-up looks alike.
+%           Labels used before: ML/DL Model Training.
+\resumeItem{\textbf{LSTM Classifier:} Trained a stacked Keras \textbf{LSTM} on 70-frame keypoint sequences to classify squats, bench presses and deadlifts, reaching \textbf{80.52\%} test accuracy after lowering the learning rate to stop exploding gradients}
+% -------------------------------------------------------------------------------------
+% FACET: Joint-angle Random Forest                       angles: ML, feature engineering
+% Evidence: README §三-2 (100 trees on the joint angles, "Test Accuracy: 0.8831", better
+%           than the LSTM on deadlift versus squat); dection.ipynb cells 37-41
+%           (RandomForestClassifier with 100 estimators on the 70-frame angle sequences)
+\resumeItem{\textbf{Joint-Angle Model:} Reached \textbf{88.31\%} test accuracy with a 100-tree Random Forest on the 6 joint angles, beating the keypoint LSTM by separating deadlifts from squats, which the LSTM confused}
+% -------------------------------------------------------------------------------------
+% FACET: Clip-length study                            angles: experimentation, ablation
+% Evidence: README §四-2 (identical settings at 70, 100, 120 and 150 frames; shorter clips
+%           trained better; gradients exploded beyond 120 frames; a wider model on 150
+%           frames: "Test Accuracy: 0.6875"); dection.ipynb cell 36 (loss and accuracy
+%           plotted over the four lengths); LSTM_e200_f70/f100/f120.keras, broad150.keras
+\resumeItem{\textbf{Clip-Length Study:} Trained the LSTM on 70-, 100-, 120- and 150-frame clips under identical settings and found shorter clips learned best, with gradients exploding past 120 frames and even a wider model reaching only 68.75\% at 150}
+% -------------------------------------------------------------------------------------
+% FACET: Unsupervised baseline                                    angles: clustering, ML
+% Evidence: README §三-3 (K-means with K = 3 on the joint angles; silhouette below 0.2;
+%           accuracy 0.3-0.5, then 0.45-0.65 after preprocessing); dection.ipynb cells
+%           42-46 (KMeans, silhouette score, then StandardScaler and PCA)
+\resumeItem{\textbf{Unsupervised Baseline:} Clustered the joint-angle sequences with K-means (K = 3) as a baseline, lifting matched-label accuracy from 30--50\% to 45--65\% with standardization and PCA while the silhouette score stayed below 0.2}
+% -------------------------------------------------------------------------------------
+% FACET: Pose model choice                                        angles: computer vision
+% Evidence: README §五-1 (MoveNet used first: faster, but 2D and fewer keypoints; OpenPose
+%           similar; MediaPipe chosen for 3D coordinates); no MoveNet or OpenPose code is
+%           committed
+\resumeItem{\textbf{Pose Model Selection:} Moved pose extraction from MoveNet to MediaPipe, since MoveNet and OpenPose return fewer keypoints and only 2D coordinates while MediaPipe gives 3D coordinates for 33}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - Accuracy on videos or people outside the 46 collected: never measured.
+%   - Live webcam classification and further exercises: listed as future work only.
+%   - An ST-GCN model: considered and set aside, never built.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Why angles for the Random Forest: six joint angles describe posture compactly and
+%     depend less on camera position than raw coordinates; a tree model cannot learn
+%     temporal features from raw keypoints the way the LSTM does.
+%   - Deadlift versus squat: both start standing with a bar; the elbow angle separates
+%     them (arms straight in a deadlift, bent under the bar in a squat).
+%   - Why shorter clips: each video yields more training clips, and long clips mix set-up
+%     with reps and pushed the deep LSTM into exploding gradients.
+%   - Next steps: ST-GCN on MediaPipe's 3D landmarks, live webcam classification, more
+%     exercises.

@@ -1,0 +1,106 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       agentic-hybrid-rag
+% title:    Agentic Hybrid RAG
+% dates:    Jul. 2024 -- Jan. 2025
+% link:     https://github.com/yarikama/Agentic-Advanced-RAG (public)
+% team:     2-person repo; Henry: routing graph, retrieval paths, knowledge graph pipeline,
+%           evaluation harness, clustering-based indexing (attested)
+% status:   claimable
+% tech:     LangGraph, CrewAI, LangChain, Neo4j (Cypher, APOC), Microsoft GraphRAG,
+%           Milvus (dense+sparse hybrid search), Cohere rerank, RAGAS, K-means, DBSCAN
+% signals:  agentic AI, multi-agent, orchestration, LangGraph, routing, RAG, retrieval,
+%           hybrid search, vector database, knowledge graph, Graph RAG, Neo4j, Milvus,
+%           reranking, evaluation, RAGAS, clustering, cost reduction
+% summary:  A LangGraph-orchestrated RAG system: an agent routes each question to no
+%           retrieval, global graph search or local entity search over a Neo4j knowledge
+%           graph, every retrieval path then runs Milvus hybrid search, and clustering the
+%           vector store cuts graph-indexing token cost.
+% verified: 2026-10-09 against github.com/yarikama/Agentic-Advanced-RAG (main)
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - The 35% indexing saving is always reported with its 2.56% RAGAS cost.
+%   - Every retrieval path runs Milvus hybrid search after the graph step. Never write that
+%     a question goes to "the graph or the vector store", or that a store is skipped.
+%   - The three routes are no retrieval, global (community summaries) and local (entities
+%     and relationships); global vs. local is chosen per question.
+%   - The agents are CrewAI running inside a LangGraph state graph. This is a project, not
+%     production work: never imply it shipped.
+%   - The RAGAS levels come from one run with no baseline: report them as levels, never as
+%     an improvement.
+%   - 88.2% is MAR@10 per Henry's source. The repo's evaluator reports Hits@10, Hits@4,
+%     MAP@10 and MRR@10, so use the metric name the source uses.
+% -------------------------------------------------------------------------------------
+% FACET: Query routing                              angles: agent, orchestration, routing
+% Evidence: src/module/graphs/hybrid_agentic_rag.py:37-46 (three-way conditional edge);
+%           src/module/nodes.py:508-519 (domain_range_score >= 80 routes global);
+%           src/multi_agent/agents.py:79-81 (the CrewAI "Query Classifier")
+% Notes:    labels used before: Self-Routing Agentic RAG, Agentic Routing,
+%           Multi-Agent Routing, Multi-Agent Orchestration.
+\resumeItem{\textbf{Agentic Query Routing:} Built a \textbf{LangGraph} state graph in which a CrewAI query-classification agent sends each question to no retrieval, to global search over Neo4j community summaries for broad questions, or to local entity-and-relationship search for specific ones, scoring each question's scope to choose}
+% -------------------------------------------------------------------------------------
+% FACET: Hybrid retrieval on every path               angles: retrieval, vector database
+% Evidence: src/module/graphs/hybrid_agentic_rag.py:47-70 (both retrieval branches end in
+%           detail_retrieval_node); src/module/nodes.py:376-394 (graph-step candidate
+%           answers added to the Milvus queries); src/config/constants.py:25-29 (TOP_K 8,
+%           weighted ranker 0.7 / 0.3); src/module/nodes.py:34-50 (Cohere
+%           rerank-english-v3.0, relevance > 0.2)
+% Notes:    the 0.7 / 0.3 weights belong to Milvus's dense+sparse ranker, not to Cohere.
+\resumeItem{\textbf{Hybrid Retrieval:} Backed both graph paths with \textbf{Milvus} dense+sparse hybrid search (weighted 0.7/0.3, top 8), seeding the vector queries with the candidate answers the graph step produced, then reranked the passages with Cohere at a 0.2 relevance cutoff before generation}
+% -------------------------------------------------------------------------------------
+% FACET: Multi-hop retrieval quality                    angles: retrieval, evaluation
+% Evidence: Henry-attested 2026-10-09 for 88.2% MAR@10 (source to be supplied);
+%           mechanism: src/module/nodes.py:376-394 and the HyDE fallback at :494-505
+\resumeItem{\textbf{Graph-Seeded Retrieval:} Fed graph-search results into vector retrieval with HyDE, generating hypothetical answers to search with when the graph finds nothing, and reached an MAR@10 of \textbf{88.2\%} on multi-hop questions}
+% -------------------------------------------------------------------------------------
+% FACET: Clustered graph indexing                       angles: cost, ML, clustering
+% Evidence: numbers Henry-attested 2026-10-09 (source to be supplied); mechanism:
+%           src/utils/clustering.py (MiniBatchKMeans, cosine DBSCAN, per-cluster
+%           sampling ratio, sampled text written out as the graph-indexing input)
+% Notes:    labels used before: ML Clustering, Cost/Quality Trade, Index Cost,
+%           Cost Reduction.
+\resumeItem{\textbf{Clustered Graph Indexing:} Clustered the vector store with K-means and DBSCAN and sampled each cluster's pivotal chunks as the graph-indexing input, saving \textbf{35\%} of indexing token cost for only 2.56\% worse RAGAS scores}
+% -------------------------------------------------------------------------------------
+% FACET: Map-reduce global search                       angles: orchestration, scale
+% Evidence: src/module/graphs/hybrid_agentic_rag.py:27-28, 47-50; src/module/nodes.py:276
+%           (Send fan-out), :291-313 (map, then Cohere-reranked reduce);
+%           src/config/constants.py:55 (NODE_BATCH_SIZE 5)
+\resumeItem{\textbf{Map-Reduce Global Search:} Ran global search as a LangGraph map-reduce, fanning community summaries out in batches of 5 with \textbf{Send}, drafting a summary and candidate answers per batch, then reranking and reducing them before the vector step}
+% -------------------------------------------------------------------------------------
+% FACET: Local graph search                              angles: retrieval, graph
+% Evidence: src/module/graphs/hybrid_agentic_rag.py:48-66 (rerank, reduce, then community
+%           retrieval, then HyDE when empty); src/utils/knowledge_graph_database.py
+\resumeItem{\textbf{Local Graph Search:} Wrote the Cypher retrieval for specific questions, matching relationships by vector similarity and entities by keyword, then falling back to community retrieval and then to HyDE when a question finds nothing}
+% -------------------------------------------------------------------------------------
+% FACET: Knowledge graph pipeline                    angles: data pipeline, knowledge graph
+% Evidence: graph_rag/settings.yaml; src/ms_graphrag_import.ipynb;
+%           src/utils/knowledge_graph_database.py
+\resumeItem{\textbf{Knowledge Graph Pipeline:} Built the knowledge graph with Microsoft GraphRAG and imported its entities, relationships and community reports into \textbf{Neo4j} with APOC and Cypher}
+% -------------------------------------------------------------------------------------
+% FACET: Evaluation harness                                    angles: evaluation
+% Evidence: src/utils/retrieval_evaluate.py:52-57 (Hits@10, Hits@4, MAP@10, MRR@10);
+%           src/module/graphs/parallel_dataset_record.py; PRs #7-#10 (Jan. 2025);
+%           src/graphrag.ipynb (one RAGAS run, 50 MultiHop-RAG questions: context
+%           precision 0.664, context recall 0.854, faithfulness 0.874, answer relevancy
+%           0.842)
+\resumeItem{\textbf{Evaluation Harness:} Built a parallel evaluation harness on LangGraph subgraphs that scores retrieval by Hits@10, MAP@10 and MRR@10 on MultiHop-RAG, and scored answers with RAGAS (faithfulness \textbf{0.87} and context recall \textbf{0.85} on 50 questions)}
+% -------------------------------------------------------------------------------------
+% FACET: Solo prototype                                       angles: prototyping
+% Evidence: private predecessor repo yarikama/Multiagent-LLM-Advanced-RAG-System
+%           (Jul. 26 -- Aug. 13, 2024; every commit Henry's)
+\resumeItem{\textbf{Prototype:} Prototyped the pipeline alone before the public repo, tuning the reranker, adding sentence-window retrieval, and checking HyDE against a retrieval evaluator of his own}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - Any gain over vector-only retrieval: no with/without comparison is recorded
+%     anywhere, so the 88.2% is a level, never an improvement.
+%   - That the graph behind the reported numbers was built from the clustered sample:
+%     no run records its input.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Why global vs. local: community summaries answer "what are the themes" questions,
+%     entity search answers specific ones; the classifier scores each question's scope.
+%   - Why Milvus runs on every path: graph search finds the right neighbourhood, and the
+%     vector step pulls the exact passages the answer quotes.

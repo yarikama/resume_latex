@@ -1,0 +1,335 @@
+% =====================================================================================
+% BANK -- complete record of one project. NEVER \input by a resume.
+% Resume modules pick from here and carry `% bank: <id>` on line 1.
+% Notes unsafe for a public repo: content/bank/private/<id>.md (gitignored).
+% =====================================================================================
+% id:       yarikama-com
+% title:    yarikama.com: Self-Hosted LLM Platform on Kubernetes
+% dates:    Jan. 2026 -- Present
+% link:     https://www.yarikama.com (public); https://github.com/yarikama/portfolio-back-end (public)
+% team:     solo; Henry: all three repos, the FastAPI back end, the React front end and the
+%           private cluster repo (k3s, Argo CD, monitoring, GPU sharing, model evaluation)
+% status:   claimable
+% tech:     FastAPI, SQLAlchemy 2, Alembic, PostgreSQL 17 (CloudNativePG), Redis (Lua scripts,
+%           Streams), vLLM, Qwen3.5-4B AWQ, Qwen3.5-0.8B-Base, OpenTelemetry, Tempo, Prometheus,
+%           Alertmanager, Grafana, Loki, Alloy, k3s, Argo CD, Sealed Secrets, Traefik,
+%           Cloudflare Tunnel, Access and R2, NVIDIA time-slicing, dcgm-exporter, GitHub
+%           Actions, GHCR, uv, Ruff, pyright, pip-audit, pytest; React 19, TypeScript, Vite 7,
+%           Tailwind 4, Vitest, Vercel
+% signals:  Kubernetes, k3s, GitOps, Argo CD, CI/CD, GitHub Actions, observability,
+%           OpenTelemetry, Prometheus, Grafana, alerting, SRE, PostgreSQL, backups, disaster
+%           recovery, Redis, rate limiting, job queue, FastAPI, Python, React, TypeScript,
+%           security, OAuth, LLM serving, vLLM, inference optimization, quantization, KV cache,
+%           GPU scheduling, LLM evaluation, prompt injection, cache-augmented generation,
+%           streaming, latency, self-hosting
+% summary:  A personal site run end to end on a single-node k3s cluster at home: a FastAPI back
+%           end with PostgreSQL and Redis, deployed by GitHub Actions and Argo CD and watched
+%           by Prometheus, Loki and Tempo, plus two self-hosted vLLM models sharing one 8 GB
+%           laptop GPU, one answering visitors' questions about the site with citations and
+%           one autocompleting notes in the admin editor.
+% verified: 2026-10-09 against yarikama/portfolio-back-end (origin/main 1ea2cb0),
+%           yarikama/portfolio-front-end (origin/main 98e6271) and yarikama/homelab (main
+%           fd0930e; later commits only bump the image tag)
+%
+% CONSTRAINTS -- every module built from this file inherits them
+%   - Solo across three repos: the public back end and front end, and a private cluster
+%     repo. The front end is hosted on Vercel, never on the cluster.
+%   - No user, visitor or traffic number, in any form.
+%   - Nothing was trained. Fine-tuning, DPO and GRPO are roadmap items: suggestion outcomes
+%     are logged for later training, and no acceptance rate is ever claimed.
+%   - Every eval number dates from model selection on Sep. 30, 2026: the 3-model comparison
+%     ran prompt v1, and the chosen model was rerun on prompt v2. Anchor them in time ("at
+%     model selection") and never present them as the live chat's current quality.
+%   - The eval sets are hand-written: 40 chat questions, and 40 cut points from 4 of Henry's
+%     own notes for autocomplete. Never "held-out", never a benchmark dataset.
+%   - Citation accuracy is over the 30 answerable questions: 29/30 (96.7%) for Qwen3.5-4B
+%     under both prompts, 11/30 (36.7%) for Qwen3.5-2B. Write n=30 if a sample size is
+%     given. The third candidate, Qwen3-4B-2507, cited correctly on 30/30 and lost on answer
+%     language and context length, so never imply the chosen model cited best.
+%   - 3.9 s to 0.17 s is time to first token, cold vs. prefix-cached, on an 8,203-token
+%     prompt. Today's corpus (about 13k tokens) has never been timed cold: never put that
+%     size in a sentence with these timings.
+%   - The KV cache per token is 4.5x smaller in like units (36 vs. 8 full-attention layers
+%     at 4 KiB each); measured cache capacity gives about 3.6-3.7x. Never round it up.
+%   - The confidence cut-off is built and was evaluated; never describe it as running on
+%     the live site. The sentence-end, newline, 16-token and repetition stops are live.
+%   - The 3 autocomplete models tie on accuracy (35/38/40% first-word match on 40 samples,
+%     95% CI about +-15 points): "statistically indistinguishable", never "more accurate".
+%     The 158 ms and 344 ms timings were measured in-pod, without network.
+%   - The 0.55 s to 0.36 s and 95 to 58 ms latency gains come from the Sep. 29, 2026 tuning
+%     round, with the confidence cut-off in place; anchor them to it.
+%   - Off-topic refusals 80% to 100% is 4/5 to 5/5, scored by a regex. Of the injection
+%     tests, claim only the fake site-owner instruction; never write that prompt injection
+%     is blocked in general.
+%   - The database move's 428 ms to 182 ms is one endpoint's median, timed from Henry's
+%     laptop through Cloudflare: "an endpoint's median latency", never "API latency".
+%   - Describe the rate limiter by its algorithms only; its limits and settings stay off
+%     the page.
+%   - The test count is 208 test functions on origin/main 1ea2cb0 (about 258 cases with
+%     parametrize expanded). Recount before reusing it; never carry an older count forward.
+%   - Each title in use fits: "yarikama.com: Self-Hosted Platform on Kubernetes" (SWE),
+%     "Self-Hosted LLM Q&A Platform (yarikama.com)" (GenAI) and "Self-Hosted LLM Inference
+%     on a Single 8 GB GPU" (MLE). No title may imply users or a product.
+% -------------------------------------------------------------------------------------
+% FACET: GitOps CI/CD                                   angles: CI/CD, Kubernetes, GitOps
+% Evidence: portfolio-back-end .github/workflows/ci.yaml:32-73 (pytest on Python 3.10-3.12
+%           with postgres:17 and redis service containers), :75-113 (image to GHCR),
+%           :117-162 (deploy job commits the image tag to homelab); README.md:169-173 (about
+%           five minutes from merge to live); tests/ at origin/main 1ea2cb0: 208 test
+%           functions by AST count; homelab apps/portfolio-backend/deployment.yaml:8-21
+%           (maxSurge 1, maxUnavailable 0, minReadySeconds 10), docs/07-gitops.md:7
+% Notes:    labels used before: GitOps CI/CD. CI also runs Ruff, pyright and pip-audit
+%           (ci.yaml:6-30).
+\resumeItem{\textbf{GitOps CI/CD:} Deployed a FastAPI/PostgreSQL/Redis backend to a self-managed k3s cluster: GitHub Actions runs \textbf{208} tests on Python 3.10--3.12 with PostgreSQL and Redis service containers, pushes the image and commits its tag to the cluster repo, and Argo CD rolls it out in \textbf{\textasciitilde5 min} with zero downtime}
+% -------------------------------------------------------------------------------------
+% FACET: Observability                                angles: observability, tracing, SRE
+% Evidence: portfolio-back-end app/core/tracing.py:1-6, :13-35 (FastAPI, SQLAlchemy, Redis
+%           and httpx instrumented); homelab docs/06-observability.md:9-19 (Alertmanager to
+%           email, Watchdog heartbeat to Healthchecks.io, external uptime check), :25-30,
+%           :204-216 (trace ids in log lines, trace-to-logs both ways);
+%           infra/monitoring/ (kube-prometheus-stack, loki, alloy and tempo HelmCharts)
+% Notes:    labels used before: Observability.
+\resumeItem{\textbf{Observability:} Ran Prometheus, Grafana, Loki, Tempo and Alertmanager in-cluster, tracing each request across SQL, Redis and LLM calls with OpenTelemetry and linking its log lines to the trace, with email alerts and a dead-man's-switch heartbeat}
+% -------------------------------------------------------------------------------------
+% FACET: Alerting and dashboards as code                            angles: alerting, SRE
+% Evidence: homelab: 31 `- alert:` rules in 8 PrometheusRule files
+%           (apps/{cloudflared,llm,portfolio-backend,portfolio-db,portfolio-redis}/
+%           prometheusrule.yaml, infra/argocd/prometheusrule.yaml,
+%           infra/gpu/prometheusrule.yaml, infra/monitoring/config/node-rules.yaml);
+%           infra/monitoring/config/dashboards/{api-performance,homelab-overview}.py;
+%           docs/06-observability.md:68-86
+\resumeItem{\textbf{Alerting as Code:} Wrote \textbf{31} custom Prometheus alert rules covering backups and WAL archiving, error rate and latency, GPU and model availability, the job queue, and the host laptop's battery and temperature, and generated the custom Grafana dashboards from Python}
+% -------------------------------------------------------------------------------------
+% FACET: Database durability                         angles: databases, backups, recovery
+% Evidence: homelab docs/05-database.md:3-8, :103-112 (restore drill: a marker table
+%           written after the base backup; all 7 tables matched by row count and content
+%           hash), :153 (daily base backup); apps/portfolio-db/objectstore.yaml:12
+%           (retentionPolicy 30d), apps/portfolio-db/scheduledbackup.yaml:7;
+%           portfolio-back-end README.md:187
+% Notes:    labels used before: Database Durability.
+\resumeItem{\textbf{Database Durability:} Ran PostgreSQL on CloudNativePG with continuous WAL archiving and daily base backups to Cloudflare R2 for \textbf{30-day} point-in-time recovery, and proved the restore with a marker table that only WAL replay could bring back}
+% -------------------------------------------------------------------------------------
+% FACET: Zero-downtime migration                           angles: migration, reliability
+% Evidence: homelab docs/04-cloudflare-tunnel.md:8, :86-88 (DNS cutover, tunnel serving
+%           within about 3 s), :108 (responses identical to Cloud Run's), :113-120 (runs of
+%           375, 29, 86 and 28 requests through the follow-up changes, none failed),
+%           :177-179 (Cloud Run project deleted 2026-09-28); docs/05-database.md:8, :20-24 (/api/v1/categories
+%           median 428 ms to 182 ms, from Henry's laptop through Cloudflare), :97-101 (all 6
+%           tables matched), :114 (32 and 36 requests during cutover, all 200), :190 (Neon
+%           deleted after a final comparison)
+\resumeItem{\textbf{Zero-Downtime Migration:} Moved the API off Cloud Run and its database off Neon onto the home cluster with zero downtime, matching every table's row count and content hash before cutover; moving the database next to the API cut an endpoint's median latency from \textbf{428 ms} to \textbf{182 ms}}
+% -------------------------------------------------------------------------------------
+% FACET: Cluster hardening                                   angles: security, Kubernetes
+% Evidence: homelab docs/09-sealed-secrets.md:7, :30-43 (what is sealed; the Argo CD
+%           bootstrap key and operator-generated Secrets stay out by design), :56-62 (5 live
+%           Secrets migrated, content hashes unchanged, no pod restarted); 9
+%           *.sealedsecret.yaml files today; 10 NetworkPolicy manifests, default-deny in 7
+%           namespaces (ingress and egress: apps/{cloudflared,llm,portfolio-backend}; ingress:
+%           infra/{argocd,gpu,monitoring,sealed-secrets}); docs/04-cloudflare-tunnel.md:8,
+%           :110 (Traefik unreachable from the LAN); docs/06-observability.md:107-117 and
+%           docs/07-gitops.md:3 (Cloudflare Access); docs/03-deploy-backend.md:112-120
+%           (non-root, read-only root filesystem, all capabilities dropped)
+\resumeItem{\textbf{Cluster Hardening:} Kept 9 Secrets in Git as Sealed Secrets, migrating the first 5 from the live cluster without restarting a pod, put default-deny NetworkPolicies on 7 namespaces, and made the cluster reachable from the web only through a Cloudflare Tunnel, with Grafana and Argo CD behind Cloudflare Access}
+% -------------------------------------------------------------------------------------
+% FACET: Rate limiting and job queue                  angles: backend, Redis, concurrency
+% Evidence: portfolio-back-end app/services/rate_limit.py:4 (one Lua script per check),
+%           :37-39 (two algorithms), :92-147 (the scripts); .github/workflows/ci.yaml:51-61
+%           (the Lua scripts also run against a real Redis, not only fakeredis);
+%           tests/test_rate_limit.py (16 test functions); app/services/jobs.py:6-13
+%           (XREADGROUP, XACK only after success, XAUTOCLAIM), :125-133 (dead-letter stream
+%           after 5 deliveries)
+% Notes:    labels used before: Rate Limiting & Jobs.
+\resumeItem{\textbf{Rate Limiting \& Jobs:} Wrote sliding-log and token-bucket rate limits as atomic Redis Lua scripts, tested in CI against both fakeredis and a real Redis, plus an at-least-once Redis Streams job queue with claim-based retries and a dead-letter stream}
+% -------------------------------------------------------------------------------------
+% FACET: Image worker                                         angles: backend, async jobs
+% Evidence: portfolio-back-end app/worker.py:2-7, :25, :59-80 (reconcile on start and
+%           hourly); app/services/images.py:15 (640 and 1600 px), :64-89 (never upscales);
+%           app/services/image_jobs.py:36, :61; README.md:85-88, :319-321;
+%           homelab apps/portfolio-backend/worker.yaml
+\resumeItem{\textbf{Image Worker:} Built a Redis Streams worker that writes 640 and 1600 px WebP variants of each upload to R2 off the request path, reconciling with the bucket on start and hourly so jobs lost with Redis's memory are queued again}
+% -------------------------------------------------------------------------------------
+% FACET: Edge caching                                   angles: caching, CDN, performance
+% Evidence: portfolio-back-end app/api/cache.py:16 (s-maxage=60,
+%           stale-while-revalidate=600), :19-37 (ETag, 304, the origin rewrite), :67;
+%           README.md:90, :323-327; tests/test_cache.py
+\resumeItem{\textbf{Edge Caching:} Let Cloudflare cache public reads with ETags, a 60 s shared max-age and stale-while-revalidate, answering 304 when nothing changed, and gave those responses a wildcard CORS origin because Cloudflare's cache ignores Vary: Origin}
+% -------------------------------------------------------------------------------------
+% FACET: Admin sign-in                                            angles: security, OAuth
+% Evidence: portfolio-back-end app/services/google_oauth.py:2-14, :63-84 (state, PKCE
+%           verifier and nonce kept once in Redis); app/api/routes/auth.py:30, :127-129;
+%           app/services/admin_session.py:16-20 (only the token's SHA-256 is stored);
+%           tests/test_google_login.py (15 test functions); commit 378c3f5 (2026-10-02,
+%           Google sign-in became the only way into the admin)
+\resumeItem{\textbf{Admin Sign-In:} Implemented Sign in with Google as an OAuth authorization-code flow with PKCE, a browser-bound one-time state and a nonce, holding the session in an HttpOnly, SameSite=Strict \_\_Host- cookie whose SHA-256 alone is kept in Redis}
+% -------------------------------------------------------------------------------------
+% FACET: API hardening                                          angles: security, backend
+% Evidence: portfolio-back-end app/api/body_limit.py:10-36 (413 before a route reads the
+%           body); app/services/images.py:37-42 (stored by what Pillow reads in the bytes);
+%           app/api/security.py:10-13, :38; app/api/routes/csp.py; .github/workflows/
+%           ci.yaml:16-30 (pyright, pip-audit); README.md:96-105; commit cad8e1f
+%           (2026-10-01, security headers and CSP reports)
+\resumeItem{\textbf{API Hardening:} Capped request bodies before any route reads them, stored uploads by what Pillow finds in their bytes rather than the type the browser claims, added HSTS, nosniff, frame and referrer headers with a CSP report endpoint, and put pip-audit and pyright in CI}
+% -------------------------------------------------------------------------------------
+% FACET: Cache-augmented generation                   angles: GenAI, LLM serving, latency
+% Evidence: portfolio-back-end app/services/ask.py:4, :170-176 (the cache key changes with
+%           published content), :235-284 (published content only, in a fixed order so the
+%           prefix stays cacheable); README.md:68-69; homelab llm/eval/ask-results/
+%           qwen35-4b-awq-prompt2-run.txt:1 (cold first token 3.93 s, prompt 8,203 tokens),
+%           :44 (first token p50 0.17 s); docs/14-ask-chat-plan.md:22-37, :146
+% Notes:    labels used before: Cache-Augmented Generation. The corpus has grown since the
+%           timing; see CONSTRAINTS before quoting its size.
+\resumeItem{\textbf{Cache-Augmented Generation:} Answered visitor questions over every published page from one cached prompt prefix on vLLM instead of RAG, rebuilt whenever content changes and never including drafts, cutting time to first token on an 8k-token prompt from \textbf{3.9 s} cold to \textbf{0.17 s}}
+% -------------------------------------------------------------------------------------
+% FACET: Eval-driven model selection                            angles: evaluation, GenAI
+% Evidence: portfolio-back-end eval/ask/questions.jsonl (40 questions: 30 answerable, 5
+%           off-topic, 5 injection; 27 English, 13 Chinese), eval/ask/run.py:70-83,
+%           :132-155 (cited_expected scored over the answerable questions); homelab
+%           llm/eval/ask-results/*-results.jsonl (cited_expected: Qwen3.5-4B AWQ 29/30 under
+%           both prompts, Qwen3.5-2B 11/30, Qwen3-4B-2507 30/30 with 34/40 answers in the
+%           right language); docs/14-ask-chat-plan.md:100-120 (12k context cap for
+%           Qwen3-4B-2507, choice on fabrication, language and context)
+% Notes:    labels used before: Eval-Driven Model Selection. The 30 answerable questions
+%           include 5 about proper nouns.
+\resumeItem{\textbf{Eval-Driven Model Selection:} Wrote a \textbf{40-question} bilingual eval set (answerable, off-topic, injection) and ran 3 small LLMs on it in-pod; at model selection Qwen3.5-4B cited the right source on \textbf{29/30} answerable questions (\textbf{97\%}) vs. \textbf{11/30} (\textbf{37\%}) for the 2B, and beat the third candidate on answer language and context length}
+% -------------------------------------------------------------------------------------
+% FACET: Grounding and injection defense             angles: LLM safety, prompt injection
+% Evidence: portfolio-back-end app/services/ask.py:330-337 (citation ids the model made up
+%           are dropped); homelab llm/eval/ask-results/qwen35-4b-awq-run.txt against
+%           qwen35-4b-awq-prompt2-run.txt (off-topic declined 4/5 then 5/5; q39 answered
+%           "HACKED" under v1, refused under v2); docs/14-ask-chat-plan.md:124-146
+% Notes:    labels used before: Grounding & Injection Defense. The model has no tools, so an
+%           injection can only change the text of an answer (README.md:75).
+\resumeItem{\textbf{Grounding \& Injection Defense:} Dropped citations to nonexistent documents server-side and hardened the system prompt against the eval set, raising off-topic refusals from \textbf{80\%} to \textbf{100\%} and stopping a fake site-owner instruction the first prompt had obeyed}
+% -------------------------------------------------------------------------------------
+% FACET: Streaming chat                                 angles: product, streaming, GenAI
+% Evidence: portfolio-back-end app/api/routes/ask.py:36-49 (concurrency semaphore, 503
+%           when busy), :103-106, :119-121 (text/event-stream); app/services/ask_history.py:
+%           21-22 (2 turns, 30 minutes), :59-66; app/services/ask.py:32-37, :306-326 (finds
+%           the document a passage comes from); app/services/ask_log.py:34-42;
+%           README.md:68-76, :289-303; portfolio-front-end src/services/api/ask.ts:40-84,
+%           src/components/ask/AskChat.tsx, src/components/ask/SelectionAsk.tsx
+\resumeItem{\textbf{Streaming Chat:} Streamed cited answers over server-sent events, with questions about a highlighted passage, two-turn memory in Redis under a server-issued conversation id the browser cannot forge, a cap on concurrent answers, and a 30-day question log the admin rates}
+% -------------------------------------------------------------------------------------
+% FACET: Context budget guard                               angles: LLM serving, alerting
+% Evidence: portfolio-back-end app/services/ask.py:65-72 (budget and dropped-document
+%           gauges), :200, :242-275 (oldest notes dropped first, then oldest projects);
+%           homelab docs/14-ask-chat-plan.md:35 (alert at 70%), :69-78 (fired at 92%,
+%           13,224 of 14,334 tokens; KV cache 0.65 to 1.04 GiB, context 16,384 to 24,576);
+%           apps/llm/vllm-ask.yaml:84-86; apps/portfolio-backend/prometheusrule.yaml
+%           (AskPromptNearLimit, AskDocumentsDropped)
+\resumeItem{\textbf{Context Budget Guard:} Exported the prompt's estimated size against its context budget, alerting at 70\% and dropping the oldest notes instead of failing past 100\%; when the alert fired at \textbf{92\%}, re-budgeted GPU memory to grow the context from 16k to \textbf{24k} tokens}
+% -------------------------------------------------------------------------------------
+% FACET: Inference under 8 GB                               angles: inference, GPU memory
+% Evidence: homelab docs/14-ask-chat-plan.md:104-108 (8 of 32 layers with full attention
+%           vs. all 36; a 16k context needs 0.61 vs. 2.25 GiB of KV cache), :122;
+%           apps/llm/vllm-ask.yaml:84-86 (--max-model-len 24576, --kv-cache-memory 1.04
+%           GiB); apps/llm/vllm.yaml:83-88 (--kv-cache-memory 0.42 GiB);
+%           docs/15-gpu-sharing.md:6-13; llm/eval/ask-results/*-memory.txt (17,246 tokens in
+%           0.65 GiB vs. 12,912 in 0.89 GiB at FP8 KV)
+% Notes:    labels used before: Inference Under 8 GB. 4.5x is 36 x 4 KiB against 8 x 4 KiB a
+%           token; the measured capacity ratio is about 3.6-3.7x.
+\resumeItem{\textbf{Inference Under 8 GB:} Co-served a 4-bit 4B chat model and a 0.8B autocomplete model on one laptop GPU with fixed KV-cache budgets, picking a hybrid-attention model whose KV cache per token is \textbf{4.5$\times$} smaller, which let a \textbf{24k} context fit}
+% -------------------------------------------------------------------------------------
+% FACET: GPU sharing                                   angles: GPU scheduling, Kubernetes
+% Evidence: homelab infra/gpu/nvidia-device-plugin.yaml:33-38 (time-slicing, 2 replicas);
+%           infra/gpu/priorityclasses.yaml:1-30 (batch -10, autocomplete -50, chat -100);
+%           docs/15-gpu-sharing.md:17-28, :42-52, :135-145 (job submitted 18:19:39 and
+%           running 18:19:42; the evicted server Ready again 2 min 10 s after it finished),
+%           :110, :119 (model alerts muted while a batch job runs)
+% Notes:    the preemption test ran before the chat model was deployed (docs/15:3), so it
+%           evicted one server; that both are preempted rests on the priority classes.
+\resumeItem{\textbf{GPU Sharing:} Time-sliced one 8 GB GPU between the two vLLM servers and gave batch jobs a priority class that preempts both yet stays below zero, so it can never evict the database; in a preemption test the batch job had the GPU within \textbf{3 s} and the evicted server came back on its own about 2 min after the job ended}
+% -------------------------------------------------------------------------------------
+% FACET: Long-context load test                           angles: inference, load testing
+% Evidence: homelab docs/14-ask-chat-plan.md:80 (run after the 24k context went live)
+\resumeItem{\textbf{Long-Context Load Test:} Load-tested the 24k-context chat model with four 12.5k-token prompts and one 17.9k-token prompt at once; all completed, with the shared 8 GB GPU peaking at \textbf{7,243 MiB}}
+% -------------------------------------------------------------------------------------
+% FACET: Model benchmarking                         angles: benchmarking, model selection
+% Evidence: homelab docs/10-autocomplete-plan.md:136-160 (40 cut points from 4 notes,
+%           in-pod: 158 ms for Qwen3.5-0.8B-Base vs. 344 ms for Qwen3.5-2B-Base and 262 ms
+%           for Qwen3-1.7B-Base; first-word match 38/35/40%, 95% CI about +-15 points);
+%           llm/eval/bench.py, llm/eval/run_bench.sh; the chat half: see Eval-driven model
+%           selection above
+% Notes:    labels used before: Model Benchmarking. "Hand-written" replaces an earlier
+%           adjective that implied a train/test split.
+\resumeItem{\textbf{Model Benchmarking:} Compared 3 candidate models per task on hand-written sets, choosing a 0.8B autocomplete model that completes a suggestion in \textbf{158 ms}, \textbf{2.2$\times$} faster than the 2B at statistically indistinguishable accuracy, and a 4B chat model at \textbf{97\%} citation accuracy}
+% -------------------------------------------------------------------------------------
+% FACET: Autocomplete latency                                angles: latency, performance
+% Evidence: homelab docs/10-autocomplete-plan.md:66-79 (0.55 s = a 300 ms pause, about
+%           150 ms of network and 95 ms of backend and model; pause cut to 150 ms; tokens a
+%           suggestion 8.3 to 2.4), :88-101 (preflight max-age 10 min to 2 h, warm-up
+%           request); portfolio-back-end app/services/autocomplete.py:121-125 (leaving the
+%           stream aborts generation); portfolio-front-end src/hooks/useAutocomplete.ts:6-9,
+%           :247-248
+% Notes:    measured Sep. 29, 2026; see CONSTRAINTS.
+\resumeItem{\textbf{Autocomplete Latency:} Cut perceived suggestion delay from \textbf{0.55 s} to \textbf{0.36 s} by halving the typing pause and streaming tokens so generation stops at the first stop condition (backend plus model 95 to 58 ms), then hid the reconnect cost after idle with a 2-hour preflight cache and a warm-up request when the editor gains focus}
+% -------------------------------------------------------------------------------------
+% FACET: Confidence-gated decoding                            angles: decoding, inference
+% Evidence: portfolio-back-end app/services/autocomplete.py:14-20 (16-token cap, sentence
+%           ends, newline), :59-63 (the probability test), :144-165 (log-probabilities read
+%           from the stream); app/core/config.py:127-128; homelab
+%           docs/10-autocomplete-plan.md:76 (0.5 vs. 0.35: suggestions shown 50% vs. 55%, 7
+%           of 11 exactly right), :81 (0.3: 25% exactly right in the bake-off)
+% Notes:    labels used before: Confidence-Gated Decoding. Built and evaluated; never
+%           described as running on the live site.
+\resumeItem{\textbf{Confidence-Gated Decoding:} Built a decoding cut-off that reads token log-probabilities from the stream and ends a suggestion at the first token below a probability threshold, at a sentence end, at a newline or after 16 tokens, and compared thresholds from 0.3 to 0.5 on how often a suggestion appears and how often it is exactly right}
+% -------------------------------------------------------------------------------------
+% FACET: Repetition control                                  angles: decoding, evaluation
+% Evidence: homelab docs/10-autocomplete-plan.md:110-122 (penalty sweep on 40 cut points
+%           and 8 real looping cases); portfolio-back-end app/services/autocomplete.py:91-110
+%           (trim_repetition), app/core/config.py:121-125 (frequency 2.0, presence 1.0)
+\resumeItem{\textbf{Repetition Control:} Swept vLLM's repetition penalties on real looping suggestions, finding that the standard repetition penalty cut first-word accuracy from 38\% to 28\% while frequency and presence penalties fixed all 8 cases at no loss, then added a trimming safety net for the repeats penalties cannot see}
+% -------------------------------------------------------------------------------------
+% FACET: Feedback logging                                       angles: data, ML pipeline
+% Evidence: portfolio-back-end app/db/models/autocomplete.py:15-17 (written only once the
+%           editor reports, so every row was shown), :31, :45-53; app/schemas/
+%           autocomplete.py:24-25; README.md:81; homelab docs/10-autocomplete-plan.md:104-108
+\resumeItem{\textbf{Feedback Logging:} Logged every suggestion the author saw with its outcome (accepted, rejected or ignored), how many characters and tokens were taken, the model version and the cut-off in force, as training data for later fine-tuning}
+% -------------------------------------------------------------------------------------
+% FACET: Editor autocomplete UI                              angles: front end, React, UX
+% Evidence: portfolio-front-end src/hooks/useAutocomplete.ts:6 (150 ms pause), :43
+%           (Intl.Segmenter), :209-220 (Tab and Option+Right), :266-273 (IME composition);
+%           src/pages/admin/NoteEditor.tsx; homelab docs/10-autocomplete-plan.md:43, :77
+\resumeItem{\textbf{Editor Autocomplete UI:} Built ghost-text suggestions in the React note editor, taken whole with Tab or a word at a time with Option+Right using Intl.Segmenter so Chinese splits correctly, and held back during IME composition}
+% -------------------------------------------------------------------------------------
+% FACET: Front end                                      angles: front end, React, testing
+% Evidence: portfolio-front-end package.json:24-49; .github/workflows/ci.yml:26-30 (lint,
+%           test, build); 55 tests in 13 *.test.ts files at origin/main 98e6271;
+%           src/components/ask/AskChat.tsx, src/components/ask/SelectionAsk.tsx; vercel.json;
+%           portfolio-back-end README.md:7
+\resumeItem{\textbf{Front End:} Built the site in React 19 and TypeScript on Vercel, with a streaming chat, an ask-about-this-passage button on selected text and an admin for reviewing visitors' questions, tested by \textbf{55} Vitest tests that CI runs alongside lint and the build}
+% -------------------------------------------------------------------------------------
+% UNVERIFIED -- not claimable until sourced; no live \resumeItem below this line
+%   - Any user, visitor or traffic number.
+%   - Cold time to first token at today's prompt size.
+%   - The chat's citation, refusal or injection results under the current system prompt:
+%     no rerun is recorded since prompt v2.
+%   - Autocomplete latency under today's settings: not re-measured since Sep. 29, 2026.
+%   - Any fine-tuning, DPO or GRPO result: none has been run.
+% -------------------------------------------------------------------------------------
+% INTERVIEW NOTES -- never on a page
+%   - Why CAG and not RAG: the whole site (about 8k tokens at model selection) fit in the
+%     context, prefix caching computes it once, retrieval cannot miss, and keyword search
+%     fails across languages. The planned switch, once content outgrows the context, is a
+%     two-tool agent (Postgres full-text search plus read-by-id) judged on the same eval set.
+%   - Why architecture decides long prompts on 8 GB: Qwen3-4B keeps KV cache in all 36
+%     layers, Qwen3.5-4B in 8 of 32, the difference between fitting 16k and not fitting an
+%     8k prompt. 4-bit AWQ also leaves the 248k-word embedding table in BF16, about a third
+%     of the weights.
+%   - Why the priority classes are negative: preemption may evict any lower-priority pod,
+%     not only GPU pods, so a positive batch class could evict the database when memory is
+%     short.
+%   - Why time-slicing plus preemption: time-slicing does not isolate memory, MPS splits it
+%     evenly and the laptop GPU has no MIG; preemption makes "one user at a time" explicit.
+%   - The restore drill's marker table, written after the base backup, can only come back
+%     through WAL replay, so one drill proves both the base backup and the WAL archive.
+%   - A CORS error that was really a 500: pooled connections to a sleeping serverless
+%     database went stale, and an unhandled error carries no CORS headers. Fixed with
+%     pre-ping and connection recycling; only a real browser surfaced it.
+%   - Row order after pg_restore: the list endpoints had no ORDER BY, so the restore
+%     reordered projects. Fixed with explicit ordering and a test that fails on physical
+%     order.
+%   - Why penalties were not enough: they see only the model's own output, not the note
+%     before the cursor, so a safety net that does not depend on the model trims echoes.
+%   - Why not WebSocket for autocomplete: the per-message round trip is the same, and the
+%     costs it would remove (preflight, reconnect) were already removed over HTTP.
