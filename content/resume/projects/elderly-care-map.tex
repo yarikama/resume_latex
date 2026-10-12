@@ -1,7 +1,9 @@
-% Elderly Care Map -- schema/ETL framing
+% bank: elderly-care-map
+% Elderly Care Map -- schema and map-search framing.
+% Facts and constraints: content/bank/projects/elderly-care-map.tex.
   \resumeProjectEntry
-    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Elderly-Care-Map-Website}{Elderly Care Map Website}}} $|$ \emph{Apache, PHP, MySQL, Google Maps API, Bootstrap5, JavaScript}}{Sep. 2023 -- Jan. 2024}
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Elderly-Care-Map-Website}{Elderly Care Map Website}}} $|$ \emph{PHP, MySQL, Google Maps API, Bootstrap 5, JavaScript}}{May 2023 -- Jun. 2023}
     \resumeItemListStart
-      \resumeItem{\textbf{Database Design \& ETL:} Designed a normalized 8-table schema covering 2,000+ long-term care institutions with joins and constraints for user favorites and geolocation data; integrated government open data (CSV) through an automated ETL pipeline}
-      \resumeItem{\textbf{Full-Stack Development:} Built a map-based search platform on the Google Maps API with radius filtering, color-coded bed-capacity indicators, and real-time distance calculation; implemented user authentication and CRUD for saved institutions}
+      \resumeItem{\textbf{Database Design:} Designed the 8-table \textbf{MySQL} schema for 1,072 long-term care institutions, with 1:1 tables for addresses, contacts and bed capacity and junction tables for service types and members' favorites}
+      \resumeItem{\textbf{Map Search:} Built the \textbf{Google Maps} search page: pins colored by vacant beds, straight-line distance from the user, county and district menus, and a radius circle around the searched address}
     \resumeItemListEnd%

@@ -1,7 +1,11 @@
-% Chat Bar -- server-architecture framing
+% bank: chat-bar
+% Chat Bar -- the networking framing, built on Henry's side of a 2-person project: the SFML
+% client, the JSON packet protocol, multi-person rooms and disconnect handling. The server
+% core, its hashing and the ranking are a teammate's and are not claimed.
+% Facts and constraints: content/bank/projects/chat-bar.tex.
   \resumeProjectEntry
-    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - Real-Time Multiplayer Game Server}}} $|$ \emph{C/C++ (Socket Programming, SFML), MySQL, SHA-256}}{Oct. 2023 -- Jan. 2024}
+    {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/Chat_Bar}{Chat Bar - Real-Time Multiplayer Map Game}}} $|$ \emph{C++ (TCP Sockets, SFML), JSON, MySQL}}{Dec. 2023 -- Jan. 2024}
     \resumeItemListStart
-      \resumeItem{\textbf{Server-Client Architecture:} Designed and implemented a real-time multiplayer game server using \textbf{TCP socket programming} with multi-threaded client handling, supporting concurrent connections for chat and gameplay state synchronization}
-      \resumeItem{\textbf{User Management \& Client:} Built authentication with SHA-256 password hashing and MySQL persistence plus ranking features backed by optimized queries; developed the SFML client with an event-driven loop for movement, group chat, and live state updates}
+      \resumeItem{\textbf{Real-Time Client \& Protocol:} Built the \textbf{SFML} game client as a 60 FPS loop that drains a non-blocking \textbf{TCP} socket every frame, and designed the newline-delimited \textbf{JSON} packet protocol it shares with the server}
+      \resumeItem{\textbf{Chat Rooms \& Disconnects:} Extended two-person chat into multi-person rooms on client and server, broadcasting each message to its room only, and made a dropped player leave every room and map cleanly}
     \resumeItemListEnd%

@@ -1,3 +1,5 @@
+% bank: papit-token-pruning
+% Corrected 2026-10-10: bullets brought in line with content/bank/projects/papit-token-pruning.tex.
 % PAPIT -- OpenAI variant. Two bullets, framed as inference efficiency rather than research.
 %
 % Why this framing:
@@ -20,5 +22,5 @@
     {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/PAPIT}{Prompt-Aware Image Token Pruning for Multimodal Inference}}} $|$ \emph{PyTorch, LLaVA, CLIP ViT, Knowledge Distillation}}{Feb. 2026 -- May 2026}
     \resumeItemListStart
       \resumeItem{\textbf{Inference Efficiency:} Distilled a \textbf{1.3M-parameter} scorer from LLaVA-1.5-7B attention to drop the image patches the model ignores before the projector, cutting attention compute for the frozen LLM \textbf{10$\times$} and running \textbf{150$\times$} cheaper than a CLIP-GradCAM pass}
-      \resumeItem{\textbf{Accuracy \& Latency:} Kept a quarter of the image tokens and still answered TextVQA about as well as the full model, \textbf{12.3} points clear of random pruning, while deciding what to keep in \textbf{0.43 ms} an image, cheap enough to be free at inference}
+      \resumeItem{\textbf{Accuracy \& Latency:} Kept a quarter of the image tokens and still answered TextVQA about as well as the full model, \textbf{12.3} points clear of random pruning, while deciding what to keep in \textbf{0.43 ms} an image}
     \resumeItemListEnd%

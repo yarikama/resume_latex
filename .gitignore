@@ -32,6 +32,10 @@ __pycache__/
 applications/*/cover_letter_*
 applications/*/*_supplement.*
 
+# The resume PDF exactly as it was sent, kept before a later correction rebuilds
+# it, plus an errata note for interview prep. Both name the company by path.
+applications/*/as-sent/
+
 # Project notes unsafe for a public repo: teammates' names and splits, contested
 # authorship, interview caveats, retracted phrases. content/bank/projects/ is the
 # public half; see CLAUDE.md.

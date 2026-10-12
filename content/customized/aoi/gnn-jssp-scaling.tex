@@ -1,3 +1,5 @@
+% bank: gnn-jssp-scaling
+% Corrected 2026-10-10: bullets brought in line with content/bank/projects/gnn-jssp-scaling.tex.
 % GGJSSP -- scheduling-at-scale framing (AOI third lane)
 %
 % Changed vs content/resume/projects/gnn-jssp-scaling.tex:
@@ -13,16 +15,14 @@
 %     GRPO plus PPO, FT/LA/TA benchmarks) is the research-framework bullet -- restore it for
 %     any GAIE or MLE target, where it is the strongest of the three.
 %
-% Attribution, carried over unchanged from the canonical module: Rice, 3-person team
-% (Henry / Kerstin Sun / Cheng Han Lin), 78 of 96 commits Henry's. Bullets cover only his
-% work. Kerstin's GRPO-Clip, benchmark download scripts and tests, and Cheng Han's alpha
-% sweep and mixed-size training are not claimed.
+% Attribution: Rice, 3-person team. Bullets cover only Henry's work; the team split is in
+% the bank's private note.
 %
-% Link check still needed: the \href points at github.com/yarikama/GGJSSP but the remote is
-% SSH, so whether the repo is public was never verified. A private repo means a 404.
+% Link: github.com/yarikama/GGJSSP has been public since 2026-10-10. It was private, a 404,
+% when this resume was sent.
   \resumeProjectEntry
     {\textbf{\textcolor{RoyalBlue}{\href{https://github.com/yarikama/GGJSSP}{Scheduling Models That Break at Scale: A Cross-Size Study}}} $|$ \emph{PyTorch, Graph Neural Networks}}{Mar. 2026 -- Apr. 2026}
     \resumeItemListStart
-      \resumeItem{\textbf{Failure Diagnosis:} Traced the collapse of learned schedulers on larger instances, relative scheduling error rising from \textbf{10\%} in-distribution to \textbf{376\%} out of it, to linear degree growth in the disjunctive graph}
-      \resumeItem{\textbf{Architectural Fix:} Cut that error to a $\sim$\textbf{26\%} ceiling, letting one 10$\times$10-trained policy generalize to \textbf{7.5$\times$} larger instances}
+      \resumeItem{\textbf{Failure Diagnosis:} Traced the collapse of learned schedulers on larger instances, a 10$\times$10-trained model reaching \textbf{136\%} relative error on 15$\times$15 against \textbf{26\%} for a degree-normalized one, to linear degree growth in the disjunctive graph}
+      \resumeItem{\textbf{Architectural Fix:} Showed that degree-normalized aggregation or machine-hub routing cuts zero-shot error to $\sim$\textbf{26\%} up to 100$\times$20}
     \resumeItemListEnd%
